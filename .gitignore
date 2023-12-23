@@ -33,4 +33,8 @@
 
 # visual studio
 /.vs
+/packages
+**/x64/*
 *.user
+*.tlog
+*.log
