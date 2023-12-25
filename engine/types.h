@@ -14,6 +14,8 @@ typedef std::chrono::seconds Seconds;
 
 // Spells
 typedef int64_t SpellId;
+typedef int64_t PlayerId;
+#define InvalidPlayerId PlayerId(0)
 
 // Combat Log
 typedef int64_t EncounterId;

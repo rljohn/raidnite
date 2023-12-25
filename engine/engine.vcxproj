@@ -83,16 +83,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="encounter\encounter.h" />
+    <ClInclude Include="encounter\event.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="system\inlist.h" />
+    <ClInclude Include="system\pool.h" />
     <ClInclude Include="system\time.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp" />
+    <ClCompile Include="encounter\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="system\inlist.cpp" />
+    <ClCompile Include="system\pool.cpp" />
     <ClCompile Include="system\time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

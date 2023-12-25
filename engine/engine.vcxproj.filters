@@ -17,6 +17,15 @@
       <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="encounter\event.h">
+      <Filter>encounter</Filter>
+    </ClInclude>
+    <ClInclude Include="system\inlist.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="system\pool.h">
+      <Filter>system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -26,5 +35,12 @@
       <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="encounter\event.cpp" />
+    <ClCompile Include="system\inlist.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="system\pool.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
