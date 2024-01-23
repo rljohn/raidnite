@@ -7,6 +7,24 @@
     <Filter Include="system">
       <UniqueIdentifier>{5bb6c533-5cad-47a0-890e-d265499b3f48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="unit">
+      <UniqueIdentifier>{ea0a8421-8a8b-4b52-a310-3cf4b9cca570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ability">
+      <UniqueIdentifier>{fae78820-e0ff-4167-afff-cfcce0d00c7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="localization">
+      <UniqueIdentifier>{d3c6d29f-88f2-4282-ae5d-1c1e207182e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty">
+      <UniqueIdentifier>{035462cc-10d9-4c66-acf2-6cc23acb94da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{6334037c-eeba-4e11-b395-00e4c79204f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="entity">
+      <UniqueIdentifier>{4c100e13-853f-420f-8285-bfa8daa47cf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="encounter\encounter.h">
@@ -26,6 +44,49 @@
     <ClInclude Include="system\pool.h">
       <Filter>system</Filter>
     </ClInclude>
+    <ClInclude Include="unit\unit.h">
+      <Filter>unit</Filter>
+    </ClInclude>
+    <ClInclude Include="unit\power.h">
+      <Filter>unit</Filter>
+    </ClInclude>
+    <ClInclude Include="localization\localization.h">
+      <Filter>localization</Filter>
+    </ClInclude>
+    <ClInclude Include="system\delegate.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="system\check.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="system\json.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\json.hpp">
+      <Filter>thirdparty</Filter>
+    </ClInclude>
+    <ClInclude Include="unit\attribute.h">
+      <Filter>unit</Filter>
+    </ClInclude>
+    <ClInclude Include="unit\buff.h">
+      <Filter>unit</Filter>
+    </ClInclude>
+    <ClInclude Include="game\combat.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\world.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\game.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\component.h">
+      <Filter>entity</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\entity.h">
+      <Filter>entity</Filter>
+    </ClInclude>
+    <ClInclude Include="system\modifier.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -35,12 +96,41 @@
       <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="encounter\event.cpp" />
     <ClCompile Include="system\inlist.cpp">
       <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="system\pool.cpp">
       <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="unit\unit.cpp">
+      <Filter>unit</Filter>
+    </ClCompile>
+    <ClCompile Include="unit\power.cpp">
+      <Filter>unit</Filter>
+    </ClCompile>
+    <ClCompile Include="localization\localization.cpp">
+      <Filter>localization</Filter>
+    </ClCompile>
+    <ClCompile Include="encounter\event.cpp">
+      <Filter>encounter</Filter>
+    </ClCompile>
+    <ClCompile Include="system\delegate.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="unit\buff.cpp">
+      <Filter>unit</Filter>
+    </ClCompile>
+    <ClCompile Include="game\combat.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\world.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\component.cpp">
+      <Filter>entity</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\attribute.cpp">
+      <Filter>unit</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -31,6 +31,7 @@ public:
 	typedef inlist_node<T> Node;
 	Node* m_Head = nullptr;
 	Node* m_Tail = nullptr;
+	int m_Count = 0;
 
 	void push_back(Node& node)
 	{
@@ -52,6 +53,8 @@ public:
 
 			m_Tail = &node;
 		}
+
+		m_Count++;
 	}
 
 	void push_front(Node& node)
@@ -74,6 +77,8 @@ public:
 
 			m_Tail = &node;
 		}
+
+		m_Count++;
 	}
 
 	void remove(Node& node)
@@ -86,6 +91,8 @@ public:
 
 		node->next = nullptr;
 		node->previous = nullptr;
+
+		m_Count--;
 	}
 
 	Node* front()
@@ -109,6 +116,8 @@ public:
 				next->previous = nullptr;
 			}
 			m_Head = next;
+
+			m_Count--;
 		}
 	}
 
@@ -131,22 +140,15 @@ public:
 			{
 				previous->next = nullptr;
 			}
+
 			m_Tail = previous;
+			m_Count--;
 		}
 	}
 
 	int size() const
 	{
-		int count = 0;
-		
-		Node* current = m_Head;
-		while (current != nullptr)
-		{
-			count++;
-			current = current->next;
-		}
-
-		return count;
+		return m_Count;
 	}
 };
 

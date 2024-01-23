@@ -14,6 +14,9 @@ public:
 	// Time Helpers
 	static TimeStamp GetCurrent();
 
+	// Unreal Helper (deltaTime is seconds)
+	static Duration FromDeltaTime(float deltaTime);
+
 	// Add Helpers
 	static TimeStamp& Add(TimeStamp& time, const Seconds& seconds);
 	static TimeStamp& Add(TimeStamp& time, const Milliseconds& millis);

@@ -54,6 +54,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -73,6 +74,7 @@
       <PrecompiledHeaderFile>engine/pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -84,22 +86,46 @@
   <ItemGroup>
     <ClInclude Include="encounter\encounter.h" />
     <ClInclude Include="encounter\event.h" />
+    <ClInclude Include="entity\component.h" />
+    <ClInclude Include="entity\entity.h" />
+    <ClInclude Include="game\combat.h" />
+    <ClInclude Include="game\game.h" />
+    <ClInclude Include="game\world.h" />
+    <ClInclude Include="localization\localization.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\inlist.h" />
+    <ClInclude Include="system\json.h" />
+    <ClInclude Include="system\modifier.h" />
     <ClInclude Include="system\pool.h" />
+    <ClInclude Include="system\check.h" />
     <ClInclude Include="system\time.h" />
+    <ClInclude Include="thirdparty\json.hpp" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="unit\attribute.h" />
+    <ClInclude Include="unit\buff.h" />
+    <ClInclude Include="unit\power.h" />
+    <ClInclude Include="unit\unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp" />
     <ClCompile Include="encounter\event.cpp" />
+    <ClCompile Include="entity\attribute.cpp" />
+    <ClCompile Include="entity\component.cpp" />
+    <ClCompile Include="game\combat.cpp" />
+    <ClCompile Include="game\world.cpp" />
+    <ClCompile Include="localization\localization.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="system\delegate.cpp" />
     <ClCompile Include="system\inlist.cpp" />
     <ClCompile Include="system\pool.cpp" />
     <ClCompile Include="system\time.cpp" />
+    <ClCompile Include="unit\buff.cpp" />
+    <ClCompile Include="unit\power.cpp" />
+    <ClCompile Include="unit\unit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
