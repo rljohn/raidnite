@@ -35,6 +35,11 @@ public:
 		}
 	}
 
+	int GetCount() const
+	{
+		return (int)m_Functions.size();
+	}
+
 private:
 
 	std::list<Function> m_Functions;

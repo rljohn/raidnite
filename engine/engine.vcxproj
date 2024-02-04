@@ -95,6 +95,7 @@
     <ClInclude Include="game\damage.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\world.h" />
+    <ClInclude Include="game\zone.h" />
     <ClInclude Include="localization\localization.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="system\delegate.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="encounter\encounter_log.cpp" />
     <ClCompile Include="encounter\event.cpp" />
     <ClCompile Include="entity\entity.cpp" />
+    <ClCompile Include="game\zone.cpp" />
     <ClCompile Include="unit\attribute.cpp" />
     <ClCompile Include="entity\component.cpp" />
     <ClCompile Include="game\combat.cpp" />

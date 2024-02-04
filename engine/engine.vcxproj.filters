@@ -93,6 +93,7 @@
     <ClInclude Include="game\combat_common.h" />
     <ClInclude Include="encounter\encounter_log.h" />
     <ClInclude Include="unit\unit_utils.h" />
+    <ClInclude Include="game\zone.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -144,5 +145,6 @@
     <ClCompile Include="entity\entity.cpp" />
     <ClCompile Include="encounter\encounter_log.cpp" />
     <ClCompile Include="unit\unit_utils.cpp" />
+    <ClCompile Include="game\zone.cpp" />
   </ItemGroup>
 </Project>

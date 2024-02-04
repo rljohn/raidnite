@@ -11,6 +11,7 @@ namespace raid
 IEntityLocator* Game::sm_EntityLocator = nullptr;
 IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
+IEncounterLog* Game::sm_EncounterLog = nullptr;
 
 void Game::SetEntityLocator(IEntityLocator* locator)
 {
@@ -40,6 +41,16 @@ void Game::SetCombatSystem(ICombatSystem* system)
 ICombatSystem* Game::GetCombatSystem()
 {
 	return sm_CombatSystem;
+}
+
+void Game::SetEncounterLog(IEncounterLog* logger)
+{
+	sm_EncounterLog = logger;
+}
+
+IEncounterLog* Game::GetEncounterLog()
+{
+	return sm_EncounterLog;
 }
 
 } // namespace raid

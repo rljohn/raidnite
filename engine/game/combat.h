@@ -42,4 +42,9 @@ public:
 	void BuildDamageEvent(const DamageParams& damage) override;
 };
 
+class CombatSystemRAII
+{
+
+};
+
 } // namespace raid

@@ -30,6 +30,10 @@ namespace raid
 	using EntityId = int64_t;
 	#define InvalidEntityId EntityId(0)	
 
+	// Zone
+	using ZoneId = int64_t;
+	#define InvalidZoneId ZoneId(0)
+
 	// Combat Log
 	using EncounterId = int64_t;
 
