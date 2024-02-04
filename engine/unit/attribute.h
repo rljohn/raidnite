@@ -11,24 +11,69 @@ namespace raid
 enum class AttributeType
 {
 	Invalid = -1,
+
+	// Level
+	Level,
+
+	// Base Stats
 	Stamina,
 	Intellect,
 	Strength,
 	Agility,
+
+	// Defensive Stats
+	DamageResist, // all dmg
 	Armor,
+	MagicResist,
+	FireResist,
+	FrostResist,
+	EarthResist,
+
+	// Damage Reduction - Elemental
+	PhysicalDR,
+	FireDR,
+	FrostDR,
+	EarthDR,
+
+	MAX,
 };
 
 struct IAttribute
 {
 	virtual AttributeType GetAttributeType() const = 0;
 
-	float BaseValue;
-	float CurrentValue;
+	IAttribute();
+	IAttribute(float value);
+
+	float GetValue() const { return m_CurrentValue; }
+
+	// Dirty Flag - Recalculate
+	bool NeedsRecalculate() const { return m_NeedsCalculation; }
+	void Recalculate();
+
+	// Modifiers
+	void AddModifier(IModifier* modifier);
+	void RemoveModifier(IModifier* modifier);
+	void SortModifiers();
+
+protected:
+
+	std::vector<IModifier*> m_Modifiers;
+
+	float m_BaseValue;
+	float m_CurrentValue;
+
+	bool m_NeedsCalculation;
 };
 
 template <AttributeType T>
 struct Attribute : IAttribute
 {
+	Attribute(float value)
+		: IAttribute(value)
+	{
+	}
+
 	virtual AttributeType GetAttributeType() const override
 	{
 		return T;
@@ -44,10 +89,31 @@ public:
 	{
 	}
 
-	template<AttributeType T>
-	void AddAttribute(float max)
+	void SetupAttributes()
 	{
-		m_Attributes.emplace(T, new Attribute<T>());
+		AddAttribute<AttributeType::Level>();
+
+		AddAttribute<AttributeType::Stamina>();
+		AddAttribute<AttributeType::Intellect>();
+		AddAttribute<AttributeType::Strength>();
+		AddAttribute<AttributeType::Agility>();
+
+		AddAttribute<AttributeType::DamageResist>();
+		AddAttribute<AttributeType::MagicResist>();
+		AddAttribute<AttributeType::FireResist>();
+		AddAttribute<AttributeType::FrostResist>();
+		AddAttribute<AttributeType::EarthResist>();
+
+		AddAttribute<AttributeType::PhysicalDR>();
+		AddAttribute<AttributeType::FireDR>();
+		AddAttribute<AttributeType::FrostDR>();
+		AddAttribute<AttributeType::EarthDR>();
+	}
+
+	template<AttributeType T>
+	void AddAttribute(float value = 0)
+	{
+		m_Attributes.emplace(T, new Attribute<T>(value));
 	}
 
 	template<AttributeType T>
@@ -64,16 +130,63 @@ private:
 	Attributes m_Attributes;
 };
 
+// Define all of our common attribute types
 using Stamina = Attribute<AttributeType::Stamina>;
 using Intellect = Attribute<AttributeType::Intellect>;
 using Strength = Attribute<AttributeType::Strength>;
 using Agility = Attribute<AttributeType::Agility>;
 using Armor = Attribute<AttributeType::Armor>;
 
-template <AttributeType ATTR, ModifierType MOD>
-struct BE_AttributeModifier : IBuffEffect, Modifier<MOD>
+// Helper that holds a reference to a Power ptr.
+// Setup with the given enity.
+struct AttributeReference
 {
+	template<AttributeType T>
+	void Setup(Entity& entity)
+	{
+		if (AttributesComponent* attributes = entity.GetComponent<AttributesComponent>())
+		{
+			m_Attribute = attributes->GetAttribute<T>();
+		}
+	}
+
+	IAttribute* m_Attribute = nullptr;
+};
+
+template <AttributeType ATTR, ModifierType MOD>
+struct BE_AttributeModifier : IBuffEffect, Modifier<MOD>, AttributeReference
+{
+public:
+
 	AttributeType GetAttributeType() const { ATTR; }
+
+	BE_AttributeModifier()
+		: Modifier<MOD>()
+	{
+	}
+
+	BE_AttributeModifier(float modifier)
+		: Modifier<MOD>(modifier)
+	{
+	}
+
+	void OnAdd(Entity& entity) override
+	{
+		AttributeReference::Setup<ATTR>(entity);
+
+		if (m_Attribute)
+		{
+			m_Attribute->AddModifier(this);
+		}
+	}
+
+	void OnRemove() override
+	{
+		if (m_Attribute)
+		{
+			m_Attribute->RemoveModifier(this);
+		}
+	}
 };
 
 // Declare common attribute modifiers

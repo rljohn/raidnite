@@ -3,30 +3,34 @@
 #include "engine/entity/entity.h"
 #include "engine/unit/unit.h"
 #include "engine/types.h"
+#include "engine/game/damage.h"
 
 namespace raid
 {
 
-class World
+class World : public IEntityLocator
 {
 
 public:
 
 	World();
 
-	void RegisterUnit(Unit* unit);
-	void UnregisterUnit(Unit* unit);
+	// IEntityLocator
+	Entity* FindEntity(const EntityId entityId) override;
 
-	using UnitList = std::vector<Unit*>;
-	UnitList& GetUnitList();
+	// Registration
+	void RegisterEntity(Entity* unit);
+	void UnRegisterEntity(Entity* unit);
 
 	const Entity& GetWorldEntity();
 
 private:
 
-	UnitList m_Units;
+	using EntityList = std::vector<Entity*>;
+	EntityList m_Entities;
 	Entity m_WorldEntity;
 
+	EntityId m_NextUnitId;
 };
 
 } // namespace World

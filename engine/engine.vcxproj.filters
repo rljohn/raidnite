@@ -87,6 +87,12 @@
       <Filter>entity</Filter>
     </ClInclude>
     <ClInclude Include="system\modifier.h" />
+    <ClInclude Include="unit\effects\damage_effect.h" />
+    <ClInclude Include="game\damage.h" />
+    <ClInclude Include="game\combat_events.h" />
+    <ClInclude Include="game\combat_common.h" />
+    <ClInclude Include="encounter\encounter_log.h" />
+    <ClInclude Include="unit\unit_utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -129,8 +135,14 @@
     <ClCompile Include="entity\component.cpp">
       <Filter>entity</Filter>
     </ClCompile>
-    <ClCompile Include="entity\attribute.cpp">
+    <ClCompile Include="unit\attribute.cpp">
       <Filter>unit</Filter>
     </ClCompile>
+    <ClCompile Include="game\game.cpp" />
+    <ClCompile Include="game\damage.cpp" />
+    <ClCompile Include="unit\effects\damage_effect.cpp" />
+    <ClCompile Include="entity\entity.cpp" />
+    <ClCompile Include="encounter\encounter_log.cpp" />
+    <ClCompile Include="unit\unit_utils.cpp" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "engine/unit/attribute.h"
 #include "engine/unit/power.h"
 #include "engine/unit/unit.h"
+#include "engine/unit/effects/damage_effect.h"
 
 using namespace raid;
 
@@ -23,6 +24,7 @@ TEST(UnitTest, PowerBasics)
 	// Empty the power to test min clamping
 	p.SetEmpty();
 	EXPECT_EQ(p.GetCurrent(), 0);
+	EXPECT_TRUE(p.IsEmpty());
 
 	// Check clamping at min
 	p.SetBaseValues(25, p.GetMax());
@@ -37,7 +39,7 @@ TEST(UnitTest, PowerBasics)
 
 TEST(UnitTest, PowerPercent)
 {
-	Power<PowerType::Health> p(0, 200);
+	Health p(0, 200);
 	EXPECT_FALSE(p.NeedsRecalculate());
 
 	// 50% HP check
@@ -58,7 +60,39 @@ TEST(UnitTest, PowerPercent)
 	EXPECT_FLOAT_EQ(p.GetPercent(), 100);
 }
 
-TEST(BuffTest, BasicBuffs)
+TEST(UnitTest, AttributeBasics)
+{
+	Stamina stam(100);
+	EXPECT_FALSE(stam.NeedsRecalculate());
+}
+
+TEST(BuffTest, AttributeBuffs)
+{
+	Unit u;
+	u.AddAttribute<AttributeType::Stamina>(100);
+
+	IAttribute* stam = u.GetAttribute<AttributeType::Stamina>();
+	ASSERT_NE(stam, nullptr);
+	EXPECT_EQ(stam->GetValue(), 100);
+
+	// Attribute buff that reduces Stamina by 10.
+	BE_StaminaAddSubtract mod(-10);
+
+	// construct the buff
+	Buff buff;
+	buff.AddEffect(&mod);
+
+	// add buff - needs recalculate
+	u.AddBuff(&buff);
+	EXPECT_EQ(stam->GetValue(), 100);
+	EXPECT_TRUE(stam->NeedsRecalculate());
+
+	// recalculate
+	stam->Recalculate();
+	EXPECT_EQ(stam->GetValue(), 90);
+}
+
+TEST(BuffTest, PowerBuffs)
 {
 	// create a basic unit with only health
 	Unit u;
@@ -138,8 +172,6 @@ TEST(BuffTest, SortBuffs)
 TEST(BuffTest, RestoreCurrentHp)
 {
 	Unit u;
-
-	// initialze unit with 1000 HP
 	u.AddPower<PowerType::Health>(1000);
 
 	// create a buff effect that halfs max health

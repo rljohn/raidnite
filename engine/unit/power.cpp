@@ -109,6 +109,12 @@ void IPower::Recalculate()
 	m_NeedsCalculation = false;
 }
 
+void IPower::Increment(float value)
+{
+	float newValue = m_ModifiedValue.GetCurrent() + value;
+	m_ModifiedValue.SetCurrent(newValue);
+}
+
 void IPower::AddModifier(IPowerModifier* modifier)
 {
 	m_Modifiers.push_back(modifier);

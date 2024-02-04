@@ -115,7 +115,9 @@ public:
 
 	// Utilities
 	void ReFill() { m_ModifiedValue.SetCurrent(m_ModifiedValue.GetMax()); }
+	bool IsEmpty() const { return m_ModifiedValue.GetCurrent() == m_ModifiedValue.GetMin(); }
 	void SetEmpty() { m_ModifiedValue.SetCurrent(m_ModifiedValue.GetMin()); }
+	void Increment(float value);
 
 	// Modifiers
 	void AddModifier(IPowerModifier* modifier);
@@ -205,7 +207,6 @@ private:
 };
 
 // Define all of our common power types
-
 using Health = Power<PowerType::Health>;
 using Mana = Power<PowerType::Mana>;
 using Rage = Power<PowerType::Rage>;
@@ -228,14 +229,14 @@ struct PowerReference
 };
 
 // Modifiers for Power
-template <PowerType T, ModifierType MOD, PowerField FIELD>
+template <PowerType POWER, ModifierType MOD, PowerField FIELD>
 class BE_PowerModifier : public IBuffEffect, public PowerModifier<MOD, FIELD>, PowerReference
 {
 public:
 
 	using PowerModifier<MOD, FIELD>::GetModifier;
 
-	PowerType GetPowerType() const { T; }
+	PowerType GetPowerType() const { POWER; }
 
 	BE_PowerModifier()
 		: PowerModifier<MOD, FIELD>()
@@ -249,7 +250,7 @@ public:
 
 	void OnAdd(Entity& entity) override
 	{
-		PowerReference::Setup<T>(entity);
+		PowerReference::Setup<POWER>(entity);
 
 		if (m_Power)
 		{
@@ -277,7 +278,7 @@ public:
 		CachePercentage();
 	}
 
-	void OnUpdate() override
+	void OnUpdate(GameFrame& frame) override
 	{
 		CachePercentage();
 	}

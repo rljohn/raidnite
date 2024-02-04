@@ -13,7 +13,7 @@ namespace raid
 	struct IBuffEffect
 	{
 		virtual void OnAdd(Entity& /* owner */) {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(GameFrame& frame) {}
 		virtual void OnRemove() {}
 	};
 
@@ -26,7 +26,6 @@ namespace raid
 	public:
 
 		void Begin(const TimeStamp& startTime = Time::GetCurrent());
-		void Update(const GameFrame& frame);
 
 		void AddEffect(IBuffEffect* effect);
 		void SetDuration(const Duration& duration);
@@ -34,8 +33,17 @@ namespace raid
 		bool IsExpired() const;
 
 		void OnAdd(Entity& owner);
-		void OnUpdate();
-		void OnRemove();
+		void OnUpdate(GameFrame& frame);
+
+		enum RemoveReason
+		{
+			Invalid,
+			Expired,
+			Cleansed,
+			Removed
+		};
+
+		void OnRemove(RemoveReason reason);
 
 	private:
 
@@ -58,9 +66,13 @@ namespace raid
 		{
 		}
 
-		void Update(const GameFrame& frame);
+		void Update(GameFrame& frame);
+
 		void AddBuff(Buff* buff);
+
+		void CleanseBuff(Buff* buff);
 		void RemoveBuff(Buff* buff);
+		void ExpireBuff(Buff* buff);
 
 	private:
 

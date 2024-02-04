@@ -7,23 +7,31 @@ namespace raid
 {
 
 World::World()
+	: m_NextUnitId(InvalidEntityId)
 {
-
 }
 
-void World::RegisterUnit(Unit* unit)
+Entity* World::FindEntity(EntityId entityId)
 {
-	m_Units.push_back(unit);
+	for (Entity* e : m_Entities)
+	{
+		if (e->GetId() == entityId)
+			return e;
+	}
+
+	return nullptr;
 }
 
-void World::UnregisterUnit(Unit* unit)
+void World::RegisterEntity(Entity* unit)
 {
-	RemoveFromVector<Unit*>(m_Units, unit);
+	m_Entities.push_back(unit);
+	unit->SetId(++m_NextUnitId);
+	unit->Init();
 }
 
-World::UnitList& World::GetUnitList()
+void World::UnRegisterEntity(Entity* unit)
 {
-	return m_Units;
+	RemoveFromVector<Entity*>(m_Entities, unit);
 }
 
 const Entity& World::GetWorldEntity()

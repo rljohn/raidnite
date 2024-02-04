@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/types.h"
+#include "engine/game/game.h"
 #include "engine/entity/entity.h"
 
 namespace raid
@@ -18,6 +19,9 @@ public:
     }
 
     virtual ~Component() = default;
+
+    virtual void Init() {}
+    virtual void Update(GameFrame& /* frame */) {}
 
 protected:
 

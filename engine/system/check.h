@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-	Avoid early out/nested if statements with try/catch style logic
+	Avoid early out/nested if statements with try/catch style logic.
 
 	stry
 	{
@@ -20,8 +20,8 @@
 */
 
 #define stry
-#define scheck(cond, LABEL) do { if (!cond) { goto LABEL; } } while(0)
-#define scheckall(cond) do {if (!cond) { goto FINALLY; } } while (0)
+#define scheck(cond, LABEL) do { if (!cond) { goto LABEL; } } while(0);
+#define scheckall(cond) do { if (!cond) { goto FINALLY; } } while (0);
 #define scatch(LABEL) LABEL:
 #define sthrow(LABEL) goto LABEL;
 #define sthrowfinally() goto FINALLY;

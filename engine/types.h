@@ -18,10 +18,17 @@ namespace raid
 	using Milliseconds = std::chrono::milliseconds;
 	using Seconds = std::chrono::seconds;
 
-	// Spells
+	// Abilities
 	using SpellId = int64_t;
-	using PlayerId = int64_t ;
+	#define InvalidSpellId SpellId(0)
+
+	// Players
+	using PlayerId = int64_t;
 	#define InvalidPlayerId PlayerId(0)
+
+	// Entities
+	using EntityId = int64_t;
+	#define InvalidEntityId EntityId(0)	
 
 	// Combat Log
 	using EncounterId = int64_t;

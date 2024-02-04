@@ -60,6 +60,9 @@ private:
 template <ModifierType M>
 struct Modifier : IModifier
 {
+	Modifier() : IModifier() {}
+	Modifier(float modifier) : IModifier(modifier) { }
+
 	ModifierType GetModifierType() const override { return M; }
 };
 
