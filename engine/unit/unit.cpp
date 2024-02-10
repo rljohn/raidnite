@@ -12,6 +12,7 @@ Unit::Unit()
 	, m_Attributes(AddComponent<AttributesComponent>())
 	, m_Buffs(AddComponent<BuffsComponent>())
 	, m_DamageReceiver(AddComponent<DamageReceiver>())
+	, m_AggroTable(AddComponent<AggroTable>())
 {
 
 }
@@ -44,6 +45,11 @@ void Unit::CleanseBuff(Buff* buff)
 void Unit::RemoveBuff(Buff* buff)
 {
 	m_Buffs.RemoveBuff(buff);
+}
+
+bool Unit::IsInCombat() const
+{
+	return !m_AggroTable.Empty();
 }
 
 } // namespace raid

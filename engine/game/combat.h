@@ -2,7 +2,7 @@
 
 #include "engine/types.h"
 #include "engine/game/damage.h"
-#include "engine/game/combat_events.h"
+#include "engine/game/game_events.h"
 #include "engine/system/delegate.h"
 
 namespace raid
@@ -27,12 +27,14 @@ public:
 
 	virtual void BuildDamageEvent(const DamageParams& damage) = 0;
 
-	using CombatEventDelegate = Delegate<CombatEvent*>;
-	CombatEventDelegate& CombatEventDlgt() { return m_CombatEventDlgt; }
+	virtual void KillEntity(Entity* e) = 0;
+
+	using GameEventDelegate = Delegate<GameEvent*>;
+	GameEventDelegate& GameEventDlgt() { return m_GameEventDlgt; }
 
 protected:
 
-	CombatEventDelegate m_CombatEventDlgt;
+	GameEventDelegate m_GameEventDlgt;
 };
 
 class CombatSystem : public ICombatSystem
@@ -40,11 +42,18 @@ class CombatSystem : public ICombatSystem
 public:
 
 	void BuildDamageEvent(const DamageParams& damage) override;
+	void KillEntity(Entity* e) override;
 };
 
+// Utility (mostly for testing) to ensure the combat system is set and destroyed.
 class CombatSystemRAII
 {
+public:
 
+	CombatSystemRAII();
+	~CombatSystemRAII();
+
+	CombatSystem Instance;
 };
 
 } // namespace raid

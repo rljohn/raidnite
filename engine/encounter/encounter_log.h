@@ -14,9 +14,9 @@ public:
 
 private:
 
-	void OnCombatEvent(CombatEvent* evt);
+	void OnGameEvent(GameEvent* evt);
 
-	ICombatSystem::CombatEventDelegate::Function m_OnCombatEvent;
+	ICombatSystem::GameEventDelegate::Function m_OnGameEvent;
 };
 
 }

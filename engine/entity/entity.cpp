@@ -16,6 +16,16 @@ void Entity::Init()
 	{
 		pair.second->Init();
 	}
+
+	OnInit();
+}
+
+void Entity::OnGameEvent(const GameEvent& evt)
+{
+	for (auto& pair : m_Components)
+	{
+		pair.second->OnGameEvent(evt);
+	}
 }
 
 } // namespace raid

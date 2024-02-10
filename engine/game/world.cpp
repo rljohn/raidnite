@@ -22,6 +22,14 @@ Entity* World::FindEntity(EntityId entityId)
 	return nullptr;
 }
 
+void World::OnGameEvent(const GameEvent& evt)
+{
+	for (Entity* e : m_Entities)
+	{
+		e->OnGameEvent(evt);
+	}
+}
+
 void World::RegisterEntity(Entity* unit)
 {
 	m_Entities.push_back(unit);
@@ -37,6 +45,16 @@ void World::UnRegisterEntity(Entity* unit)
 const Entity& World::GetWorldEntity()
 {
 	return m_WorldEntity;
+}
+
+WorldRAII::WorldRAII()
+{
+	Game::SetEntityManager(&Instance);
+}
+
+WorldRAII::~WorldRAII()
+{
+	Game::SetEntityManager(nullptr);
 }
 
 } // namespace raid

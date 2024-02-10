@@ -2,6 +2,7 @@
 
 #include "engine/entity/entity.h"
 #include "engine/game/damage.h"
+#include "engine/unit/aggro.h"
 #include "engine/unit/attribute.h"
 #include "engine/unit/power.h"
 
@@ -32,12 +33,16 @@ public:
 	void CleanseBuff(Buff* buff);
 	void RemoveBuff(Buff* buff);
 
+	// Combat Helpers
+	bool IsInCombat() const;
+
 private:
 
 	PowerComponent& m_Powers;
 	AttributesComponent& m_Attributes;
 	BuffsComponent& m_Buffs;
 	DamageReceiver& m_DamageReceiver;
+	AggroTable& m_AggroTable;
 };
 
 } // namespace raid

@@ -8,17 +8,17 @@
 namespace raid
 {
 
-IEntityLocator* Game::sm_EntityLocator = nullptr;
+IEntityManager* Game::sm_EntityLocator = nullptr;
 IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
 IEncounterLog* Game::sm_EncounterLog = nullptr;
 
-void Game::SetEntityLocator(IEntityLocator* locator)
+void Game::SetEntityManager(IEntityManager* locator)
 {
 	sm_EntityLocator = locator;
 }
 
-IEntityLocator* Game::GetEntityLocator()
+IEntityManager* Game::GetEntityManager()
 {
 	return sm_EntityLocator;
 }

@@ -10,6 +10,7 @@ namespace raid
 
 class Component;
 class World;
+struct GameEvent;
 
 class Entity
 {
@@ -35,7 +36,11 @@ public:
     void SetId(EntityId id) { m_Id = id; }
     EntityId GetId() const { return m_Id; }
 
-    virtual void Init();
+    void Init();
+
+    virtual void OnInit() {}
+
+    virtual void OnGameEvent(const GameEvent& evt);
 
 private:
 
@@ -43,11 +48,12 @@ private:
     EntityId m_Id;
 };
 
-class IEntityLocator
+class IEntityManager
 {
 public:
 
     virtual Entity* FindEntity(const EntityId id) = 0;
+    virtual void OnGameEvent(const GameEvent& e) = 0;
 };
 
 } // namespace raid

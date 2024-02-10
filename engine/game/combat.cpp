@@ -13,7 +13,7 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 	stry
 	{
 		// Locator is required to find the source/target units.
-		IEntityLocator* locator = Game::GetEntityLocator();
+		IEntityManager* locator = Game::GetEntityManager();
 		scheckall(locator);
 
 		// Comgat resolver is required to calculate damage
@@ -93,12 +93,31 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 			receiver->ApplyDamage(evt);
 		}
 
-		m_CombatEventDlgt.Invoke(&evt);
+		m_GameEventDlgt.Invoke(&evt);
 	}
 	sfinally
 	{
 
 	}	
+}
+
+void CombatSystem::KillEntity(Entity* e)
+{
+	if (IEntityManager* mgr = Game::GetEntityManager()) 
+	{
+		DeathEvent evt(e);
+		mgr->OnGameEvent(evt);
+	}
+}
+
+CombatSystemRAII::CombatSystemRAII()
+{
+	Game::SetCombatSystem(&Instance);
+}
+
+CombatSystemRAII::~CombatSystemRAII()
+{
+	Game::SetCombatSystem(nullptr);
 }
 
 } // namespace raid

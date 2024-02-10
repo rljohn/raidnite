@@ -7,17 +7,21 @@
 
 using namespace raid;
 
-TEST(EncounterLog, InitShutdown)
+TEST(EncounterLogTest, InitShutdown)
 {
-	CombatSystem combat;
-	Game::SetCombatSystem(&combat);
+	CombatSystemRAII combat;
 
 	EncounterLog log;
 	log.Init();
-	EXPECT_EQ(combat.CombatEventDlgt().GetCount(), 1);
+	EXPECT_EQ(combat.Instance.GameEventDlgt().GetCount(), 1);
 
 	log.Shutdown();
-	EXPECT_EQ(combat.CombatEventDlgt().GetCount(), 0);
+	EXPECT_EQ(combat.Instance.GameEventDlgt().GetCount(), 0);
+}
 
-	Game::SetCombatSystem(nullptr);
+TEST(EncounterLogTest, StartEnd)
+{
+	CombatSystemRAII combat;
+
+	EncounterLog log;
 }

@@ -8,6 +8,8 @@ namespace raid
 {
 
 class Entity;
+struct GameEvent;
+
 class Component
 {
 public:
@@ -22,6 +24,7 @@ public:
 
     virtual void Init() {}
     virtual void Update(GameFrame& /* frame */) {}
+    virtual void OnGameEvent(const GameEvent& evt) {}
 
 protected:
 

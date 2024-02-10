@@ -12,14 +12,14 @@ using namespace raid;
 
 void GameTest::SetUp()
 {
-	Game::SetEntityLocator(&m_World);
+	Game::SetEntityManager(&m_World);
 	Game::SetDamageCalculator(&m_Calculator);
 	Game::SetCombatSystem(&m_CombatSystem);
 }
 
 void GameTest::TearDown()
 {
-	Game::SetEntityLocator(nullptr);
+	Game::SetEntityManager(nullptr);
 	Game::SetDamageCalculator(nullptr);
 	Game::SetCombatSystem(nullptr);
 }
@@ -27,7 +27,7 @@ void GameTest::TearDown()
 TEST_F(GameTest, WorldBasics)
 {
 	ASSERT_NE(Game::GetDamageCalculator(), nullptr);
-	ASSERT_NE(Game::GetEntityLocator(), nullptr);
+	ASSERT_NE(Game::GetEntityManager(), nullptr);
 	ASSERT_NE(Game::GetCombatSystem(), nullptr);
 }
 

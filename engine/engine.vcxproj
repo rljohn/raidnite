@@ -91,7 +91,7 @@
     <ClInclude Include="entity\entity.h" />
     <ClInclude Include="game\combat.h" />
     <ClInclude Include="game\combat_common.h" />
-    <ClInclude Include="game\combat_events.h" />
+    <ClInclude Include="game\game_events.h" />
     <ClInclude Include="game\damage.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\world.h" />
@@ -107,6 +107,7 @@
     <ClInclude Include="system\time.h" />
     <ClInclude Include="thirdparty\json.hpp" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="unit\aggro.h" />
     <ClInclude Include="unit\attribute.h" />
     <ClInclude Include="unit\buff.h" />
     <ClInclude Include="unit\effects\damage_effect.h" />
@@ -120,6 +121,7 @@
     <ClCompile Include="encounter\event.cpp" />
     <ClCompile Include="entity\entity.cpp" />
     <ClCompile Include="game\zone.cpp" />
+    <ClCompile Include="unit\aggro.cpp" />
     <ClCompile Include="unit\attribute.cpp" />
     <ClCompile Include="entity\component.cpp" />
     <ClCompile Include="game\combat.cpp" />

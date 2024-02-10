@@ -6,7 +6,7 @@ namespace raid
 {
 
 // Forward declare Game classes
-class IEntityLocator;
+class IEntityManager;
 class IDamageCalculator;
 class ICombatSystem;
 class IEncounterLog;
@@ -18,9 +18,9 @@ class Game
 {
 public:
 
-	// System to find entities
-	static void SetEntityLocator(IEntityLocator* locator);
-	static IEntityLocator* GetEntityLocator();
+	// System to manage entities
+	static void SetEntityManager(IEntityManager* locator);
+	static IEntityManager* GetEntityManager();
 
 	// System to calculate damage
 	static void SetDamageCalculator(IDamageCalculator* calculator);
@@ -36,7 +36,7 @@ public:
 
 private:
 
-	static IEntityLocator* sm_EntityLocator;
+	static IEntityManager* sm_EntityLocator;
 	static IDamageCalculator* sm_DamageCalculator;
 	static ICombatSystem* sm_CombatSystem;
 	static IEncounterLog* sm_EncounterLog;

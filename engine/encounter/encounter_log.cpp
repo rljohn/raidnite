@@ -12,12 +12,12 @@ bool EncounterLog::Init()
 	if (!system)
 		return false;
 
-	m_OnCombatEvent = [this](CombatEvent* evt)
+	m_OnGameEvent = [this](GameEvent* evt)
 	{
-		this->OnCombatEvent(evt);
+		this->OnGameEvent(evt);
 	};
 
-	system->CombatEventDlgt().Register(m_OnCombatEvent);
+	system->GameEventDlgt().Register(m_OnGameEvent);
 	return true;
 }
 
@@ -27,18 +27,19 @@ void EncounterLog::Shutdown()
 	if (!system)
 		return;
 
-	system->CombatEventDlgt().Unregister(m_OnCombatEvent);
+	system->GameEventDlgt().Unregister(m_OnGameEvent);
+	m_OnGameEvent = nullptr;
 }
 
-void EncounterLog::OnCombatEvent(CombatEvent* evt)
+void EncounterLog::OnGameEvent(GameEvent* evt)
 {
 	switch (evt->GetType())
 	{
-	case CombatEventType::CombatStart:
+	case GameEventType::CombatStart:
 		break;
-	case CombatEventType::CombatEnd:
+	case GameEventType::CombatEnd:
 		break;
-	case CombatEventType::Damage:
+	case GameEventType::Damage:
 		break;
 	}
 }

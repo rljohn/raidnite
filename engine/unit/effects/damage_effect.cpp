@@ -19,7 +19,7 @@ namespace raid
 
 	bool BE_Damage::GetLevel(EntityId id, float& out_value) const
 	{
-		if (IEntityLocator* locator = Game::GetEntityLocator())
+		if (IEntityManager* locator = Game::GetEntityManager())
 		{
 			Entity* source_entity = locator->FindEntity(m_Source);
 			if (source_entity)

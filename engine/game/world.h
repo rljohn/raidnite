@@ -8,15 +8,16 @@
 namespace raid
 {
 
-class World : public IEntityLocator
+class World : public IEntityManager
 {
 
 public:
 
 	World();
 
-	// IEntityLocator
+	// IEntityManager
 	Entity* FindEntity(const EntityId entityId) override;
+	void OnGameEvent(const GameEvent& e) override;
 
 	// Registration
 	void RegisterEntity(Entity* unit);
@@ -31,6 +32,17 @@ private:
 	Entity m_WorldEntity;
 
 	EntityId m_NextUnitId;
+};
+
+// Utility (mostly for testing) to ensure the combat system is set and destroyed.
+class WorldRAII
+{
+public:
+
+	WorldRAII();
+	~WorldRAII();
+
+	World Instance;
 };
 
 } // namespace World

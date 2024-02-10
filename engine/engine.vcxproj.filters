@@ -89,11 +89,12 @@
     <ClInclude Include="system\modifier.h" />
     <ClInclude Include="unit\effects\damage_effect.h" />
     <ClInclude Include="game\damage.h" />
-    <ClInclude Include="game\combat_events.h" />
+    <ClInclude Include="game\game_events.h" />
     <ClInclude Include="game\combat_common.h" />
     <ClInclude Include="encounter\encounter_log.h" />
     <ClInclude Include="unit\unit_utils.h" />
     <ClInclude Include="game\zone.h" />
+    <ClInclude Include="unit\aggro.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -146,5 +147,6 @@
     <ClCompile Include="encounter\encounter_log.cpp" />
     <ClCompile Include="unit\unit_utils.cpp" />
     <ClCompile Include="game\zone.cpp" />
+    <ClCompile Include="unit\aggro.cpp" />
   </ItemGroup>
 </Project>
