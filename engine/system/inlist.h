@@ -21,6 +21,10 @@ struct inlist_node
 		, previous(nullptr)
 	{
 	}
+
+private:
+
+	inlist_node() = delete;
 };
 
 template<typename T>
@@ -146,9 +150,79 @@ public:
 		}
 	}
 
+	class iterator {
+	public:
+		explicit iterator(Node* node) : current(node) {}
+
+		T& operator*() const {
+			return current->data;
+		}
+
+		iterator& operator++() {
+			current = current->next;
+			return *this;
+		}
+
+		bool operator!=(const iterator& other) const {
+			return current != other.current;
+		}
+
+	private:
+		Node* current;
+	};
+
+	iterator begin() {
+		return iterator(m_Head);
+	}
+
+	iterator end() {
+		return iterator(nullptr);
+	}
+
+	class const_iterator 
+	{
+	public:
+		explicit const_iterator(const Node* node) 
+			: current(node) 
+		{
+		}
+
+		const T& operator*() const
+		{
+			return *current->data;
+		}
+
+		const_iterator& operator++()
+		{
+			current = current->next;
+			return *this;
+		}
+
+		bool operator!=(const const_iterator& other) const 
+		{
+			return current != other.current;
+		}
+
+	private:
+		const Node* current;
+	};
+
+	const_iterator begin() const {
+		return const_iterator(m_Head);
+	}
+
+	const_iterator end() const {
+		return const_iterator(nullptr);
+	}
+
 	int size() const
 	{
 		return m_Count;
+	}
+
+	bool empty() const
+	{
+		return m_Count == 0;
 	}
 };
 

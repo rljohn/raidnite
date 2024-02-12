@@ -3,7 +3,7 @@
 #include <thread>
 
 #include "window.h"
-#include "game.h"
+#include "sandbox_game.h"
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -13,7 +13,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         return false;
     }
 
-    raid::sandbox::Game game;
+    raid::sandbox::GameSandbox game;
     game.Init();
     
     // Cap to 60 FPS for the sandbox

@@ -3,6 +3,7 @@
 #include "engine/types.h"
 #include "engine/system/time.h"
 #include "engine/system/inlist.h"
+#include "engine/system/pool.h"
 
 #include <iostream>  
 using namespace std;
@@ -13,27 +14,24 @@ namespace raid
 enum EncounterEventType
 {
 	Invalid = 0,
-	AbilityStart = 1,
-	AbilityEnd = 2,
-	HealthChanged = 3,
-	ManaChanged = 4,
-	AuraGained = 5,
-	AuraRefreshed = 6,
-	AuraRemoved = 7
+	EncounterStart = 1,
+	EncounterEnd = 2,
+	AbilityStart = 3,
+	AbilityEnd = 4,
+	HealthChanged = 5,
+	ManaChanged = 6,
+	AuraGained = 7,
+	AuraRefreshed = 8,
+	AuraRemoved = 9
 };
 
-struct EncounterEventBase
+struct EncounterEvent
 {
 	EncounterEventType m_Type = EncounterEventType::Invalid;
 	TimeStamp m_Time;
 	PlayerId m_Source = InvalidPlayerId;
 	PlayerId m_Target = InvalidPlayerId;
 
-	EncounterEventBase();
-};
-
-struct EncounterEvent : EncounterEventBase
-{
 	union
 	{
 		int Int;
@@ -56,17 +54,35 @@ struct EncounterEvent : EncounterEventBase
 };
 
 
+using EventPool = IPool<raid::EncounterEvent>;
+
 class EncounterEvents
 {
 public:
 
-	static EncounterEvent CreateEvent(PlayerId source, PlayerId target = InvalidPlayerId, const TimeStamp& time = Time::GetCurrent())
+	static EncounterEvent CreateEvent(EventPool* pool, PlayerId source, PlayerId target = InvalidPlayerId, const TimeStamp& time = Time::GetCurrent())
 	{
 		EncounterEvent rvo;
 		rvo.m_Source = source;
 		rvo.m_Target = target;
 		rvo.m_Time = time;
 		return rvo;
+	}
+
+	template<EncounterEventType T>
+	static EncounterEvent* CreateEvent(EventPool* pool, const TimeStamp& time = Time::GetCurrent())
+	{
+		if (!pool)
+			return nullptr;
+
+		EncounterEvent* evt = pool->Create();
+		if (evt)
+		{
+			evt->m_Type = T;
+			evt->m_Time = time;
+		}
+		
+		return evt;
 	}
 
 	static void OnAbilityStart(EncounterEvent& event, SpellId spellId)

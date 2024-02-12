@@ -12,16 +12,9 @@ class PoolTest : public testing::Test
 {
 protected:
 
-    static const int POOL_SIZE = 1 * 1000;
-    raid::IntrusivePool<raid::EncounterEvent, POOL_SIZE>* pool;
+    static constexpr const int POOL_SIZE = 1000;
+    raid::IPool<raid::EncounterEvent>* m_Pool;
 
-    void SetUp() override
-    {
-        pool = new raid::IntrusivePool<raid::EncounterEvent, POOL_SIZE>();
-    }
-
-    void TearDown() override
-    {
-        delete pool;
-    }
+    void SetUp() override;
+    void TearDown() override;
 };

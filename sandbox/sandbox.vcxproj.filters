@@ -51,7 +51,7 @@
     <ClCompile Include="imgui\imgui_impl_win32.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="sandbox_game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,7 +89,7 @@
     <ClInclude Include="imgui\imgui_impl_win32.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
+    <ClInclude Include="sandbox_game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

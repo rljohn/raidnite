@@ -19,13 +19,13 @@ TEST(ListsTest, IntrusiveTestGeneric)
 
 	inlist<EncounterEvent> events;
 
-	EncounterEvent s1 = EncounterEvents::CreateEvent(source, target, now);
+	EncounterEvent s1;
 	EncounterEvents::OnAbilityStart(s1, spellId);
 
-	EncounterEvent s2 = EncounterEvents::CreateEvent(source, target, now);
+	EncounterEvent s2;
 	EncounterEvents::OnAbilityStart(s2, spellId);
 
-	EncounterEvent s3 = EncounterEvents::CreateEvent(source, target, now);
+	EncounterEvent s3;
 	EncounterEvents::OnAbilityStart(s3, spellId);
 
 	events.push_back(s1.m_Node);
@@ -33,26 +33,35 @@ TEST(ListsTest, IntrusiveTestGeneric)
 	events.push_back(s3.m_Node);
 
 	EXPECT_EQ(events.size(), 3);
-
 }
 
 ////////////////////
 // Pools
 ////////////////////
 
+void PoolTest::SetUp()
+{
+	m_Pool = new raid::IntrusivePool<raid::EncounterEvent, POOL_SIZE>();
+}
+
+void PoolTest::TearDown()
+{
+	delete m_Pool;
+}
+
+
 TEST_F(PoolTest, PoolTestGeneric)
 {
+	ASSERT_NE(m_Pool, nullptr);
+
 	EncounterEvent evt;
-	size_t offset = offsetof(EncounterEvent, m_Node);
+	EXPECT_EQ(m_Pool->GetNumAvailable(), POOL_SIZE);
 
-	pool->Init(offset);
-	EXPECT_EQ(pool->GetNumAvailable(), POOL_SIZE);
+	EncounterEvent* e = m_Pool->Create();
+	EXPECT_EQ(m_Pool->GetNumAvailable(), POOL_SIZE - 1);
 
-	EncounterEvent* e = pool->Create();
-	EXPECT_EQ(pool->GetNumAvailable(), POOL_SIZE - 1);
-
-	pool->Free(e);
-	EXPECT_EQ(pool->GetNumAvailable(), POOL_SIZE);
+	m_Pool->Free(e);
+	EXPECT_EQ(m_Pool->GetNumAvailable(), POOL_SIZE);
 }
 
 ////////////////////

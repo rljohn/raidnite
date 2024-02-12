@@ -5,14 +5,30 @@
 namespace raid
 {
 
+template<typename T>
+class IPool
+{
+public:
+
+	virtual int GetNumAvailable() const = 0;
+	virtual T* Create() = 0;
+	virtual void Free(T* value) = 0;
+};
+
 template <typename T, int _SIZE>
-class IntrusivePool
+class IntrusivePool : public IPool<T>
 {
 	T m_Objects[_SIZE];
 	inlist<T> m_Available;
 	typedef inlist_node<T> Node;
 
 public:
+	
+	IntrusivePool()
+	{
+		size_t offset = offsetof(T, m_Node);
+		Init(offset);
+	}
 
 	void Init(size_t nodeOffset)
 	{
@@ -29,14 +45,14 @@ public:
 		return m_Available.size();
 	}
 
-	T* Create()
+	T* Create() override
 	{
 		Node* node = m_Available.front();
 		m_Available.pop_front();
 		return node->data;
 	}
 
-	void Free(T* value)
+	void Free(T* value) override
 	{
 		if (value)
 		{

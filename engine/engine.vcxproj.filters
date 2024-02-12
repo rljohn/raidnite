@@ -95,6 +95,8 @@
     <ClInclude Include="unit\unit_utils.h" />
     <ClInclude Include="game\zone.h" />
     <ClInclude Include="unit\aggro.h" />
+    <ClInclude Include="encounter\encounter_serialization.h" />
+    <ClInclude Include="system\fileutil.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -148,5 +150,7 @@
     <ClCompile Include="unit\unit_utils.cpp" />
     <ClCompile Include="game\zone.cpp" />
     <ClCompile Include="unit\aggro.cpp" />
+    <ClCompile Include="encounter\encounter_serialization.cpp" />
+    <ClCompile Include="system\fileutil.cpp" />
   </ItemGroup>
 </Project>

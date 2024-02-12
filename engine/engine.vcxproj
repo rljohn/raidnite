@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="encounter\encounter.h" />
     <ClInclude Include="encounter\encounter_log.h" />
+    <ClInclude Include="encounter\encounter_serialization.h" />
     <ClInclude Include="encounter\event.h" />
     <ClInclude Include="entity\component.h" />
     <ClInclude Include="entity\entity.h" />
@@ -99,6 +100,7 @@
     <ClInclude Include="localization\localization.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="system\delegate.h" />
+    <ClInclude Include="system\fileutil.h" />
     <ClInclude Include="system\inlist.h" />
     <ClInclude Include="system\json.h" />
     <ClInclude Include="system\modifier.h" />
@@ -118,9 +120,11 @@
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp" />
     <ClCompile Include="encounter\encounter_log.cpp" />
+    <ClCompile Include="encounter\encounter_serialization.cpp" />
     <ClCompile Include="encounter\event.cpp" />
     <ClCompile Include="entity\entity.cpp" />
     <ClCompile Include="game\zone.cpp" />
+    <ClCompile Include="system\fileutil.cpp" />
     <ClCompile Include="unit\aggro.cpp" />
     <ClCompile Include="unit\attribute.cpp" />
     <ClCompile Include="entity\component.cpp" />
