@@ -1,7 +1,8 @@
+#include "sandbox/pch.h"
 #include "sandbox_game.h"
 
 // imgui
-#include "imgui.h"
+#include "thirdparty/imgui/imgui.h"
 
 namespace raid {
 namespace sandbox {

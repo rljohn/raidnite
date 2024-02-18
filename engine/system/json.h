@@ -1,5 +1,5 @@
 #pragma once
 
-//#define JSON_NOEXCEPTION 0
-#include "engine/thirdparty/json.hpp"
+#define JSON_NOEXCEPTION 0
+#include "thirdparty/json/json.hpp"
 using json = nlohmann::json;

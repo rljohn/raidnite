@@ -47,11 +47,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>engine/pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)thirdparty</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -69,7 +69,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)thirdparty</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>engine/pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>
@@ -103,9 +103,12 @@
     <ClInclude Include="system\fileutil.h" />
     <ClInclude Include="system\inlist.h" />
     <ClInclude Include="system\json.h" />
+    <ClInclude Include="system\log\logging.h" />
+    <ClInclude Include="system\log\log_channels.h" />
     <ClInclude Include="system\modifier.h" />
     <ClInclude Include="system\pool.h" />
     <ClInclude Include="system\check.h" />
+    <ClInclude Include="system\stringutil.h" />
     <ClInclude Include="system\time.h" />
     <ClInclude Include="thirdparty\json.hpp" />
     <ClInclude Include="types.h" />
@@ -125,6 +128,9 @@
     <ClCompile Include="entity\entity.cpp" />
     <ClCompile Include="game\zone.cpp" />
     <ClCompile Include="system\fileutil.cpp" />
+    <ClCompile Include="system\log\logging.cpp" />
+    <ClCompile Include="system\log\log_channels.cpp" />
+    <ClCompile Include="system\stringutil.cpp" />
     <ClCompile Include="unit\aggro.cpp" />
     <ClCompile Include="unit\attribute.cpp" />
     <ClCompile Include="entity\component.cpp" />

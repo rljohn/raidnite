@@ -1,6 +1,5 @@
 #include "pch.h"
 
-#include "test_encounters.h"
 #include "engine/encounter/encounter_log.h"
 #include "engine/encounter/encounter_serialization.h"
 #include "engine/encounter/event.h"
@@ -53,6 +52,16 @@ TEST(EncounterStartStop, EncounterTests)
 /////////////////////////////////////////
 //  EncounterLogTest
 /////////////////////////////////////////
+
+class EncounterLogTest : public testing::Test
+{
+protected:
+
+	std::wstring m_LogPath;
+
+	void SetUp() override;
+	void TearDown() override;
+};
 
 void EncounterLogTest::SetUp()
 {

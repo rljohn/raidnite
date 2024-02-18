@@ -1,5 +1,19 @@
 #pragma once
 
+#define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING
+
+#if NDEBUG
+#define RAID_RELEASE (1)
+#define RAID_DEBUG (0)
+#define RELEASE_ONLY(...) __VA_ARGS__
+#define DEBUG_ONLY(...)
+#else
+#define RAID_RELEASE (0)
+#define RAID_DEBUG (1)
+#define RELEASE_ONLY(...)
+#define DEBUG_ONLY(...) __VA_ARGS__
+#endif
+
 #include <algorithm>
 #include <cstdint>
 #include <chrono>

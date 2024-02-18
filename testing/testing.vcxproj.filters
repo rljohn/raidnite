@@ -11,13 +11,13 @@
     <ClCompile Include="test_system.cpp" />
     <ClCompile Include="test_encounters.cpp" />
     <ClCompile Include="test_aggro.cpp" />
+    <ClCompile Include="test_logging.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="test_system.h" />
     <ClInclude Include="test_game.h" />
-    <ClInclude Include="test_encounters.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
