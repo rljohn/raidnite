@@ -139,18 +139,18 @@ TEST(SehTest, SehTestBasic)
 
 	stry
 	{
-		count += 1;
-		scheck(count == 0, label);
+		count ++; // +1
+		scheckand(count == 0, label, count++); // +1
 	}
 	scatch(label)
 	{
-		count += 1;
+		count ++; // +1
 		sthrowfinally();
 	}
 	sfinally
 	{
-		count += 1;
+		count ++; // +1
 	}
 
-	EXPECT_EQ(count, 3);
+	EXPECT_EQ(count, 4);
 }

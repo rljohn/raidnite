@@ -5,6 +5,11 @@
 
 using namespace raid;
 
+#define ENABLE_ASSERT_TESTS (0)
+#define ENABLE_LOG_TESTS (1)
+
+#if ENABLE_LOG_TESTS
+
 class LoggingTest : public testing::Test
 {
 protected:
@@ -68,7 +73,28 @@ TEST_F(LoggingTest, LogMacros)
 		mainDisplay("Test String!");
 		mainDisplay("Test String: {}", "Please Ignore");
 
+#if ENABLE_ASSERT_TESTS
 		bool success = false;
-		mainAssert(success, "Condition failed");
+		mainAssert(success, "The operation failed!");
+#endif
 	}
 }
+
+TEST_F(LoggingTest, FrameNumber)
+{
+	Logger* logger = LogSystem::CreateLogger("LogTest", m_LogPath);
+	ASSERT_NE(logger, nullptr);
+
+	{
+		LoggerRAII raii(logger);
+
+		LogSystem::ResetTickCount();
+		for (int i = 0; i < 100; i++)
+		{
+			LogSystem::Tick();
+			mainDisplay("Spam: {}", i);
+		}
+	}
+}
+
+#endif // ENABLE_LOG_TESTS

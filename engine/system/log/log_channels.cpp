@@ -8,5 +8,6 @@ constexpr const LogSeverity DefaultLogSeverity = RAID_RELEASE ? LogSeverity::Dis
 
 // Built-In Engine channels
 LogChannel LogChannels::Main("Main", DefaultLogSeverity);
+LogChannel LogChannels::Unit("Unit", DefaultLogSeverity);
 
 } // namespace raid

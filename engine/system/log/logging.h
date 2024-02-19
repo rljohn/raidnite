@@ -60,6 +60,9 @@ public:
 	}
 
 private:
+
+	void PrintStartupMessage();
+
 	std::shared_ptr<spdlog::logger> m_SpdLog;
 	std::string m_Name;
 };
@@ -74,11 +77,16 @@ public:
 	static Logger* GetDefaultLogger();
 
 	static void AssertBreakMsg(const char* msg);
+
+	static void ResetTickCount();
+	static int64_t GetTickCount();
+	static void Tick();
 	
 
 private:
 
 	static Logger* sm_DefaultLogger;
+	static int64_t sm_TickCount;
 };
 
 struct LoggerRAII

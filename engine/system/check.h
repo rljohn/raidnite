@@ -20,7 +20,8 @@
 */
 
 #define stry
-#define scheck(cond, LABEL) do { if (!(cond)) { goto LABEL; } } while(0);
+#define scheck(cond, LABEL) do { if (!(cond)) {  goto LABEL; } } while(0);
+#define scheckand(cond, LABEL, work) do { if (!(cond)) { work; goto LABEL; } } while(0);
 #define scheckall(cond) do { if (!(cond)) { goto FINALLY; } } while (0);
 #define scatch(LABEL) LABEL:
 #define sthrow(LABEL) goto LABEL;

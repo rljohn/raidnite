@@ -110,13 +110,13 @@
     <ClInclude Include="system\check.h" />
     <ClInclude Include="system\stringutil.h" />
     <ClInclude Include="system\time.h" />
-    <ClInclude Include="thirdparty\json.hpp" />
     <ClInclude Include="types.h" />
     <ClInclude Include="unit\aggro.h" />
     <ClInclude Include="unit\attribute.h" />
     <ClInclude Include="unit\buff.h" />
     <ClInclude Include="unit\effects\damage_effect.h" />
     <ClInclude Include="unit\power.h" />
+    <ClInclude Include="unit\states\state.h" />
     <ClInclude Include="unit\unit.h" />
     <ClInclude Include="unit\unit_utils.h" />
   </ItemGroup>
@@ -150,6 +150,7 @@
     <ClCompile Include="unit\buff.cpp" />
     <ClCompile Include="unit\effects\damage_effect.cpp" />
     <ClCompile Include="unit\power.cpp" />
+    <ClCompile Include="unit\states\state.cpp" />
     <ClCompile Include="unit\unit.cpp" />
     <ClCompile Include="unit\unit_utils.cpp" />
   </ItemGroup>

@@ -1,27 +1,27 @@
 #include "engine/pch.h"
 #include "engine/system/log/logging.h"
+#include "engine/game/game.h"
 
 #include "spdlog/pattern_formatter.h"
-class my_formatter_flag : public spdlog::custom_flag_formatter
+
+namespace raid
+{
+
+class LogFormatter : public spdlog::custom_flag_formatter
 {
 public:
 
 	void format(const spdlog::details::log_msg&, const std::tm&, spdlog::memory_buf_t& dest) override
 	{
-		std::string some_txt = "custom-flag";
-		dest.append(std::to_string(GameFrame));
+		std::string str = std::to_string(LogSystem::GetTickCount());
+		dest.append(std::string(10 - str.length(), '0') + str);
 	}
 
 	std::unique_ptr<custom_flag_formatter> clone() const override
 	{
-		return spdlog::details::make_unique<my_formatter_flag>();
+		return spdlog::details::make_unique<LogFormatter>();
 	}
-
-	int GameFrame = 0;
 };
-
-namespace raid
-{
 
 Logger::~Logger()
 {
@@ -37,11 +37,11 @@ bool Logger::Init(const char* name, const std::wstring& path)
 		spdlog::filename_t filename = stringutil::WideStringToUtf8(path);
 		m_SpdLog = spdlog::basic_logger_mt(m_Name, filename);
 
-		auto formatter = std::make_unique<spdlog::pattern_formatter>();
-		formatter->add_flag<my_formatter_flag>('*').set_pattern("[%10*] [%D %r] [%l] %v");
-		spdlog::set_formatter(std::move(formatter));
+		PrintStartupMessage();
 
-		//spdlog::set_pattern("[%D %r] [%l] %v");
+		auto formatter = std::make_unique<spdlog::pattern_formatter>();
+		formatter->add_flag<LogFormatter>('*').set_pattern("[%*] [%r] [%l] %v");
+		spdlog::set_formatter(std::move(formatter));
 
 		return true;
 	}
@@ -50,6 +50,18 @@ bool Logger::Init(const char* name, const std::wstring& path)
 		std::cout << "Log initialization failed: " << ex.what() << std::endl;
 		return false;
 	}
+}
+
+void Logger::PrintStartupMessage()
+{
+	SYSTEMTIME st;
+	::GetLocalTime(&st);
+
+	const char* suffix = (st.wHour < 12) ? "AM" : "PM";
+
+	char buffer[32];
+	sprintf_s(buffer, "%04d/%02d/%02d %02d:%02d:%02d %s", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, suffix);
+	m_SpdLog->info("Log Started: {}", std::string(buffer));
 }
 
 void Logger::Shutdown()
@@ -64,6 +76,7 @@ void Logger::Shutdown()
 
 
 Logger* LogSystem::sm_DefaultLogger = nullptr;
+int64_t LogSystem::sm_TickCount = 0;
 
 void LogSystem::SetDefaultLogger(Logger* logger)
 {
@@ -83,7 +96,7 @@ void LogSystem::AssertBreakMsg(const char* DEBUG_ONLY(message))
 
 	int result = ::MessageBoxA(NULL, message, "Assertion Failed!", MB_OKCANCEL | MB_DEFBUTTON2);
 
-	if (result == IDOK) 
+	if (result == IDOK)
 	{
 		::DebugBreak();
 	}
@@ -99,6 +112,21 @@ Logger* LogSystem::CreateLogger(const char* name, const std::wstring& path)
     }
     
     return nullptr;
+}
+
+void LogSystem::ResetTickCount()
+{
+	sm_TickCount = 0;
+}
+
+int64_t LogSystem::GetTickCount()
+{
+	return sm_TickCount;
+}
+
+void LogSystem::Tick()
+{
+	sm_TickCount++;
 }
 
 } // namespace raid

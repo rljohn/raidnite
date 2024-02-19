@@ -62,9 +62,6 @@
     <ClInclude Include="system\json.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="thirdparty\json.hpp">
-      <Filter>thirdparty</Filter>
-    </ClInclude>
     <ClInclude Include="unit\attribute.h">
       <Filter>unit</Filter>
     </ClInclude>
@@ -100,6 +97,7 @@
     <ClInclude Include="system\log\logging.h" />
     <ClInclude Include="system\stringutil.h" />
     <ClInclude Include="system\log\log_channels.h" />
+    <ClInclude Include="unit\states\state.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -158,5 +156,6 @@
     <ClCompile Include="system\log\logging.cpp" />
     <ClCompile Include="system\stringutil.cpp" />
     <ClCompile Include="system\log\log_channels.cpp" />
+    <ClCompile Include="unit\states\state.cpp" />
   </ItemGroup>
 </Project>
