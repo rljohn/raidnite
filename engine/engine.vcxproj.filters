@@ -98,6 +98,15 @@
     <ClInclude Include="system\stringutil.h" />
     <ClInclude Include="system\log\log_channels.h" />
     <ClInclude Include="unit\states\state.h" />
+    <ClInclude Include="unit\states\state_movement.h" />
+    <ClInclude Include="unit\states\state_idle.h" />
+    <ClInclude Include="unit\movement.h" />
+    <ClInclude Include="map\tile.h" />
+    <ClInclude Include="system\math\vector2.h" />
+    <ClInclude Include="map\map.h" />
+    <ClInclude Include="system\math\math.h" />
+    <ClInclude Include="map\pathfinding.h" />
+    <ClInclude Include="system\math\vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -157,5 +166,9 @@
     <ClCompile Include="system\stringutil.cpp" />
     <ClCompile Include="system\log\log_channels.cpp" />
     <ClCompile Include="unit\states\state.cpp" />
+    <ClCompile Include="unit\movement.cpp" />
+    <ClCompile Include="map\tile.cpp" />
+    <ClCompile Include="map\map.cpp" />
+    <ClCompile Include="map\pathfinding.cpp" />
   </ItemGroup>
 </Project>

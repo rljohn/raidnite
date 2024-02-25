@@ -23,6 +23,10 @@
 #include <vector>
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
+#include <set>
+
+#include "engine/system/math/vector2.h"
 
 namespace raid
 {
@@ -55,6 +59,9 @@ namespace raid
 	// Hash
 	using StringHash = std::hash<std::string>;
 
+	// Map
+	using Position = IntVector2D;
+
 	// Map Find or Null
 	template<typename T, typename U>
 	U GetMapEntry(std::unordered_map<T, U>& map, const T& key)
@@ -81,6 +88,19 @@ namespace raid
 		}
 
 		return false;
+	}
+
+	// Container Checks
+	template <typename T>
+	bool VectorContains(std::vector<T>& v, const T& value)
+	{
+		return std::find(v.begin(), v.end(), value) != v.end();
+	}
+
+	template<typename T>
+	bool SetContains(const std::set<T>& s, const T& value) 
+	{
+		return s.find(value) != s.end();
 	}
 
 

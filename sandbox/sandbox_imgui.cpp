@@ -108,7 +108,7 @@ void ImGuiFramework::Init(HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* 
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
-	embraceTheDarkness();
+	//embraceTheDarkness();
 
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(device, context);

@@ -98,6 +98,9 @@
     <ClInclude Include="game\world.h" />
     <ClInclude Include="game\zone.h" />
     <ClInclude Include="localization\localization.h" />
+    <ClInclude Include="map\map.h" />
+    <ClInclude Include="map\pathfinding.h" />
+    <ClInclude Include="map\tile.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\fileutil.h" />
@@ -105,6 +108,9 @@
     <ClInclude Include="system\json.h" />
     <ClInclude Include="system\log\logging.h" />
     <ClInclude Include="system\log\log_channels.h" />
+    <ClInclude Include="system\math\math.h" />
+    <ClInclude Include="system\math\vector2.h" />
+    <ClInclude Include="system\math\vector3.h" />
     <ClInclude Include="system\modifier.h" />
     <ClInclude Include="system\pool.h" />
     <ClInclude Include="system\check.h" />
@@ -115,8 +121,11 @@
     <ClInclude Include="unit\attribute.h" />
     <ClInclude Include="unit\buff.h" />
     <ClInclude Include="unit\effects\damage_effect.h" />
+    <ClInclude Include="unit\movement.h" />
     <ClInclude Include="unit\power.h" />
     <ClInclude Include="unit\states\state.h" />
+    <ClInclude Include="unit\states\state_idle.h" />
+    <ClInclude Include="unit\states\state_movement.h" />
     <ClInclude Include="unit\unit.h" />
     <ClInclude Include="unit\unit_utils.h" />
   </ItemGroup>
@@ -127,6 +136,9 @@
     <ClCompile Include="encounter\event.cpp" />
     <ClCompile Include="entity\entity.cpp" />
     <ClCompile Include="game\zone.cpp" />
+    <ClCompile Include="map\map.cpp" />
+    <ClCompile Include="map\pathfinding.cpp" />
+    <ClCompile Include="map\tile.cpp" />
     <ClCompile Include="system\fileutil.cpp" />
     <ClCompile Include="system\log\logging.cpp" />
     <ClCompile Include="system\log\log_channels.cpp" />
@@ -149,6 +161,7 @@
     <ClCompile Include="system\time.cpp" />
     <ClCompile Include="unit\buff.cpp" />
     <ClCompile Include="unit\effects\damage_effect.cpp" />
+    <ClCompile Include="unit\movement.cpp" />
     <ClCompile Include="unit\power.cpp" />
     <ClCompile Include="unit\states\state.cpp" />
     <ClCompile Include="unit\unit.cpp" />

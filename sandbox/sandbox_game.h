@@ -6,6 +6,9 @@
 #include "engine/game/combat.h"
 #include "engine/encounter/encounter_log.h"
 
+// widgets
+#include "map_widgets.h"
+
 namespace raid {
 namespace sandbox {
 
@@ -23,6 +26,10 @@ private:
 	raid::EncounterLog m_EncounterLog;
 	raid::DamageCalculator m_DamageCalculator;
 	raid::CombatSystem m_CombatSystem;
+
+	// Widgets
+	std::vector<Widget*> m_Widgets;
+	MapWidget m_MapWidgets;
 };
 
 } // namespace sandbox

@@ -15,18 +15,37 @@ void GameSandbox::Init()
 	Game::SetEncounterLog(&m_EncounterLog);
 	Game::SetDamageCalculator(&m_DamageCalculator);
 	Game::SetCombatSystem(&m_CombatSystem);
+
+	m_Widgets.push_back(&m_MapWidgets);
+
+	for (Widget* w : m_Widgets)
+	{
+		w->Init();
+	}
 }
 
 void GameSandbox::Update()
 {
-	if (ImGui::Begin("Test"))
+	for (Widget* w : m_Widgets)
 	{
-		ImGui::End();
+		if (ImGui::Begin(w->GetName()))
+		{
+			ImGui::PushID(w->GetName());
+			w->Draw();
+			ImGui::PopID();
+
+			ImGui::End();
+		}
 	}
 }
 
 void GameSandbox::Shutdown()
 {
+	for (Widget* w : m_Widgets)
+	{
+		w->Shutdown();
+	}
+
 	Game::SetEntityManager(nullptr);
 	Game::SetEncounterLog(nullptr);
 	Game::SetDamageCalculator(nullptr);

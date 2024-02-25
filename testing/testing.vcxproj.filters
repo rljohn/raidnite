@@ -12,6 +12,8 @@
     <ClCompile Include="test_encounters.cpp" />
     <ClCompile Include="test_aggro.cpp" />
     <ClCompile Include="test_logging.cpp" />
+    <ClCompile Include="test_map.cpp" />
+    <ClCompile Include="test_math.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

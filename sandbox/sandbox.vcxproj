@@ -78,32 +78,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">sandbox/pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">sandbox/pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="sandbox_game.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="sandbox_imgui.cpp" />
-    <ClCompile Include="window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="sandbox_game.h" />
-    <ClInclude Include="renderer.h" />
-    <ClInclude Include="sandbox_imgui.h" />
-    <ClInclude Include="window.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\engine\engine.vcxproj">
       <Project>{40d1b482-aab8-40a1-ae3d-f0cda8e77ec1}</Project>
     </ProjectReference>
     <ProjectReference Include="..\thirdparty\thirdparty.vcxproj">
       <Project>{407cf594-6235-4e52-a7c3-82407ff13a34}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="map_widgets.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="sandbox_game.cpp" />
+    <ClCompile Include="sandbox_imgui.cpp" />
+    <ClCompile Include="window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="map_widgets.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="renderer.h" />
+    <ClInclude Include="sandbox_game.h" />
+    <ClInclude Include="sandbox_imgui.h" />
+    <ClInclude Include="widgets.h" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

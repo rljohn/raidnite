@@ -34,6 +34,7 @@ namespace LogChannels
 {
 	extern LogChannel Main;
 	extern LogChannel Unit;
+	extern LogChannel Map;
 };
 
 #define CONCAT(a, b) a ## b
@@ -68,5 +69,13 @@ namespace LogChannels
 #define unitWarning(fmt, ...) logMessage(fmt, LogChannels::Unit, LogSeverity::Warning, __VA_ARGS__)
 #define unitAssert(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Unit, LogSeverity::Error, __VA_ARGS__)
 #define unitVerbose(fmt, ...) logMessage(fmt, LogChannels::Unit, LogSeverity::Verbose, __VA_ARGS__)
+
+// Map Channel
+#define mapFatal(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Fatal, __VA_ARGS__)
+#define mapDisplay(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Display, __VA_ARGS__)
+#define mapError(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Error, __VA_ARGS__)
+#define mapWarning(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Warning, __VA_ARGS__)
+#define mapAssert(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Map, LogSeverity::Error, __VA_ARGS__)
+#define mapVerbose(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Verbose, __VA_ARGS__)
 
 } // namespace raid
