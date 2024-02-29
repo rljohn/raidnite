@@ -17,6 +17,7 @@ void GameSandbox::Init()
 	Game::SetCombatSystem(&m_CombatSystem);
 
 	m_Widgets.push_back(&m_MapWidgets);
+	m_Widgets.push_back(&m_PartyWidgets);
 
 	for (Widget* w : m_Widgets)
 	{

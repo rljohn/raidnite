@@ -7,58 +7,27 @@ namespace raid
 
 class Entity;
 
-template<int _SIZE>
 class Group
 {
 public:
 
-	Group()
-	{
-		m_List.reserve(_SIZE);
-	}
+    Group();
+    Group(int size);
 
-	bool AddUnit(Entity* entity)
-	{
-		if (entity == nullptr)
-		{
-			return false;
-		}
-
-		if (IsFull())
-		{
-			return false;
-		}
-
-		if (VectorContains(m_List, entity))
-		{
-			return true;
-		}
-
-		m_List.push_back(entity);
-		return true;
-	}
-
-	void RemoveUnit(Entity* entity)
-	{
-		VectorRemove(m_List, entity);
-	}
-
-	void RemoveUnitAt(int index)
-	{
-		VectorDelete(m_List, index);
-	}
-
-	bool Contains(Entity* entity) const
-	{
-		return VectorContains(m_List, entity);
-	}
-
-	bool IsEmpty() const { return m_List.size() == 0; }
-	bool IsFull() const { return m_List.size() == _SIZE; }
+    void Init(int size);
+    bool AddUnit(Entity* entity);
+    void RemoveUnit(Entity* entity);
+    void RemoveUnitAt(int index);
+    bool Contains(Entity* entity) const;
+    bool IsEmpty() const;
+    bool IsFull() const;
+    bool IsValid() const;
+    size_t GetSize() const;
+    size_t GetCapacity() const;
+    Entity* GetEntity(const size_t index);
 
 private:
-
-	std::vector<Entity*> m_List;
+    std::vector<Entity*> m_List;
 };
 
 } // namespace raid

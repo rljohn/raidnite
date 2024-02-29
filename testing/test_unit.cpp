@@ -198,7 +198,11 @@ TEST(BuffTest, RestoreCurrentHp)
 TEST(PartyTest, PartyLimits)
 {
 	Unit units[4];
-	Group<3> group;
+	Group group(3);
+
+	// Capacity
+	EXPECT_EQ(group.GetSize(), 0);
+	EXPECT_EQ(group.GetCapacity(), 3);
 
 	// AddUnit (null), IsEmpty
 	EXPECT_TRUE(group.IsEmpty());
@@ -208,6 +212,7 @@ TEST(PartyTest, PartyLimits)
 	// AddUnit, IsEmpty
 	EXPECT_TRUE(group.AddUnit(&units[0]));
 	EXPECT_FALSE(group.IsEmpty());
+	EXPECT_EQ(group.GetSize(), 1);
 
 	// Contains
 	EXPECT_TRUE(group.Contains(&units[0]));
@@ -246,4 +251,23 @@ TEST(PartyTest, PartyLimits)
 	EXPECT_FALSE(group.Contains(&units[1]));
 	EXPECT_TRUE(group.Contains(&units[2]));
 	EXPECT_TRUE(group.Contains(&units[2]));
+
+	// Reset
+	while (group.GetSize() > 0)
+		group.RemoveUnitAt(group.GetSize() - 1);
+	EXPECT_TRUE(group.IsEmpty());
+	
+	// Re-Initialize
+	group.Init(4);
+	EXPECT_TRUE(group.IsEmpty());
+	EXPECT_EQ(group.GetSize(), 0);
+	EXPECT_EQ(group.GetCapacity(), 4);
+
+	// Fill the group
+	EXPECT_TRUE(group.AddUnit(&units[0]));
+	EXPECT_TRUE(group.AddUnit(&units[1]));
+	EXPECT_TRUE(group.AddUnit(&units[2]));
+	EXPECT_TRUE(group.AddUnit(&units[3]));
+	EXPECT_TRUE(group.IsFull());
+	EXPECT_EQ(group.GetSize(), 4);
 }

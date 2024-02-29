@@ -19,7 +19,10 @@ public:
 
 private:
 
-	raid::Group<8> m_Party;
+	void DrawPartyWidgets();
+
+	raid::Group m_Party;
+	int m_PartySize = 8;
 };
 
 } // namespace sandbox
