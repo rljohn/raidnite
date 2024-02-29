@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/game/combat.h"
+#include "engine/game/game.h"
 
 #include "engine/system/inlist.h"
 #include "engine/system/pool.h"
@@ -30,7 +31,7 @@ public:
 	void Shutdown();
 	void Clear();
 
-	void OnGameEvent(GameEvent* evt);
+	void OnGameEvent(const GameEvent* evt);
 
 	const std::list<Encounter*>& GetEncounterList() const 
 	{ 
@@ -43,8 +44,8 @@ private:
 	void OnZoneExit();
 	void OnCombatStart();
 	void OnCombatEnd();
-	void OnEntityDied(DeathEvent* deathDevent);
-	void OnDamageEvent(DamageEvent* damageEvent);
+	void OnEntityDied(const DeathEvent* deathDevent);
+	void OnDamageEvent(const DamageEvent* damageEvent);
 
 	template <EncounterEventType T>
 	EncounterEvent* CreateEvent()
@@ -65,7 +66,7 @@ private:
 	Encounter* m_ActiveEncounter;
 	EventPool* m_EventPool;
 
-	ICombatSystem::GameEventDelegate::Function m_OnGameEvent;
+	GameEventDelegate::Function m_OnGameEvent;
 	std::list<Encounter*> m_Encounters;
 };
 

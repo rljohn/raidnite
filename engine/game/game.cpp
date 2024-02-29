@@ -12,7 +12,9 @@ IEntityManager* Game::sm_EntityLocator = nullptr;
 IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
 IEncounterLog* Game::sm_EncounterLog = nullptr;
-IMap* Game::sm_Map = nullptr;
+Map* Game::sm_Map = nullptr;
+
+GameEventDelegate Game::sm_GameEventDlgt;
 GameFrame Game::sm_GameFrame;
 
 void Game::SetEntityManager(IEntityManager* locator)
@@ -55,12 +57,12 @@ IEncounterLog* Game::GetEncounterLog()
 	return sm_EncounterLog;
 }
 
-void Game::SetMap(IMap* map)
+void Game::SetMap(Map* map)
 {
 	sm_Map = map;
 }
 
-IMap* Game::GetMap()
+Map* Game::GetMap()
 {
 	return sm_Map;
 }
@@ -68,6 +70,11 @@ IMap* Game::GetMap()
 const GameFrame& Game::GetGameFrame()
 {
 	return sm_GameFrame;
+}
+
+void Game::DispatchGameEvent(const GameEvent* evt)
+{
+	sm_GameEventDlgt.Invoke(evt);
 }
 
 } // namespace raid

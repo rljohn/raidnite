@@ -93,7 +93,7 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 			receiver->ApplyDamage(evt);
 		}
 
-		m_GameEventDlgt.Invoke(&evt);
+		Game::DispatchGameEvent(&evt);
 	}
 	sfinally
 	{

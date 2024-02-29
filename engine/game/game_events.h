@@ -1,27 +1,12 @@
 #pragma once
 
+#include "engine/game/game.h"
 #include "engine/game/combat_common.h"
 #include "engine/game/damage.h"
 #include "engine/entity/entity.h"
 
 namespace raid
 {
-
-enum class GameEventType
-{
-	Invalid = 0,
-	ZoneEnter,
-	ZoneExit,
-	CombatStart,
-	CombatEnd,
-	Damage,
-	Death
-};
-
-struct GameEvent
-{
-	virtual GameEventType GetType() const = 0;
-};
 
 struct ZoneEnterEvent : public GameEvent
 {

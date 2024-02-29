@@ -75,14 +75,12 @@ void EncounterLogTest::TearDown()
 
 TEST_F(EncounterLogTest, InitShutdown)
 {
-	CombatSystemRAII combat;
-
 	EncounterLog log;
 	log.Init();
-	EXPECT_EQ(combat.Instance.GameEventDlgt().GetCount(), 1);
+	EXPECT_EQ(Game::GameEventDlgt().GetCount(), 1);
 
 	log.Shutdown();
-	EXPECT_EQ(combat.Instance.GameEventDlgt().GetCount(), 0);
+	EXPECT_EQ(Game::GameEventDlgt().GetCount(), 0);
 }
 
 TEST_F(EncounterLogTest, StartEnd)

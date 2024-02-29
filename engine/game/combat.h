@@ -26,15 +26,8 @@ public:
 	};
 
 	virtual void BuildDamageEvent(const DamageParams& damage) = 0;
-
 	virtual void KillEntity(Entity* e) = 0;
 
-	using GameEventDelegate = Delegate<GameEvent*>;
-	GameEventDelegate& GameEventDlgt() { return m_GameEventDlgt; }
-
-protected:
-
-	GameEventDelegate m_GameEventDlgt;
 };
 
 class CombatSystem : public ICombatSystem

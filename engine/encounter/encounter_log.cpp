@@ -16,16 +16,12 @@ EncounterLog::EncounterLog()
 
 bool EncounterLog::Init(EventPool* pool)
 {
-	ICombatSystem* system = Game::GetCombatSystem();
-	if (!system)
-		return false;
-
-	m_OnGameEvent = [this](GameEvent* evt)
+	m_OnGameEvent = [this](const GameEvent* evt)
 	{
 		this->OnGameEvent(evt);
 	};
 
-	system->GameEventDlgt().Register(m_OnGameEvent);
+	Game::GameEventDlgt().Register(m_OnGameEvent);
 	
 	m_EventPool = pool;
 	return true;
@@ -33,11 +29,7 @@ bool EncounterLog::Init(EventPool* pool)
 
 void EncounterLog::Shutdown()
 {
-	ICombatSystem* system = Game::GetCombatSystem();
-	if (!system)
-		return;
-
-	system->GameEventDlgt().Unregister(m_OnGameEvent);
+	Game::GameEventDlgt().Unregister(m_OnGameEvent);
 	m_OnGameEvent = nullptr;
 
 	delete m_EventPool;
@@ -65,7 +57,7 @@ void EncounterLog::Clear()
 	}
 }
 
-void EncounterLog::OnGameEvent(GameEvent* evt)
+void EncounterLog::OnGameEvent(const GameEvent* evt)
 {
 	switch (evt->GetType())
 	{
@@ -85,7 +77,7 @@ void EncounterLog::OnGameEvent(GameEvent* evt)
 		break;
 	case GameEventType::Death:
 		{
-			DeathEvent* deathDevent = static_cast<DeathEvent*>(evt);
+			const DeathEvent* deathDevent = static_cast<const DeathEvent*>(evt);
 			OnEntityDied(deathDevent);
 		}
 		break;
@@ -130,12 +122,12 @@ void EncounterLog::OnCombatEnd()
 	m_ActiveEncounter = nullptr;
 }
 
-void EncounterLog::OnEntityDied(DeathEvent* deathDevent)
+void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)
 {
 
 }
 
-void EncounterLog::OnDamageEvent(DamageEvent* damageEvent)
+void EncounterLog::OnDamageEvent(const DamageEvent* damageEvent)
 {
 
 }

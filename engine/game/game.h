@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/types.h"
+#include "engine/system/delegate.h"
 
 namespace raid
 {
@@ -10,7 +11,7 @@ class IEntityManager;
 class IDamageCalculator;
 class ICombatSystem;
 class IEncounterLog;
-class IMap;
+class Map;
 class World;
 
 struct GameFrame
@@ -18,6 +19,25 @@ struct GameFrame
 	World* World = nullptr;
 	const Duration DeltaTime;
 };
+
+enum class GameEventType
+{
+	Invalid = 0,
+	ZoneEnter,
+	ZoneExit,
+	CombatStart,
+	CombatEnd,
+	Damage,
+	Death
+};
+
+struct GameEvent
+{
+	virtual GameEventType GetType() const = 0;
+};
+
+
+using GameEventDelegate = Delegate<const GameEvent*>;
 
 // Game Service Locators
 class Game
@@ -41,11 +61,14 @@ public:
 	static IEncounterLog* GetEncounterLog();
 
 	// Map
-	static void SetMap(IMap* map);
-	static IMap* GetMap();
+	static void SetMap(Map* map);
+	static Map* GetMap();
 
 	// Game Frame
 	static const GameFrame& GetGameFrame();
+
+	static GameEventDelegate& GameEventDlgt() { return sm_GameEventDlgt; }
+	static void DispatchGameEvent(const GameEvent* evt);
 
 private:
 
@@ -53,7 +76,9 @@ private:
 	static IDamageCalculator* sm_DamageCalculator;
 	static ICombatSystem* sm_CombatSystem;
 	static IEncounterLog* sm_EncounterLog;
-	static IMap* sm_Map;
+	static Map* sm_Map;
+
+	static GameEventDelegate sm_GameEventDlgt;
 	static GameFrame sm_GameFrame;
 };
 
