@@ -10,7 +10,7 @@ TEST(Vector2DTest, Magnitude) {
 }
 
 TEST(Vector2DTest, Normalize) {
-    raid::Vector2D vec(3.0, 4.0);
+    raid::Vector2D vec(3.0, 3.0);
     raid::Vector2D normalizedVec = vec.Normalize();
     ASSERT_DOUBLE_EQ(normalizedVec.Magnitude(), 1.0);
 }

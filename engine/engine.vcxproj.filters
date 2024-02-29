@@ -107,6 +107,8 @@
     <ClInclude Include="system\math\math.h" />
     <ClInclude Include="map\pathfinding.h" />
     <ClInclude Include="system\math\vector3.h" />
+    <ClInclude Include="unit\group.h" />
+    <ClInclude Include="system\container.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -170,5 +172,6 @@
     <ClCompile Include="map\tile.cpp" />
     <ClCompile Include="map\map.cpp" />
     <ClCompile Include="map\pathfinding.cpp" />
+    <ClCompile Include="unit\group.cpp" />
   </ItemGroup>
 </Project>

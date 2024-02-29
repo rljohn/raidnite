@@ -20,6 +20,7 @@
 #include <string>
 #include <functional>
 #include <map>
+#include <array>
 #include <vector>
 #include <memory>
 #include <unordered_map>
@@ -62,46 +63,7 @@ namespace raid
 	// Map
 	using Position = IntVector2D;
 
-	// Map Find or Null
-	template<typename T, typename U>
-	U GetMapEntry(std::unordered_map<T, U>& map, const T& key)
-	{
-		auto it = map.find(key);
-		if (it != map.end())
-		{
-			return it->second;
-		}
-		
-		return nullptr;
-	}
-
-	// Vector removal
-	template <typename T>
-	bool RemoveFromVector(std::vector<T>& v, const T& value) 
-	{
-		auto it = std::find(v.begin(), v.end(), value);
-
-		if (it != v.end()) 
-		{
-			v.erase(it);
-			return true;
-		}
-
-		return false;
-	}
-
-	// Container Checks
-	template <typename T>
-	bool VectorContains(std::vector<T>& v, const T& value)
-	{
-		return std::find(v.begin(), v.end(), value) != v.end();
-	}
-
-	template<typename T>
-	bool SetContains(const std::set<T>& s, const T& value) 
-	{
-		return s.find(value) != s.end();
-	}
+	
 
 
 } // namespace raid

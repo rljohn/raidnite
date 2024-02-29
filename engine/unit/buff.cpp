@@ -90,19 +90,19 @@ void BuffsComponent::AddBuff(Buff* buff)
 
 void BuffsComponent::CleanseBuff(Buff* buff)
 {
-	RemoveFromVector(m_Buffs, buff);
+	VectorRemove(m_Buffs, buff);
 	buff->OnRemove(Buff::RemoveReason::Cleansed);
 }
 
 void BuffsComponent::RemoveBuff(Buff* buff)
 {
-	RemoveFromVector(m_Buffs, buff);
+	VectorRemove(m_Buffs, buff);
 	buff->OnRemove(Buff::RemoveReason::Removed);
 }
 
 void BuffsComponent::ExpireBuff(Buff* buff)
 {
-	RemoveFromVector(m_Buffs, buff);
+	VectorRemove(m_Buffs, buff);
 	buff->OnRemove(Buff::RemoveReason::Expired);
 }
 

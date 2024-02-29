@@ -4,6 +4,7 @@
 #include "engine/game/game.h"
 #include "engine/game/world.h"
 #include "engine/unit/attribute.h"
+#include "engine/unit/group.h"
 #include "engine/unit/power.h"
 #include "engine/unit/unit.h"
 #include "engine/unit/effects/damage_effect.h"
@@ -192,4 +193,57 @@ TEST(BuffTest, RestoreCurrentHp)
 	u.RemoveBuff(&buff);
 	EXPECT_FALSE(hp->NeedsRecalculate());
 	EXPECT_EQ(hp->GetMax(), 1000);
+}
+
+TEST(PartyTest, PartyLimits)
+{
+	Unit units[4];
+	Group<3> group;
+
+	// AddUnit (null), IsEmpty
+	EXPECT_TRUE(group.IsEmpty());
+	EXPECT_FALSE(group.AddUnit(nullptr));
+	EXPECT_TRUE(group.IsEmpty());
+
+	// AddUnit, IsEmpty
+	EXPECT_TRUE(group.AddUnit(&units[0]));
+	EXPECT_FALSE(group.IsEmpty());
+
+	// Contains
+	EXPECT_TRUE(group.Contains(&units[0]));
+	EXPECT_FALSE(group.Contains(&units[1]));
+	EXPECT_FALSE(group.Contains(&units[2]));
+	
+	// AddUnit (redundant)
+	EXPECT_TRUE(group.AddUnit(&units[0]));
+
+	// fill the group
+	EXPECT_TRUE(group.AddUnit(&units[1]));
+	EXPECT_TRUE(group.AddUnit(&units[2]));
+	EXPECT_TRUE(group.IsFull());
+
+	// AddUnit (fail)
+	EXPECT_FALSE(group.AddUnit(&units[3]));
+	EXPECT_TRUE(group.IsFull());
+
+	// RemoveUnitAt - out of range, nullptr, missing
+	group.RemoveUnitAt(3);
+	EXPECT_TRUE(group.IsFull());
+
+	// RemoveUnitAt - Not found
+	group.RemoveUnit(&units[3]);
+	EXPECT_TRUE(group.IsFull());
+
+	// Remove
+	group.RemoveUnit(&units[1]);
+	EXPECT_FALSE(group.IsFull());
+	EXPECT_FALSE(group.Contains(&units[1]));
+
+	// Re-Add
+	group.AddUnit(&units[3]);
+	EXPECT_TRUE(group.IsFull());
+	EXPECT_TRUE(group.Contains(&units[0]));
+	EXPECT_FALSE(group.Contains(&units[1]));
+	EXPECT_TRUE(group.Contains(&units[2]));
+	EXPECT_TRUE(group.Contains(&units[2]));
 }

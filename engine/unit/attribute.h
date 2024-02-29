@@ -3,6 +3,7 @@
 #include <map>
 
 #include "engine/unit/buff.h"
+#include "engine/system/container.h"
 #include "engine/system/modifier.h"
 
 namespace raid

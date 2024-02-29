@@ -1,6 +1,7 @@
 #include "engine/pch.h"
 #include "power.h"
 
+#include "engine/system/container.h"
 #include <algorithm>
 
 namespace raid
@@ -124,7 +125,7 @@ void IPower::AddModifier(IPowerModifier* modifier)
  
 void IPower::RemoveModifier(IPowerModifier* modifier)
 {
-	RemoveFromVector(m_Modifiers, modifier);
+	VectorRemove(m_Modifiers, modifier);
 	SortModifiers();
 	m_NeedsCalculation = true;
 }

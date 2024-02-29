@@ -7,7 +7,6 @@
 // engine
 #include "engine/game/game.h"
 
-
 namespace raid {
 namespace sandbox {
 

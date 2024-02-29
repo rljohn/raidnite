@@ -3,6 +3,7 @@
 #include "engine/types.h"
 
 #include <vector>
+#include <array>
 #include <string>
 #include <cstdint>
 #include <chrono>

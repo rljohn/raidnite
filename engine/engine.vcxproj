@@ -102,6 +102,7 @@
     <ClInclude Include="map\pathfinding.h" />
     <ClInclude Include="map\tile.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="system\container.h" />
     <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\fileutil.h" />
     <ClInclude Include="system\inlist.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="unit\attribute.h" />
     <ClInclude Include="unit\buff.h" />
     <ClInclude Include="unit\effects\damage_effect.h" />
+    <ClInclude Include="unit\group.h" />
     <ClInclude Include="unit\movement.h" />
     <ClInclude Include="unit\power.h" />
     <ClInclude Include="unit\states\state.h" />
@@ -161,6 +163,7 @@
     <ClCompile Include="system\time.cpp" />
     <ClCompile Include="unit\buff.cpp" />
     <ClCompile Include="unit\effects\damage_effect.cpp" />
+    <ClCompile Include="unit\group.cpp" />
     <ClCompile Include="unit\movement.cpp" />
     <ClCompile Include="unit\power.cpp" />
     <ClCompile Include="unit\states\state.cpp" />

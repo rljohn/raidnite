@@ -3,6 +3,7 @@
 #include "pathfinding.h"
 
 #include "engine/map/map.h"
+#include "engine/system/container.h"
 
 #include <array>
 #include <queue>

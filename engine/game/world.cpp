@@ -39,7 +39,7 @@ void World::RegisterEntity(Entity* unit)
 
 void World::UnRegisterEntity(Entity* unit)
 {
-	RemoveFromVector<Entity*>(m_Entities, unit);
+	VectorRemove<Entity*>(m_Entities, unit);
 }
 
 const Entity& World::GetWorldEntity()

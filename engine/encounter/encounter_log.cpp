@@ -44,7 +44,7 @@ Encounter* EncounterLog::CreateEncounter()
 	}
 	
 	return m_ActiveEncounter;
-}
+}	
 
 void EncounterLog::Clear()
 {

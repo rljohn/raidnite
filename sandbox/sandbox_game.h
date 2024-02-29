@@ -8,6 +8,7 @@
 
 // widgets
 #include "map_widgets.h"
+#include "party_widgets.h"
 
 namespace raid {
 namespace sandbox {
@@ -30,6 +31,7 @@ private:
 	// Widgets
 	std::vector<Widget*> m_Widgets;
 	MapWidget m_MapWidgets;
+	PartyWidget m_PartyWidgets;
 };
 
 } // namespace sandbox

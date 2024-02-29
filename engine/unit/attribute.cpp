@@ -44,7 +44,7 @@ void IAttribute::AddModifier(IModifier* modifier)
 
 void IAttribute::RemoveModifier(IModifier* modifier)
 {
-	RemoveFromVector(m_Modifiers, modifier);
+	VectorRemove(m_Modifiers, modifier);
 	SortModifiers();
 	m_NeedsCalculation = true;
 }

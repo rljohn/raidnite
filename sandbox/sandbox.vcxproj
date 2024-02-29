@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map_widgets.cpp" />
+    <ClCompile Include="party_widgets.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="sandbox_game.cpp" />
@@ -96,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="map_widgets.h" />
+    <ClInclude Include="party_widgets.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="sandbox_game.h" />
