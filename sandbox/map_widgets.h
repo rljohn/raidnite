@@ -12,7 +12,7 @@ class MapWidget : public Widget
 public:
 
 	void Init() override;
-	void Draw() override;
+	void Draw(GameSandbox* sandbox) override;
 	void Shutdown() override;
 
 	const char* GetName() override { return "Map"; }

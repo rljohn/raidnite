@@ -16,8 +16,8 @@ class World;
 
 struct GameFrame
 {
-	World* World = nullptr;
-	const Duration DeltaTime;
+	const int64_t Frame;
+	const TimeStep TimeStep;
 };
 
 enum class GameEventType
@@ -31,11 +31,17 @@ enum class GameEventType
 	Death
 };
 
+class IGameSystem
+{
+public:
+
+	virtual void Update(const GameFrame& frame) = 0;
+};
+
 struct GameEvent
 {
 	virtual GameEventType GetType() const = 0;
 };
-
 
 using GameEventDelegate = Delegate<const GameEvent*>;
 
@@ -43,6 +49,14 @@ using GameEventDelegate = Delegate<const GameEvent*>;
 class Game
 {
 public:
+
+	static void Init();
+	static void Update(const GameFrame& frame);
+	static void Shutdown();
+
+	// Game Systems
+	static void RegisterGameSystem(IGameSystem* system);
+	static void UnregisterGameSystem(IGameSystem* system);
 
 	// System to manage entities
 	static void SetEntityManager(IEntityManager* locator);
@@ -64,9 +78,7 @@ public:
 	static void SetMap(Map* map);
 	static Map* GetMap();
 
-	// Game Frame
-	static const GameFrame& GetGameFrame();
-
+	// Game Events
 	static GameEventDelegate& GameEventDlgt() { return sm_GameEventDlgt; }
 	static void DispatchGameEvent(const GameEvent* evt);
 
@@ -79,7 +91,7 @@ private:
 	static Map* sm_Map;
 
 	static GameEventDelegate sm_GameEventDlgt;
-	static GameFrame sm_GameFrame;
+	static std::vector<IGameSystem*> sm_GameSystems;
 };
 
 

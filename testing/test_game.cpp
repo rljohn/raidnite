@@ -3,6 +3,7 @@
 
 #include "engine/game/damage.h"
 #include "engine/game/world.h"
+#include "engine/unit/spawner.h"
 #include "engine/unit/unit.h"
 #include "engine/unit/effects/damage_effect.h"
 
@@ -56,4 +57,20 @@ TEST_F(GameTest, DamageEffects)
 	IPower* hp = target.GetPower<PowerType::Health>();
 	ASSERT_NE(hp, nullptr);
 	EXPECT_EQ(hp->GetCurrent(), 500);
+}
+
+
+TEST_F(GameTest, SpawnUnit)
+{
+	UnitSpawner spawner;
+
+	Entity* e = spawner.SpawnEntity();
+	EXPECT_NE(e, nullptr);
+
+	EXPECT_EQ(m_World.FindEntity(e->GetId()), e);
+
+	m_World.UnRegisterEntity(e);
+	EXPECT_EQ(m_World.FindEntity(e->GetId()), nullptr);
+
+	delete e;
 }

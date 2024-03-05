@@ -200,6 +200,8 @@ public:
 		return GetMapEntry(m_Powers, T);
 	}
 
+	void Update(const GameFrame& /* frame */) override;
+
 private:
 
 	using Powers = std::unordered_map<PowerType, IPower*>;

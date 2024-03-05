@@ -43,9 +43,8 @@ bool EncounterSerialization::Load(const std::wstring& filename, EncounterLog& en
         }
 
         int etype;
-        size_t ts;
         if (!(iss >> etype >> delimiter
-            >> ts >> delimiter
+            >> evt->m_Frame >> delimiter
             >> evt->m_Source >> delimiter
             >> evt->m_Target >> delimiter
             >> evt->m_ExtraData1.Int64 >> delimiter
@@ -55,7 +54,6 @@ bool EncounterSerialization::Load(const std::wstring& filename, EncounterLog& en
         }
 
         evt->m_Type = (EncounterEventType)etype;
-        evt->m_Time = std::chrono::system_clock::from_time_t(ts);
 
         if (evt->m_Type == EncounterEventType::EncounterStart)
         {
@@ -89,10 +87,8 @@ bool EncounterSerialization::Save(const std::wstring& filename, const EncounterL
     {
         for (const EncounterEvent& event : encounter->GetEvents())
         {
-            time_t ts = std::chrono::system_clock::to_time_t(event.m_Time);
-
             outfile << event.m_Type << ","
-                << ts << ","
+                << event.m_Frame << ","
                 << event.m_Source << ","
                 << event.m_Target << ","
                 << event.m_ExtraData1.Int64 << ","

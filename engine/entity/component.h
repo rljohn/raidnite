@@ -23,8 +23,9 @@ public:
     virtual ~Component() = default;
 
     virtual void Init() {}
-    virtual void Update(GameFrame& /* frame */) {}
+    virtual void Update(const GameFrame& /* frame */) {}
     virtual void OnGameEvent(const GameEvent& evt) {}
+    virtual void Shutdown() {}
 
 protected:
 

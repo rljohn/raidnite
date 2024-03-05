@@ -100,7 +100,9 @@ void EncounterLog::OnCombatStart()
 		CreateEncounter();
 		scheckall(m_ActiveEncounter);
 
-		EncounterEvent* start = CreateEvent<EncounterEventType::EncounterStart>();
+		const Frame TODO = 0;
+
+		EncounterEvent* start = CreateEvent<EncounterEventType::EncounterStart>(TODO);
 		scheckall(start);
 		m_ActiveEncounter->AddEvent(start);
 	}
@@ -109,11 +111,13 @@ void EncounterLog::OnCombatStart()
 	}
 }
 
-void EncounterLog::OnCombatEnd()
+void EncounterLog::OnCombatEnd()  
 {
 	if (m_ActiveEncounter)
 	{
-		if (EncounterEvent* end = CreateEvent<EncounterEventType::EncounterEnd>())
+		const Frame TODO = 0;
+
+		if (EncounterEvent* end = CreateEvent<EncounterEventType::EncounterEnd>(TODO))
 		{
 			m_ActiveEncounter->AddEvent(end);
 		}

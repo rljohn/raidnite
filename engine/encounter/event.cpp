@@ -6,7 +6,7 @@ namespace raid
 
 EncounterEvent::EncounterEvent()
 	: m_Type(EncounterEventType::Invalid)
-	, m_Time()
+	, m_Frame(0)
 	, m_Source(InvalidPlayerId)
 	, m_Target(InvalidPlayerId)
 	, m_Node(this)

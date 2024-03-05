@@ -30,6 +30,14 @@ void World::OnGameEvent(const GameEvent& evt)
 	}
 }
 
+void World::Update(const GameFrame& frame)
+{
+	for (Entity* e : m_Entities)
+	{
+		
+	}
+}
+
 void World::RegisterEntity(Entity* unit)
 {
 	m_Entities.push_back(unit);

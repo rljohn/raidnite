@@ -8,6 +8,7 @@
 namespace raid
 {
 
+std::vector<IGameSystem*> Game::sm_GameSystems;
 IEntityManager* Game::sm_EntityLocator = nullptr;
 IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
@@ -15,7 +16,35 @@ IEncounterLog* Game::sm_EncounterLog = nullptr;
 Map* Game::sm_Map = nullptr;
 
 GameEventDelegate Game::sm_GameEventDlgt;
-GameFrame Game::sm_GameFrame;
+
+
+void Game::Init()
+{
+
+}
+
+void Game::Update(const GameFrame& frame)
+{
+	for (IGameSystem* system : sm_GameSystems)
+	{
+		system->Update(frame);
+	}
+}
+
+void Game::Shutdown()
+{
+	sm_GameSystems.clear();
+}
+
+void Game::RegisterGameSystem(IGameSystem* system)
+{
+	sm_GameSystems.push_back(system);
+}
+
+void Game::UnregisterGameSystem(IGameSystem* system)
+{
+	VectorRemove(sm_GameSystems, system);
+}
 
 void Game::SetEntityManager(IEntityManager* locator)
 {
@@ -65,11 +94,6 @@ void Game::SetMap(Map* map)
 Map* Game::GetMap()
 {
 	return sm_Map;
-}
-
-const GameFrame& Game::GetGameFrame()
-{
-	return sm_GameFrame;
 }
 
 void Game::DispatchGameEvent(const GameEvent* evt)

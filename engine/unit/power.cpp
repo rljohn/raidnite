@@ -135,4 +135,17 @@ void IPower::SortModifiers()
 	std::sort(m_Modifiers.begin(), m_Modifiers.end());
 }
 
+///////////////////////////////////
+
+void PowerComponent::Update(const GameFrame& /* frame */)
+{
+	for (auto& pair : m_Powers)
+	{
+		if (pair.second->NeedsRecalculate())
+		{
+			pair.second->Recalculate();
+		}
+	}
+}
+
 } // namespace raid

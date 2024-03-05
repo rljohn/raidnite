@@ -13,6 +13,7 @@ Unit::Unit()
 	, m_Buffs(AddComponent<BuffsComponent>())
 	, m_DamageReceiver(AddComponent<DamageReceiver>())
 	, m_AggroTable(AddComponent<AggroTable>())
+	, m_Name(AddComponent<NameComponent>())
 {
 
 }
@@ -24,7 +25,7 @@ void Unit::BeginFrame()
 
 void Unit::UpdateFrame(GameFrame& frame)
 {
-	m_Buffs.Update(frame);
+	Entity::Update(frame);
 }
 
 void Unit::EndFrame()

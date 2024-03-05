@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/entity/entity.h"
+#include "engine/entity/name_component.h"
 #include "engine/game/damage.h"
 #include "engine/unit/aggro.h"
 #include "engine/unit/attribute.h"
@@ -36,6 +37,9 @@ public:
 	// Combat Helpers
 	bool IsInCombat() const;
 
+	// Easy access to required components
+	NameComponent& GetName() { return m_Name; }
+
 private:
 
 	PowerComponent& m_Powers;
@@ -43,6 +47,7 @@ private:
 	BuffsComponent& m_Buffs;
 	DamageReceiver& m_DamageReceiver;
 	AggroTable& m_AggroTable;
+	NameComponent& m_Name;
 };
 
 } // namespace raid

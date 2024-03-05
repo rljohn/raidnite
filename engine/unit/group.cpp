@@ -51,7 +51,7 @@ void Group::RemoveUnit(Entity* entity)
     VectorRemove(m_List, entity);
 }
 
-void Group::RemoveUnitAt(int index)
+void Group::RemoveUnitAt(size_t index)
 {
     VectorDelete(m_List, index);
 }

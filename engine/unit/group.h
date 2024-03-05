@@ -17,7 +17,7 @@ public:
     void Init(int size);
     bool AddUnit(Entity* entity);
     void RemoveUnit(Entity* entity);
-    void RemoveUnitAt(int index);
+    void RemoveUnitAt(size_t index);
     bool Contains(Entity* entity) const;
     bool IsEmpty() const;
     bool IsFull() const;

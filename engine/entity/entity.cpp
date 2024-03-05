@@ -10,6 +10,17 @@ Entity::Entity()
 {
 }
 
+Entity::~Entity()
+{
+	for (auto& pair : m_Components)
+	{
+		pair.second->Shutdown();
+		delete pair.second;
+	}
+
+	m_Components.clear();
+}
+
 void Entity::Init()
 {
 	for (auto& pair : m_Components)
@@ -18,6 +29,14 @@ void Entity::Init()
 	}
 
 	OnInit();
+}
+
+void Entity::Update(const GameFrame& frame)
+{
+	for (auto& pair : m_Components)
+	{
+		pair.second->Update(frame);
+	}
 }
 
 void Entity::OnGameEvent(const GameEvent& evt)

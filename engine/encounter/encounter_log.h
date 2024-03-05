@@ -48,9 +48,9 @@ private:
 	void OnDamageEvent(const DamageEvent* damageEvent);
 
 	template <EncounterEventType T>
-	EncounterEvent* CreateEvent()
+	EncounterEvent* CreateEvent(const Frame frame)
 	{
-		return EncounterEvents::CreateEvent<T>(m_EventPool);
+		return EncounterEvents::CreateEvent<T>(frame, m_EventPool);
 	}
 
 	EncounterEvent* LoadEvent()

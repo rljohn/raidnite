@@ -11,12 +11,14 @@ namespace raid
 class Component;
 class World;
 struct GameEvent;
+struct GameFrame;
 
 class Entity
 {
 public:
 
     Entity();
+    ~Entity();
 
     template <typename T, typename... Args>
     T& AddComponent(Args&&... args)
@@ -39,7 +41,7 @@ public:
     void Init();
 
     virtual void OnInit() {}
-
+    virtual void Update(const GameFrame& /* frame */);
     virtual void OnGameEvent(const GameEvent& evt);
 
 private:
@@ -54,6 +56,8 @@ public:
 
     virtual Entity* FindEntity(const EntityId id) = 0;
     virtual void OnGameEvent(const GameEvent& e) = 0;
+    virtual void RegisterEntity(Entity* unit) = 0;
+    virtual void UnRegisterEntity(Entity* unit) = 0;
 };
 
 } // namespace raid

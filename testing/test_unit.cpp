@@ -254,7 +254,9 @@ TEST(PartyTest, PartyLimits)
 
 	// Reset
 	while (group.GetSize() > 0)
+	{
 		group.RemoveUnitAt(group.GetSize() - 1);
+	}
 	EXPECT_TRUE(group.IsEmpty());
 	
 	// Re-Initialize

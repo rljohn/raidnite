@@ -18,8 +18,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     raid::sandbox::GameSandbox game;
     game.Init();
     
-    // Cap to 60 FPS for the sandbox
-    const std::chrono::nanoseconds frameTime(16666666);
+    // Cap to 120 FPS for the sandbox
+    const std::chrono::nanoseconds frameTime(8333333);
     std::chrono::steady_clock::time_point nextFrame = std::chrono::steady_clock::now() + frameTime;
     
     MSG msg = { 0 };

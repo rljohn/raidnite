@@ -28,7 +28,7 @@ enum EncounterEventType
 struct EncounterEvent
 {
 	EncounterEventType m_Type = EncounterEventType::Invalid;
-	TimeStamp m_Time;
+	Frame m_Frame;
 	PlayerId m_Source = InvalidPlayerId;
 	PlayerId m_Target = InvalidPlayerId;
 
@@ -60,17 +60,17 @@ class EncounterEvents
 {
 public:
 
-	static EncounterEvent CreateEvent(EventPool* pool, PlayerId source, PlayerId target = InvalidPlayerId, const TimeStamp& time = Time::GetCurrent())
+	static EncounterEvent CreateEvent(const Frame frame, EventPool* pool, PlayerId source, PlayerId target = InvalidPlayerId)
 	{
 		EncounterEvent rvo;
 		rvo.m_Source = source;
 		rvo.m_Target = target;
-		rvo.m_Time = time;
+		rvo.m_Frame = frame;
 		return rvo;
 	}
 
 	template<EncounterEventType T>
-	static EncounterEvent* CreateEvent(EventPool* pool, const TimeStamp& time = Time::GetCurrent())
+	static EncounterEvent* CreateEvent(const Frame frame, EventPool* pool)
 	{
 		if (!pool)
 			return nullptr;
@@ -79,7 +79,7 @@ public:
 		if (evt)
 		{
 			evt->m_Type = T;
-			evt->m_Time = time;
+			evt->m_Frame = frame;
 		}
 		
 		return evt;

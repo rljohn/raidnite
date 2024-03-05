@@ -14,6 +14,7 @@
     <ClCompile Include="test_logging.cpp" />
     <ClCompile Include="test_map.cpp" />
     <ClCompile Include="test_math.cpp" />
+    <ClCompile Include="test_engine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

@@ -22,6 +22,9 @@
     <ClCompile Include="party_widgets.cpp">
       <Filter>widgets</Filter>
     </ClCompile>
+    <ClCompile Include="engine_widgets.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -36,6 +39,9 @@
       <Filter>widgets</Filter>
     </ClInclude>
     <ClInclude Include="party_widgets.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_widgets.h">
       <Filter>widgets</Filter>
     </ClInclude>
   </ItemGroup>

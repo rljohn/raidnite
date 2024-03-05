@@ -12,17 +12,21 @@ class PartyWidget : public Widget
 public:
 
 	void Init() override;
-	void Draw() override;
+	void Draw(GameSandbox* sandbox) override;
 	void Shutdown() override;
 
 	const char* GetName() override { return "Party"; }
 
 private:
 
-	void DrawPartyWidgets();
+	void DrawPartyWidgets(GameSandbox* sandbox);
 
-	raid::Group m_Party;
 	int m_PartySize = 8;
+	char m_NameBuf[16] = {0};
+	char m_TagBuf[16] = { 0 };
+	char m_TitlePrefixBuf[16] = { 0 };
+	char m_TitleSuffixBuf[16] = { 0 };
+	bool m_ShowHealthWidgets = false;
 };
 
 } // namespace sandbox

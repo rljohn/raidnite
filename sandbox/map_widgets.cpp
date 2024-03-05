@@ -14,7 +14,7 @@ namespace sandbox {
 	{
 	}
 
-	void MapWidget::Draw()
+	void MapWidget::Draw(GameSandbox* /* sandbox */ )
 	{
 		if (m_Map == nullptr)
 		{

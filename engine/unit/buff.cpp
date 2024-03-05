@@ -40,7 +40,7 @@ void Buff::OnAdd(Entity& owner)
 
 void Buff::OnUpdate(GameFrame& frame)
 {
-	m_TimeRemaining -= frame.DeltaTime;
+	m_TimeRemaining -= frame.TimeStep;
 
 	for (IBuffEffect* effect : m_Effects)
 	{

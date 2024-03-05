@@ -86,6 +86,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map_widgets.cpp" />
     <ClCompile Include="party_widgets.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine_widgets.h" />
     <ClInclude Include="map_widgets.h" />
     <ClInclude Include="party_widgets.h" />
     <ClInclude Include="pch.h" />

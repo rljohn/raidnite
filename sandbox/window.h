@@ -21,7 +21,7 @@ public:
 
 private:
 
-	HWND m_Hwnd;
+	HWND m_Hwnd = 0;
 	WNDCLASSW m_Wc = { 0 };
 	Renderer m_Renderer;
 	ImGuiFramework m_ImGui;

@@ -3,12 +3,13 @@
 #include "engine/entity/entity.h"
 #include "engine/unit/unit.h"
 #include "engine/types.h"
+#include "engine/engine.h"
 #include "engine/game/damage.h"
 
 namespace raid
 {
 
-class World : public IEntityManager
+class World : public IEntityManager, public IGameSystem
 {
 
 public:
@@ -19,9 +20,12 @@ public:
 	Entity* FindEntity(const EntityId entityId) override;
 	void OnGameEvent(const GameEvent& e) override;
 
+	// IGameSystem
+	void Update(const GameFrame& frame);
+
 	// Registration
-	void RegisterEntity(Entity* unit);
-	void UnRegisterEntity(Entity* unit);
+	void RegisterEntity(Entity* unit) override;
+	void UnRegisterEntity(Entity* unit) override;
 
 	const Entity& GetWorldEntity();
 

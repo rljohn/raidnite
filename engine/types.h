@@ -31,12 +31,15 @@
 
 namespace raid
 {
-
 	// Time
-	using TimeStamp = std::chrono::time_point<std::chrono::system_clock>;
-	using Duration = std::chrono::duration<std::chrono::system_clock::rep, std::chrono::system_clock::period> ;
+	using Nanoseconds = std::chrono::nanoseconds;
+	using Microseconds = std::chrono::microseconds;
 	using Milliseconds = std::chrono::milliseconds;
 	using Seconds = std::chrono::seconds;
+	using TimeStamp = std::chrono::time_point<std::chrono::steady_clock>;
+	using Duration = Nanoseconds;
+	using TimeStep = Nanoseconds;
+	using Frame = int64_t;
 
 	// Abilities
 	using SpellId = int64_t;
@@ -63,8 +66,8 @@ namespace raid
 	// Map
 	using Position = IntVector2D;
 
-	
-
+	// Array helper
+	#define COUNTOF(arr) (sizeof(arr) / sizeof(arr[0]))
 
 } // namespace raid
 

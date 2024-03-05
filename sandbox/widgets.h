@@ -5,13 +5,14 @@
 namespace raid {
 namespace sandbox {
 
+class GameSandbox;
 class Widget
 {
 public:
 
-	virtual void Init() = 0;
-	virtual void Draw() = 0;
-	virtual void Shutdown() = 0;
+	virtual void Init() {}
+	virtual void Draw(GameSandbox* sandbox) = 0;
+	virtual void Shutdown() {}
 	virtual const char* GetName() = 0;
 };
 

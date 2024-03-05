@@ -11,7 +11,7 @@ bool Time::IsInitialized(const TimeStamp& time)
 
 TimeStamp Time::GetCurrent()
 {
-	return std::chrono::system_clock::now();
+	return std::chrono::steady_clock::now();
 }
 
 Duration Time::FromDeltaTime(float deltaTime)
