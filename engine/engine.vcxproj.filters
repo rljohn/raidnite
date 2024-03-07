@@ -112,6 +112,7 @@
     <ClInclude Include="unit\spawner.h" />
     <ClInclude Include="entity\name_component.h" />
     <ClInclude Include="engine.h" />
+    <ClInclude Include="system\math\random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">

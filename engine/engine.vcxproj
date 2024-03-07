@@ -112,6 +112,7 @@
     <ClInclude Include="system\log\logging.h" />
     <ClInclude Include="system\log\log_channels.h" />
     <ClInclude Include="system\math\math.h" />
+    <ClInclude Include="system\math\random.h" />
     <ClInclude Include="system\math\vector2.h" />
     <ClInclude Include="system\math\vector3.h" />
     <ClInclude Include="system\modifier.h" />
