@@ -90,7 +90,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map_widgets.cpp" />
     <ClCompile Include="party_widgets.cpp" />
-    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="sandbox_game.cpp" />
     <ClCompile Include="sandbox_imgui.cpp" />

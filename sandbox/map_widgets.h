@@ -20,7 +20,7 @@ public:
 private:
 
 	void CreateMapWidgets();
-	void DrawMapWidgets();
+	void DrawMapWidgets(GameSandbox* sandbox);
 
 	int m_Width = 10;
 	int m_Height = 10;

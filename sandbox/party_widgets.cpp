@@ -5,8 +5,12 @@
 #include "sandbox_imgui.h"
 #include "sandbox_game.h"
 
+#include <stdio.h>
+
 namespace raid {
 namespace sandbox {
+
+extern ImFont* HeHeXD;
 
 void PartyWidget::Init()
 {
@@ -24,6 +28,12 @@ void PartyWidget::Draw(GameSandbox* sandbox)
 		if (ImGui::Button("Create Party"))
 		{
 			sandbox->GetParty().Init(m_PartySize);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Quick Party"))
+		{
+			sandbox->GetParty().Init(m_PartySize);
+			AddRandomUnit(sandbox, m_PartySize);
 		}
 	}
 }
@@ -106,7 +116,7 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 	ImGui::InputText("Title Prefix", m_TitlePrefixBuf, COUNTOF(m_TitlePrefixBuf));
 	ImGui::InputText("Title Suffix", m_TitleSuffixBuf, COUNTOF(m_TitleSuffixBuf));
 
-	if (ImGui::Button("Add Unit"))
+	if (ImGui::Button(ICON_FK_PLUS_CIRCLE "Add Unit"))
 	{
 		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
 		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity()))
@@ -120,10 +130,38 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 			names.SetTitleSuffix(m_TitleSuffixBuf);
 		}
 	}
+
+	ImGui::SameLine();
+	if (ImGui::Button("Add Random Unit"))
+	{
+		AddRandomUnit(sandbox, 1);
+	}
 }
 
 void PartyWidget::Shutdown()
 {
+}
+
+void PartyWidget::AddRandomUnit(GameSandbox* sandbox, int numUnits)
+{
+	raid::Group& party = sandbox->GetParty();
+	for (int i = 0; i < numUnits; i++)
+	{
+		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
+		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity()))
+		{
+			party.AddUnit(unit);
+
+			static int count = 0;
+			NameComponent& names = unit->GetName();
+
+			char buf[32] = { 0 };
+			sprintf_s(buf, "Random Unit %d", ++count);
+			names.SetName(buf);
+			names.SetTag("Random");
+		}
+	}
+	
 }
 
 } // namespace sandbox

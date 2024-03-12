@@ -20,6 +20,7 @@ public:
 private:
 
 	void DrawPartyWidgets(GameSandbox* sandbox);
+	void AddRandomUnit(GameSandbox* sandbox, int numUnits);
 
 	int m_PartySize = 8;
 	char m_NameBuf[16] = {0};

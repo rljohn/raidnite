@@ -29,6 +29,12 @@
     <Filter Include="json">
       <UniqueIdentifier>{e7b7e8a5-ea19-4ab5-9cc7-cbba29d6cdb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="easing">
+      <UniqueIdentifier>{c58672e9-1f35-4aad-a5ac-372070f3e345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fonts">
+      <UniqueIdentifier>{cff8e0c7-9ca9-495b-92b0-566d8a833feb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thirdparty.cpp">
@@ -53,6 +59,12 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="easing\easing.cpp">
+      <Filter>easing</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\ForkAwesome.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
@@ -393,6 +405,12 @@
     <ClInclude Include="json\json.hpp">
       <Filter>json</Filter>
     </ClInclude>
+    <ClInclude Include="easing\easing.h">
+      <Filter>easing</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\ForkAwesome.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="spdlog\fmt\bundled\fmt.license.rst">
@@ -403,5 +421,10 @@
     <Text Include="imgui\LICENSE.txt">
       <Filter>imgui</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\forkawesome-webfont.ttf">
+      <Filter>fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

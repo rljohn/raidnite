@@ -91,7 +91,8 @@
     <ClInclude Include="engine.h" />
     <ClInclude Include="entity\component.h" />
     <ClInclude Include="entity\entity.h" />
-    <ClInclude Include="entity\name_component.h" />
+    <ClInclude Include="entity\name.h" />
+    <ClInclude Include="entity\position.h" />
     <ClInclude Include="game\combat.h" />
     <ClInclude Include="game\combat_common.h" />
     <ClInclude Include="game\game_events.h" />
@@ -132,6 +133,7 @@
     <ClInclude Include="unit\states\state.h" />
     <ClInclude Include="unit\states\state_idle.h" />
     <ClInclude Include="unit\states\state_movement.h" />
+    <ClInclude Include="unit\targeting.h" />
     <ClInclude Include="unit\unit.h" />
     <ClInclude Include="unit\unit_utils.h" />
   </ItemGroup>
@@ -173,6 +175,7 @@
     <ClCompile Include="unit\power.cpp" />
     <ClCompile Include="unit\spawner.cpp" />
     <ClCompile Include="unit\states\state.cpp" />
+    <ClCompile Include="unit\targeting.cpp" />
     <ClCompile Include="unit\unit.cpp" />
     <ClCompile Include="unit\unit_utils.cpp" />
   </ItemGroup>

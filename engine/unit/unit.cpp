@@ -14,6 +14,8 @@ Unit::Unit()
 	, m_DamageReceiver(AddComponent<DamageReceiver>())
 	, m_AggroTable(AddComponent<AggroTable>())
 	, m_Name(AddComponent<NameComponent>())
+	, m_Targeting(AddComponent<TargetingComponent>())
+	, m_Movement(AddComponent<MovementComponent>())
 {
 
 }

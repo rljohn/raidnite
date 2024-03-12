@@ -12,6 +12,11 @@ class Window
 {
 public:
 
+	Window()
+		: m_ImGui()
+	{
+	}
+
 	bool Init(HINSTANCE hInstance, const int nCmdShow, const int width, const int height);
 	void Update();
 	void Render();

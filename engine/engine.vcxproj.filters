@@ -110,9 +110,11 @@
     <ClInclude Include="unit\group.h" />
     <ClInclude Include="system\container.h" />
     <ClInclude Include="unit\spawner.h" />
-    <ClInclude Include="entity\name_component.h" />
+    <ClInclude Include="entity\name.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="system\math\random.h" />
+    <ClInclude Include="unit\targeting.h" />
+    <ClInclude Include="entity\position.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -179,5 +181,6 @@
     <ClCompile Include="unit\group.cpp" />
     <ClCompile Include="unit\spawner.cpp" />
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="unit\targeting.cpp" />
   </ItemGroup>
 </Project>

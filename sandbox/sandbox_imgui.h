@@ -4,8 +4,12 @@
 
 #include "renderer.h"
 
+// Font Data needed for all widgets
+#include "thirdparty/IconFontcppHeaders/IconsForkAwesome.h"
+
 struct ID3D11Device;
 struct ID3D11DeviceContext;
+struct ImFont;
 
 namespace raid {
 namespace sandbox {
@@ -21,6 +25,12 @@ public:
 	void BeginFrame();
 	void EndFrame();
 	void Shutdown();
+
+private:
+
+	void InitFonts();
+	ImFont* DefaultFont;
+	ImFont* FontAwesome;
 };
 
 } // namespace sandbox

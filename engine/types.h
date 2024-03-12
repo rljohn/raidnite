@@ -28,6 +28,7 @@
 #include <set>
 
 #include "engine/system/math/vector2.h"
+#include "engine/system/math/vector3.h"
 
 namespace raid
 {
@@ -65,6 +66,8 @@ namespace raid
 
 	// Map
 	using Position = IntVector2D;
+	using Location = Vector3D;
+	using Rotation = Vector3D;
 
 	// Array helper
 	#define COUNTOF(arr) (sizeof(arr) / sizeof(arr[0]))

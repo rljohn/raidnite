@@ -14,7 +14,7 @@ namespace sandbox {
 	{
 	}
 
-	void MapWidget::Draw(GameSandbox* /* sandbox */ )
+	void MapWidget::Draw(GameSandbox* sandbox)
 	{
 		if (m_Map == nullptr)
 		{
@@ -22,7 +22,7 @@ namespace sandbox {
 		}
 		else
 		{
-			DrawMapWidgets();
+			DrawMapWidgets(sandbox);
 		}
 	}
 
@@ -39,7 +39,7 @@ namespace sandbox {
 		}
 	}
 
-	void MapWidget::DrawMapWidgets()
+	void MapWidget::DrawMapWidgets(GameSandbox* sandbox)
 	{
 		ImVec4* colors = ImGui::GetStyle().Colors;
 
@@ -71,7 +71,12 @@ namespace sandbox {
 				for (int j = 0; j < m_Map->GetWidth(); j++)
 				{
 					ImGui::TableSetColumnIndex(j+1);
-					ImGui::Text("%d,%d", j, i);
+
+					if (i == 3 && j == 4)
+						ImGui::Text(ICON_FK_BUNNY);
+					else
+						ImGui::Text(ICON_FK_CIRCLE_O);
+						
 				}
 			}
 

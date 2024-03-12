@@ -1,11 +1,13 @@
 #pragma once
 
 #include "engine/entity/entity.h"
-#include "engine/entity/name_component.h"
+#include "engine/entity/name.h"
 #include "engine/game/damage.h"
 #include "engine/unit/aggro.h"
 #include "engine/unit/attribute.h"
 #include "engine/unit/power.h"
+#include "engine/unit/targeting.h"
+#include "engine/unit/movement.h"
 
 namespace raid
 {
@@ -48,6 +50,8 @@ private:
 	DamageReceiver& m_DamageReceiver;
 	AggroTable& m_AggroTable;
 	NameComponent& m_Name;
+	MovementComponent& m_Movement;
+	TargetingComponent& m_Targeting;
 };
 
 } // namespace raid

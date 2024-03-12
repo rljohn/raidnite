@@ -1,6 +1,6 @@
 #pragma once
 
-#include "engine/entity/component.h" 
+#include "engine/entity/component.h"
 #include "thirdparty/spdlog/fmt/bundled/format.h"
 
 namespace raid
