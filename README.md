@@ -1,10 +1,12 @@
 # raidnite
 
-Collection of engine libraries for a hobby project.
+Collection of gameplay engine libraries for a hobby project.
 
-I was finding that my prototypes were taking a long time to test in Unreal due to the nature of the coupling to the game itself.
+I was finding that my prototypes were taking a long time to test in Unreal due to the nature of the coupling to the game itself. It was easy to get "lost in the sauce" so to speak, so I decided to completely decouple gameplay from the Unreal Engine.
 
-This project extracts this code into an standalone, testable library for some of the game systems. It contains four projects: engine, testing, thirdparty and sandbox.
+My gameplay engine powers all the game logic, with the Unreal Engine handling input, audio, graphics. Essentially, the unreal 'actors' are simply a visual representation of the gameplay and blindly do what they are told.
+
+This project extracts the gameplay code into an standalone, testable library. It contains four projects: engine, testing, thirdparty and sandbox.
 
 ### Engine
 
