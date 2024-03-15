@@ -22,6 +22,15 @@ void Group::Init(int size)
     m_List.reserve(size);
 }
 
+void Group::Shutdown()
+{
+    while (!m_List.empty())
+    {
+        RemoveUnitAt(0);
+    }
+    m_List = std::vector<Entity*>();
+}
+
 bool Group::AddUnit(Entity* entity)
 {
     if (entity == nullptr)

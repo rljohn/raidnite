@@ -1,6 +1,9 @@
 #include "sandbox/pch.h"
 #include "party_widgets.h"
 
+// engine
+#include "engine/entity/position.h"
+
 // sandbox
 #include "sandbox_imgui.h"
 #include "sandbox_game.h"
@@ -55,6 +58,7 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 
 		NameComponent& names = *entity->GetComponent<NameComponent>();
 
+		// TITLE
 		std::string display;
 		if (!names.GetTitlePrefix().empty())
 		{
@@ -62,11 +66,13 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 			display += " ";
 		}
 
+		// NAME
 		if (!names.GetName().empty())
 		{
 			display += names.GetName();
 		}
 
+		// SUFFIX
 		if (!names.GetTitleSuffix().empty())
 		{
 			display += ", ";
@@ -75,11 +81,13 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 
 		ImGui::Text("%s", display.c_str());
 
+		// TAG
 		if (!names.GetTag().empty())
 		{
 			ImGui::Text("<%s>", names.GetTag().c_str());
 		}
 
+		// HEALTH
 		raid::IPower* hp = unit->GetPower<raid::PowerType::Health>();
 		if (hp)
 		{
@@ -103,6 +111,38 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 				{
 					hp->SetCurrent(current);
 				}
+			}
+		}
+
+		// POSITION
+		PositionComponent* cPos = unit->GetComponent<PositionComponent>();
+		if (cPos)
+		{
+			Position pos = cPos->GetPosition();
+			ImGui::Text("Pos: %d,%d", pos.GetX(), pos.GetY());
+			ImGui::SameLine();
+			if (ImGui::Button(ICON_FK_ARROW_LEFT))
+			{
+				pos.SetX(pos.GetX() - 1);
+				cPos->SetPosition(pos);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button(ICON_FK_ARROW_RIGHT))
+			{
+				pos.SetX(pos.GetX() + 1);
+				cPos->SetPosition(pos);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button(ICON_FK_ARROW_UP))
+			{
+				pos.SetY(pos.GetY() - 1);
+				cPos->SetPosition(pos);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button(ICON_FK_ARROW_DOWN))
+			{
+				pos.SetY(pos.GetY() + 1);
+				cPos->SetPosition(pos);
 			}
 		}
 
@@ -135,6 +175,11 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 	if (ImGui::Button("Add Random Unit"))
 	{
 		AddRandomUnit(sandbox, 1);
+	}
+
+	if (ImGui::Button("Destroy Party"))
+	{
+		sandbox->GetParty().Shutdown();
 	}
 }
 

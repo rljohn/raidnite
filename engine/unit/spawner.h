@@ -1,5 +1,7 @@
 #pragma once
 
+#include "engine/entity/entity.h"
+
 namespace raid
 {
 
@@ -10,7 +12,7 @@ public:
 	virtual Entity* SpawnEntity() = 0;
 };
 
-class UnitSpawner : public IEntitySpawner
+class UnitSpawner : public IEntitySpawner, public Entity
 {
 public:
 

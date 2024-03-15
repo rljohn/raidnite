@@ -2,6 +2,7 @@
 
 #include "engine/entity/entity.h"
 #include "engine/entity/name.h"
+#include "engine/entity/position.h"
 #include "engine/game/damage.h"
 #include "engine/unit/aggro.h"
 #include "engine/unit/attribute.h"
@@ -51,6 +52,7 @@ private:
 	AggroTable& m_AggroTable;
 	NameComponent& m_Name;
 	MovementComponent& m_Movement;
+	PositionComponent& m_Position;
 	TargetingComponent& m_Targeting;
 };
 

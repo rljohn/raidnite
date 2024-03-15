@@ -15,6 +15,8 @@ public:
     Group(int size);
 
     void Init(int size);
+    void Shutdown();
+
     bool AddUnit(Entity* entity);
     void RemoveUnit(Entity* entity);
     void RemoveUnitAt(size_t index);

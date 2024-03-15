@@ -10,7 +10,7 @@
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
     raid::sandbox::Window window;
-    if (!window.Init(hInstance, nCmdShow, 1280, 720))
+    if (!window.Init(hInstance, nCmdShow, 1440, 900))
     {
         return false;
     }

@@ -3,9 +3,11 @@
 
 // sandbox
 #include "sandbox_imgui.h"
+#include "sandbox_game.h"
 
 // engine
 #include "engine/game/game.h"
+#include "engine/system/stringutil.h"
 
 namespace raid {
 namespace sandbox {
@@ -72,15 +74,33 @@ namespace sandbox {
 				{
 					ImGui::TableSetColumnIndex(j+1);
 
-					if (i == 3 && j == 4)
-						ImGui::Text(ICON_FK_BUNNY);
-					else
-						ImGui::Text(ICON_FK_CIRCLE_O);
-						
+					const char* mapIcon = GetMapIcon(sandbox, j, i);
+					if (!raid::stringutil::NullOrEmpty(mapIcon))
+					{
+						ImGui::Text(mapIcon);
+					}
+					
 				}
 			}
 
 			ImGui::EndTable();
+		}
+
+		// Player Spawning
+		{
+			ImGui::PushID("Player Spawn");
+			ImGui::Text("Player Spawn");
+			const Position pos = m_Map->GetPlayerSpawnPosition();
+			int x = pos.GetX(); int y = pos.GetY();
+			if (ImGui::SliderInt("X", &x, 0, m_Map->GetWidth() - 1))
+			{
+				m_Map->SetPlayerSpawnPosition(Position(x, y));
+			}
+			if (ImGui::SliderInt("Y", &y, 0, m_Map->GetHeight() - 1))
+			{
+				m_Map->SetPlayerSpawnPosition(Position(x, y));
+			}
+			ImGui::PopID();
 		}
 
 		if (ImGui::Button("Destroy Map"))
@@ -89,6 +109,25 @@ namespace sandbox {
 			delete m_Map;
 			m_Map = nullptr;
 		}
+	}
+
+	const char* MapWidget::GetMapIcon(GameSandbox* sandbox, const int x, const int y) const
+	{
+		raid::Group& group = sandbox->GetParty();
+		for (size_t idx = 0; idx < group.GetSize(); idx++)
+		{
+			Entity* e = group.GetEntity(idx);
+			if (PositionComponent* p = e->GetComponent<PositionComponent>())
+			{
+				auto& pos = p->GetPosition();
+				if (pos.GetX() == x && pos.GetY() == y)
+				{
+					return ICON_FK_CIRCLE_O;
+				}
+			}
+		}
+
+		return nullptr;
 	}
 
 	void MapWidget::Shutdown()

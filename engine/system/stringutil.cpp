@@ -25,3 +25,4 @@ std::wstring Utf8StringToWide(const std::string& utf8_string)
 
 } // namespace stringutil
 } // namespace raid
+

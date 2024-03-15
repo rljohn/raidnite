@@ -19,3 +19,4 @@
 #include "engine/entity/entity.h"
 #include "engine/unit/buff.h"
 #include "engine/unit/power.h"
+#include "engine/system/stringutil.h"
