@@ -23,6 +23,7 @@ void GameSandbox::Init()
 	m_Widgets.push_back(&m_EngineWidgets);
 	m_Widgets.push_back(&m_MapWidgets);
 	m_Widgets.push_back(&m_PartyWidgets);
+	m_Widgets.push_back(&m_LogWidgets);
 
 	for (Widget* w : m_Widgets)
 	{
@@ -34,9 +35,38 @@ void GameSandbox::Update()
 {
 	m_Engine.Update();
 
+	if (ImGui::BeginMainMenuBar()) 
+	{
+		if (ImGui::BeginMenu("File")) 
+		{
+			ImGui::MenuItem("New", "Ctrl+N");
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Widgets"))
+		{
+			for (Widget* w : m_Widgets)
+			{
+				bool enabled = w->IsEnabled();
+
+				if (ImGui::MenuItem(w->GetName(), "", &enabled))
+				{
+					w->SetEnabled(enabled);
+				}
+			}
+			ImGui::EndMenu();
+		}
+
+		ImGui::EndMainMenuBar();
+	}
+
 	for (Widget* w : m_Widgets)
 	{
-		if (ImGui::Begin(w->GetName()))
+		if (!w->IsEnabled())
+			continue;
+
+		bool open = true;
+		if (ImGui::Begin(w->GetName(), &open))
 		{
 			ImGui::PushID(w->GetName());
 			w->Draw(this);
@@ -44,6 +74,7 @@ void GameSandbox::Update()
 
 			ImGui::End();
 		}
+		w->SetEnabled(open);
 	}
 }
 

@@ -5,10 +5,11 @@
 namespace raid
 {
 
-Entity* UnitSpawner::SpawnEntity()
+Entity* UnitSpawner::SpawnEntity(const Position& pos)
 {
 	if (Unit* unit = new Unit())
 	{
+		unit->GetTransform().SetPosition(pos);
 		// Every spawned unit must have a Health attribute.
 		unit->AddPower<PowerType::Health>(0);
 

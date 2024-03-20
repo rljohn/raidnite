@@ -13,6 +13,7 @@ class ICombatSystem;
 class IEncounterLog;
 class Map;
 class World;
+class Engine;
 
 struct GameFrame
 {
@@ -58,6 +59,10 @@ public:
 	static void RegisterGameSystem(IGameSystem* system);
 	static void UnregisterGameSystem(IGameSystem* system);
 
+	// Main engine
+	static void SetEngine(Engine* engine);
+	static Engine* GetEngine();
+
 	// System to manage entities
 	static void SetEntityManager(IEntityManager* locator);
 	static IEntityManager* GetEntityManager();
@@ -84,6 +89,7 @@ public:
 
 private:
 
+	static Engine* sm_Engine;
 	static IEntityManager* sm_EntityLocator;
 	static IDamageCalculator* sm_DamageCalculator;
 	static ICombatSystem* sm_CombatSystem;

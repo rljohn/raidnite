@@ -14,6 +14,7 @@ namespace sandbox {
 
 	void MapWidget::Init()
 	{
+		m_Enabled = true;
 	}
 
 	void MapWidget::Draw(GameSandbox* sandbox)
@@ -117,9 +118,9 @@ namespace sandbox {
 		for (size_t idx = 0; idx < group.GetSize(); idx++)
 		{
 			Entity* e = group.GetEntity(idx);
-			if (PositionComponent* p = e->GetComponent<PositionComponent>())
+			if (TransformComponent* transform = e->GetComponent<TransformComponent>())
 			{
-				auto& pos = p->GetPosition();
+				auto& pos = transform->GetPosition();
 				if (pos.GetX() == x && pos.GetY() == y)
 				{
 					return ICON_FK_CIRCLE_O;

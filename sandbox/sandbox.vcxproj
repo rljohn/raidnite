@@ -52,6 +52,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>sandbox/pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -87,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine_widgets.cpp" />
+    <ClCompile Include="log_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map_widgets.cpp" />
     <ClCompile Include="party_widgets.cpp" />
@@ -100,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine_widgets.h" />
+    <ClInclude Include="log_widgets.h" />
     <ClInclude Include="map_widgets.h" />
     <ClInclude Include="party_widgets.h" />
     <ClInclude Include="pch.h" />

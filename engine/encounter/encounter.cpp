@@ -1,11 +1,17 @@
 #include "engine/pch.h"
 #include "encounter.h"
 
+#include <iostream>
+#include <chrono>
+#include <ctime>
+#include <iomanip>
+
 namespace raid
 {
 
 Encounter::Encounter()
 {
+	m_Name[0] = '\0';
 }
 
 void Encounter::Shutdown(EventPool* pool)
@@ -50,6 +56,11 @@ Duration Encounter::GetDuration(const TimeStamp& current) const
 void Encounter::AddEvent(EncounterEvent* evt)
 {
 	m_Events.push_back(evt->m_Node);
+}
+
+void Encounter::UpdateName()
+{
+
 }
 
 } // namespace raid

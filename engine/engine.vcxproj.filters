@@ -114,7 +114,7 @@
     <ClInclude Include="engine.h" />
     <ClInclude Include="system\math\random.h" />
     <ClInclude Include="unit\targeting.h" />
-    <ClInclude Include="entity\position.h" />
+    <ClInclude Include="entity\transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">

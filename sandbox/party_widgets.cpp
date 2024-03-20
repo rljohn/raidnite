@@ -2,7 +2,7 @@
 #include "party_widgets.h"
 
 // engine
-#include "engine/entity/position.h"
+#include "engine/entity/transform.h"
 
 // sandbox
 #include "sandbox_imgui.h"
@@ -17,6 +17,7 @@ extern ImFont* HeHeXD;
 
 void PartyWidget::Init()
 {
+	m_Enabled = true;
 }
 
 void PartyWidget::Draw(GameSandbox* sandbox)
@@ -115,34 +116,34 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 		}
 
 		// POSITION
-		PositionComponent* cPos = unit->GetComponent<PositionComponent>();
-		if (cPos)
+		TransformComponent* transform = unit->GetComponent<TransformComponent>();
+		if (transform)
 		{
-			Position pos = cPos->GetPosition();
+			Position pos = transform->GetPosition();
 			ImGui::Text("Pos: %d,%d", pos.GetX(), pos.GetY());
 			ImGui::SameLine();
 			if (ImGui::Button(ICON_FK_ARROW_LEFT))
 			{
 				pos.SetX(pos.GetX() - 1);
-				cPos->SetPosition(pos);
+				transform->SetPosition(pos);
 			}
 			ImGui::SameLine();
 			if (ImGui::Button(ICON_FK_ARROW_RIGHT))
 			{
 				pos.SetX(pos.GetX() + 1);
-				cPos->SetPosition(pos);
+				transform->SetPosition(pos);
 			}
 			ImGui::SameLine();
 			if (ImGui::Button(ICON_FK_ARROW_UP))
 			{
 				pos.SetY(pos.GetY() - 1);
-				cPos->SetPosition(pos);
+				transform->SetPosition(pos);
 			}
 			ImGui::SameLine();
 			if (ImGui::Button(ICON_FK_ARROW_DOWN))
 			{
 				pos.SetY(pos.GetY() + 1);
-				cPos->SetPosition(pos);
+				transform->SetPosition(pos);
 			}
 		}
 
@@ -158,8 +159,15 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 
 	if (ImGui::Button(ICON_FK_PLUS_CIRCLE "Add Unit"))
 	{
+		Position pos = Position(0, 0);
+		Map* map = raid::Game::GetMap();
+		if (map)
+		{
+			pos = map->GetPlayerSpawnPosition();
+		}
+
 		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity()))
+		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(pos)))
 		{
 			party.AddUnit(unit);
 
@@ -189,11 +197,13 @@ void PartyWidget::Shutdown()
 
 void PartyWidget::AddRandomUnit(GameSandbox* sandbox, int numUnits)
 {
+	Position pos = Position(0, 0);
+
 	raid::Group& party = sandbox->GetParty();
 	for (int i = 0; i < numUnits; i++)
 	{
 		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity()))
+		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(pos)))
 		{
 			party.AddUnit(unit);
 

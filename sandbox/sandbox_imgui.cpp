@@ -60,7 +60,10 @@ void ImGuiFramework::Update()
 	ImGui::NewFrame();
 
 	static bool showDemo = false;
-	ImGui::ShowDemoWindow(&showDemo);
+	if (showDemo)
+	{
+		ImGui::ShowDemoWindow(&showDemo);
+	}
 }
 
 void ImGuiFramework::BeginFrame()

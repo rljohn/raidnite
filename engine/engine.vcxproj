@@ -92,7 +92,7 @@
     <ClInclude Include="entity\component.h" />
     <ClInclude Include="entity\entity.h" />
     <ClInclude Include="entity\name.h" />
-    <ClInclude Include="entity\position.h" />
+    <ClInclude Include="entity\transform.h" />
     <ClInclude Include="game\combat.h" />
     <ClInclude Include="game\combat_common.h" />
     <ClInclude Include="game\game_events.h" />

@@ -28,6 +28,9 @@ public:
 
 private:
 
+	void UpdateName();
+
+	char m_Name[64];
 	TimeStamp m_StartTime;
 	TimeStamp m_EndTime;
 	inlist<EncounterEvent> m_Events;

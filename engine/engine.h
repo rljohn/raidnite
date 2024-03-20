@@ -16,7 +16,7 @@ public:
 	void Update(const TimeStamp& now, const Nanoseconds& duration);
 	void Shutdown();
 
-	int64_t GetFrameCount() { return m_FrameCount; }
+	int64_t GetFrameCount() const { return m_FrameCount; }
 
 private:
 

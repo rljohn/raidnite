@@ -16,7 +16,7 @@ Unit::Unit()
 	, m_Name(AddComponent<NameComponent>())
 	, m_Targeting(AddComponent<TargetingComponent>())
 	, m_Movement(AddComponent<MovementComponent>())
-	, m_Position(AddComponent<PositionComponent>())
+	, m_Transform(AddComponent<TransformComponent>())
 {
 
 }

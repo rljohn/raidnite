@@ -5,11 +5,11 @@
 namespace raid
 {
 
-class PositionComponent : public Component
+class TransformComponent : public Component
 {
 public:
     
-    PositionComponent(Entity& parent)
+    TransformComponent(Entity& parent)
         : Component(parent)
     {
     }

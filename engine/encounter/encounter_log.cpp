@@ -102,6 +102,8 @@ void EncounterLog::OnCombatStart()
 
 		const Frame TODO = 0;
 
+		
+
 		EncounterEvent* start = CreateEvent<EncounterEventType::EncounterStart>(TODO);
 		scheckall(start);
 		m_ActiveEncounter->AddEvent(start);

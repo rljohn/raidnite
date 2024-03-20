@@ -11,6 +11,7 @@
 
 // widgets
 #include "engine_widgets.h"
+#include "log_widgets.h"
 #include "map_widgets.h"
 #include "party_widgets.h"
 
@@ -48,6 +49,7 @@ private:
 	MapWidget m_MapWidgets;
 	PartyWidget m_PartyWidgets;
 	EngineWidget m_EngineWidgets;
+	LogWidget m_LogWidgets;
 };
 
 } // namespace sandbox

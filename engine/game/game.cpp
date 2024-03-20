@@ -4,6 +4,7 @@
 #include "engine/entity/entity.h"
 #include "engine/game/damage.h"
 #include "engine/game/combat.h"
+#include "engine/engine.h"
 
 namespace raid
 {
@@ -14,6 +15,7 @@ IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
 IEncounterLog* Game::sm_EncounterLog = nullptr;
 Map* Game::sm_Map = nullptr;
+Engine* Game::sm_Engine = nullptr;
 
 GameEventDelegate Game::sm_GameEventDlgt;
 
@@ -44,6 +46,16 @@ void Game::RegisterGameSystem(IGameSystem* system)
 void Game::UnregisterGameSystem(IGameSystem* system)
 {
 	VectorRemove(sm_GameSystems, system);
+}
+
+void Game::SetEngine(Engine* engine)
+{
+	sm_Engine = engine;
+}
+
+Engine* Game::GetEngine()
+{
+	return sm_Engine;
 }
 
 void Game::SetEntityManager(IEntityManager* locator)

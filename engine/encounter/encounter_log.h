@@ -14,7 +14,9 @@ class Encounter;
 
 class IEncounterLog
 {
+public:
 
+	virtual const std::vector<Encounter*>& GetEncounterList() const = 0;
 };
 
 class EncounterLog : public IEncounterLog
@@ -33,7 +35,7 @@ public:
 
 	void OnGameEvent(const GameEvent* evt);
 
-	const std::list<Encounter*>& GetEncounterList() const 
+	const std::vector<Encounter*>& GetEncounterList() const  override
 	{ 
 		return m_Encounters; 
 	}
@@ -67,7 +69,7 @@ private:
 	EventPool* m_EventPool;
 
 	GameEventDelegate::Function m_OnGameEvent;
-	std::list<Encounter*> m_Encounters;
+	std::vector<Encounter*> m_Encounters;
 };
 
 }
