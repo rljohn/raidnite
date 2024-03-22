@@ -16,10 +16,10 @@ public:
 	Encounter();
 	void Shutdown(EventPool* pool);
 
-	void Begin(const TimeStamp& current = Time::GetCurrent());
-	void End(const TimeStamp& current = Time::GetCurrent());
+	void Begin(const Frame frame);
+	void End(const Frame frame);
 	
-	Duration GetDuration(const TimeStamp& current = Time::GetCurrent()) const;
+	Frame GetDuration(const Frame current) const;
 
 	inlist<EncounterEvent>& GetEvents() { return m_Events; }
 	const inlist<EncounterEvent>& GetEvents() const { return m_Events; }
@@ -31,8 +31,8 @@ private:
 	void UpdateName();
 
 	char m_Name[64];
-	TimeStamp m_StartTime;
-	TimeStamp m_EndTime;
+	Frame m_StartFrame;
+	Frame m_EndFrame;
 	inlist<EncounterEvent> m_Events;
 };
 

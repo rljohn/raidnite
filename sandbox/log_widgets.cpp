@@ -25,6 +25,8 @@ void LogWidget::Draw(GameSandbox* sandbox)
 		return;
 
 	const std::vector<Encounter*>& encounters = log->GetEncounterList();
+	if (encounters.size() == 0)
+		return;
 
 	int count = (int)(encounters.size() - 1);
 	m_EncounterIndex = std::clamp(m_EncounterIndex, 0, count);

@@ -11,6 +11,7 @@ namespace raid
 EncounterLog::EncounterLog()
 	: m_ActiveEncounter(nullptr)
 	, m_EventPool(nullptr)
+	, m_StartFrame(0)
 {
 }
 
@@ -126,6 +127,11 @@ void EncounterLog::OnCombatEnd()
 	}
 
 	m_ActiveEncounter = nullptr;
+}
+
+void EncounterLog::Begin(const GameFrame& frame)
+{
+	m_StartFrame = frame.Frame;
 }
 
 void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)

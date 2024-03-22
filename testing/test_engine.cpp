@@ -49,3 +49,30 @@ TEST(EngineTest, TimeSteps)
 
 	Game::UnregisterGameSystem(&tmp);
 }
+
+float RoundToSeconds(const Milliseconds& ms)
+{
+	float seconds = static_cast<float>(ms.count()) / 1000.0f;
+	return roundf(seconds * 100.0f) / 100.0f;
+}
+
+TEST(EngineTest, TimeFrames)
+{
+	const std::chrono::nanoseconds frameTime(16666666);
+
+	Engine e;
+	e.Init(frameTime);
+
+	Frame frames = 60;
+	Milliseconds ms = e.FramesToMillis(frames);
+	EXPECT_EQ(ms.count(), 999);
+
+	float seconds = RoundToSeconds(ms);
+	EXPECT_FLOAT_EQ(seconds, 1);
+
+	frames = 61;
+	ms = e.FramesToMillis(frames);
+	EXPECT_EQ(ms.count(), 1016);
+	seconds = RoundToSeconds(ms);
+	EXPECT_FLOAT_EQ(seconds, 1.02f);
+}

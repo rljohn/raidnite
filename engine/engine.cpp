@@ -48,5 +48,11 @@ void Engine::Update(const TimeStamp& now, const Nanoseconds& duration)
 	m_LastUpdate = now;
 }
 
+Milliseconds Engine::FramesToMillis(const Frame frames) const
+{
+	Nanoseconds nanos = m_TimeStep * frames;
+	return std::chrono::duration_cast<Milliseconds>(nanos);
+}
+
 
 } // namespace raid

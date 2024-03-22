@@ -198,6 +198,11 @@ void PartyWidget::Shutdown()
 void PartyWidget::AddRandomUnit(GameSandbox* sandbox, int numUnits)
 {
 	Position pos = Position(0, 0);
+	Map* map = raid::Game::GetMap();
+	if (map)
+	{
+		pos = map->GetPlayerSpawnPosition();
+	}
 
 	raid::Group& party = sandbox->GetParty();
 	for (int i = 0; i < numUnits; i++)

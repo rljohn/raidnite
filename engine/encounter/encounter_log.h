@@ -35,10 +35,12 @@ public:
 
 	void OnGameEvent(const GameEvent* evt);
 
-	const std::vector<Encounter*>& GetEncounterList() const  override
+	const std::vector<Encounter*>& GetEncounterList() const override
 	{ 
 		return m_Encounters; 
 	}
+
+	void Begin(const GameFrame& frame);
 
 private:
 
@@ -70,6 +72,7 @@ private:
 
 	GameEventDelegate::Function m_OnGameEvent;
 	std::vector<Encounter*> m_Encounters;
+	Frame m_StartFrame;
 };
 
 }

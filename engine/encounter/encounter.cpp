@@ -10,6 +10,8 @@ namespace raid
 {
 
 Encounter::Encounter()
+	: m_StartFrame(0)
+	, m_EndFrame(0)
 {
 	m_Name[0] = '\0';
 }
@@ -24,32 +26,32 @@ void Encounter::Shutdown(EventPool* pool)
 	}
 }
 
-void Encounter::Begin(const TimeStamp& current)
+void Encounter::Begin(const Frame current)
 {
-	m_StartTime = current;
+	m_StartFrame = current;
 }
 
-void Encounter::End(const TimeStamp& current)
+void Encounter::End(const Frame current)
 {
-	m_EndTime = current;
+	m_EndFrame = current;
 }
 
-Duration Encounter::GetDuration(const TimeStamp& current) const
+Frame Encounter::GetDuration(const Frame current) const
 {
-	if (Time::IsInitialized(m_StartTime))
+	if (m_StartFrame != 0)
 	{
-		if (Time::IsInitialized(m_EndTime))
+		if (m_EndFrame != 0)
 		{
-			return (m_EndTime - m_StartTime);
+			return (m_EndFrame - m_StartFrame);
 		}
 		else
 		{
-			return current - m_StartTime;
+			return current - m_StartFrame;
 		}
 	}
 	else
 	{
-		return Duration();
+		return 0;
 	}
 }
 

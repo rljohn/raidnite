@@ -14,7 +14,6 @@ TEST(EncounterAbilityCast, EncounterTests)
 	SpellId spellId = 5;
 	PlayerId source = 10;
 	PlayerId target = 15;
-	TimeStamp now = Time::GetCurrent();
 
 	EncounterEvent start;
 	EncounterEvents::OnAbilityStart(start, spellId);
@@ -25,28 +24,26 @@ TEST(EncounterAbilityCast, EncounterTests)
 
 TEST(EncounterStartStop, EncounterTests)
 {
-	TimeStamp now = Time::GetCurrent();
-
-	Duration empty = Duration();
+	Frame now = 1;
 
 	// Non-started encounter should have empty duration
 	Encounter encounter;
-	Duration d1 = encounter.GetDuration(now);
-	EXPECT_EQ(d1, empty);
+	Frame d1 = encounter.GetDuration(now);
+	EXPECT_EQ(d1, 0);
 
-	// Begin the encounter: duraiton should remain empty
+	// Begin the encounter: duration should remain empty
 	encounter.Begin(now);
-	Duration d2 = encounter.GetDuration(now);
-	EXPECT_EQ(d2, empty);
+	Frame d2 = encounter.GetDuration(now);
+	EXPECT_EQ(d2, 0);
 
-	// Add 1 seconds of time and end encounter
-	Time::Add(now, Seconds(1));
+	// Add 10 frames and end encounter
+	now += 10;
 	encounter.End(now);
 
-	// Duration should now be 1 second
-	Duration d3 = encounter.GetDuration(now);
-	Seconds s3 = Time::ToSeconds(d3);
-	EXPECT_EQ(s3, Seconds(1));
+	// Duration should now be 10 frames.
+	// Engine can convert this to time.
+	Frame d3 = encounter.GetDuration(now);
+	EXPECT_EQ(d3, 10);
 }
 
 /////////////////////////////////////////

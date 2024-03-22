@@ -19,10 +19,8 @@ Engine* Game::sm_Engine = nullptr;
 
 GameEventDelegate Game::sm_GameEventDlgt;
 
-
 void Game::Init()
 {
-
 }
 
 void Game::Update(const GameFrame& frame)

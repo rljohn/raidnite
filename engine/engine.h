@@ -18,6 +18,8 @@ public:
 
 	int64_t GetFrameCount() const { return m_FrameCount; }
 
+	Milliseconds FramesToMillis(const Frame frames) const;
+
 private:
 
 	int64_t m_FrameCount;
