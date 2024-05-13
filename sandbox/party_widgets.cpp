@@ -33,11 +33,15 @@ void PartyWidget::Draw(GameSandbox* sandbox)
 		{
 			sandbox->GetParty().Init(m_PartySize);
 		}
-		ImGui::SameLine();
-		if (ImGui::Button("Quick Party"))
+
+		if (raid::Game::GetMap())
 		{
-			sandbox->GetParty().Init(m_PartySize);
-			AddRandomUnit(sandbox, m_PartySize);
+			ImGui::SameLine();
+			if (ImGui::Button("Quick Party"))
+			{
+				sandbox->GetParty().Init(m_PartySize);
+				AddRandomUnit(sandbox, m_PartySize);
+			}
 		}
 	}
 }
@@ -157,32 +161,35 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 	ImGui::InputText("Title Prefix", m_TitlePrefixBuf, COUNTOF(m_TitlePrefixBuf));
 	ImGui::InputText("Title Suffix", m_TitleSuffixBuf, COUNTOF(m_TitleSuffixBuf));
 
-	if (ImGui::Button(ICON_FK_PLUS_CIRCLE "Add Unit"))
+	if (raid::Game::GetMap())
 	{
-		Position pos = Position(0, 0);
-		Map* map = raid::Game::GetMap();
-		if (map)
+		if (ImGui::Button(ICON_FK_PLUS_CIRCLE "Add Unit"))
 		{
-			pos = map->GetPlayerSpawnPosition();
+			Position pos = Position(0, 0);
+			Map* map = raid::Game::GetMap();
+			if (map)
+			{
+				pos = map->GetPlayerSpawnPosition();
+			}
+
+			raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
+			if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(pos)))
+			{
+				party.AddUnit(unit);
+
+				NameComponent& names = unit->GetName();
+				names.SetName(m_NameBuf);
+				names.SetTag(m_TagBuf);
+				names.SetTitlePrefix(m_TitlePrefixBuf);
+				names.SetTitleSuffix(m_TitleSuffixBuf);
+			}
 		}
 
-		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(pos)))
+		ImGui::SameLine();
+		if (ImGui::Button("Add Random Unit"))
 		{
-			party.AddUnit(unit);
-
-			NameComponent& names = unit->GetName();
-			names.SetName(m_NameBuf);
-			names.SetTag(m_TagBuf);
-			names.SetTitlePrefix(m_TitlePrefixBuf);
-			names.SetTitleSuffix(m_TitleSuffixBuf);
+			AddRandomUnit(sandbox, 1);
 		}
-	}
-
-	ImGui::SameLine();
-	if (ImGui::Button("Add Random Unit"))
-	{
-		AddRandomUnit(sandbox, 1);
 	}
 
 	if (ImGui::Button("Destroy Party"))

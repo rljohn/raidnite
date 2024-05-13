@@ -115,6 +115,7 @@
     <ClInclude Include="system\math\random.h" />
     <ClInclude Include="unit\targeting.h" />
     <ClInclude Include="entity\transform.h" />
+    <ClInclude Include="game\game_instance.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -182,5 +183,6 @@
     <ClCompile Include="unit\spawner.cpp" />
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="unit\targeting.cpp" />
+    <ClCompile Include="game\game_instance.cpp" />
   </ItemGroup>
 </Project>

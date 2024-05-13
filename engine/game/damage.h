@@ -1,7 +1,6 @@
 #pragma once
 
 #include "engine/game/combat_common.h"
-#include "engine/game/game_events.h"
 #include "engine/entity/component.h"
 #include "engine/system/delegate.h"
 #include "engine/unit/power.h"
@@ -11,6 +10,7 @@ namespace raid
 {
 
 	class PowerComponent;
+	struct DamageEvent;
 
 	class DamageReceiver : public Component
 	{

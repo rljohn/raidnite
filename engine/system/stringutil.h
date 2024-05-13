@@ -13,5 +13,10 @@ inline bool NullOrEmpty(const char* str)
 	return (str == nullptr) || (str[0] == '\0');
 }
 
+inline void StringSetEmpty(char* str)
+{
+	str[0] = '\0';
+}
+
 } // namespace raid
 } // namespace raid

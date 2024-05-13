@@ -1,5 +1,6 @@
 #include "engine/pch.h"
 #include "engine/game/damage.h"
+#include "engine/game/game_events.h"
 
 namespace raid
 {

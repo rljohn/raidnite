@@ -14,6 +14,7 @@ class IEncounterLog;
 class Map;
 class World;
 class Engine;
+class GameInstance;
 
 struct GameFrame
 {
@@ -24,6 +25,8 @@ struct GameFrame
 enum class GameEventType
 {
 	Invalid = 0,
+	GameStart,
+	GameEnd,
 	ZoneEnter,
 	ZoneExit,
 	CombatStart,

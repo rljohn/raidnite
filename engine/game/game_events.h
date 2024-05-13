@@ -8,6 +8,16 @@
 namespace raid
 {
 
+struct GameStartEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::GameStart; }
+};
+
+struct GameEndEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::GameEnd; }
+};
+
 struct ZoneEnterEvent : public GameEvent
 {
 	virtual GameEventType GetType() const { return GameEventType::ZoneEnter; }

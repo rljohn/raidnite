@@ -15,6 +15,7 @@ void GameSandbox::Init()
 	Nanoseconds timeStep(16666666);
 	m_Engine.Init(timeStep);
 
+	Game::RegisterGameSystem(&m_GameInstance);
 	Game::SetEntityManager(&m_World);
 	Game::SetEncounterLog(&m_EncounterLog);
 	Game::SetDamageCalculator(&m_DamageCalculator);
@@ -24,6 +25,7 @@ void GameSandbox::Init()
 	m_Widgets.push_back(&m_MapWidgets);
 	m_Widgets.push_back(&m_PartyWidgets);
 	m_Widgets.push_back(&m_LogWidgets);
+	m_Widgets.push_back(&m_GameInstanceWidgets);
 
 	for (Widget* w : m_Widgets)
 	{

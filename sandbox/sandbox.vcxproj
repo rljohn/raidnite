@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine_widgets.cpp" />
+    <ClCompile Include="game_instance_widgets.cpp" />
     <ClCompile Include="log_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map_widgets.cpp" />
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine_widgets.h" />
+    <ClInclude Include="game_instance_widgets.h" />
     <ClInclude Include="log_widgets.h" />
     <ClInclude Include="map_widgets.h" />
     <ClInclude Include="party_widgets.h" />
