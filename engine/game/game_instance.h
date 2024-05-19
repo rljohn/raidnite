@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/game/game.h"
+#include "engine/game/loading.h"
 
 namespace raid
 {
@@ -8,16 +9,16 @@ namespace raid
 enum class GameState
 {
 	None,
-	LoadingGame,
+	Loading,
 	Active,
 	EndGame,
+	FatalError
 };
 
-enum class MapState
+enum class LoadType
 {
-	None,
-	LoadingMap,
-	Active
+	Starting,
+	Ending
 };
 
 class GameInstance : public IGameSystem
@@ -25,24 +26,33 @@ class GameInstance : public IGameSystem
 
 public:
 
+	void Init(std::shared_ptr< ILoadDelegate> loadDlgt);
 	void Update(const GameFrame& frame) override;
+	void Shutdown();
+	void Reset();
 
 	GameState GetGameState() const { return m_GameState; }
-	void BeginLoadGame();
-	void EndLoadGame();
-	void StartGame();
-	void EndGame();
 
-	MapState GetMapState() const { return m_MapState; }
-	void BeginLoadMap();
-	void EndLoadMap();
+	bool BeginLoadGame(const LoadContext& context);
+	void StartGame();
+
+	bool BeginEndGame(const LoadContext& context);
+	void EndGame();
 	
 private:
 
+	bool Load(const LoadContext& context);
+
+	void SetGameState(GameState state);
 	void UpdateState(const GameFrame& frame);
 
+	void UpdateGameLoad(const GameFrame& frame);
+	void UpdateGameActive(const GameFrame& frame);
+	void UpdateGameEnd(const GameFrame& frame);
+
+	std::shared_ptr<ILoadDelegate> m_LoadDelegate;
 	GameState m_GameState;
-	MapState m_MapState;
+	LoadType m_LoadType;
 };
 
 } // namespace raid

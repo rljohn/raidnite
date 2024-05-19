@@ -15,7 +15,7 @@ namespace sandbox {
 
 void LogWidget::Init()
 {
-	m_Enabled = true;
+	SetEnabled(true);
 }
 
 void LogWidget::Draw(GameSandbox* sandbox)

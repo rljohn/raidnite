@@ -8,6 +8,7 @@
 // engine
 #include "engine/game/game.h"
 #include "engine/game/game_instance.h"
+#include "engine/game/loading.h"
 #include "engine/system/stringutil.h"
 
 namespace raid {
@@ -22,16 +23,18 @@ GameInstanceWidget::GameInstanceWidget()
 
 void GameInstanceWidget::Init()
 {
+	SetEnabled(true);
+	m_LoadDlgt = std::make_shared<LoadDlgt>();
 }
 
 void GameInstanceWidget::Draw(GameSandbox* sandbox)
 {
 	DrawGameStateWidgets(sandbox);
-	DrawMapStateWidgets(sandbox);
 }
 
 void GameInstanceWidget::Shutdown()
 {
+	m_LoadDlgt = nullptr;
 }
 
 static const char* LogState(GameState state)
@@ -40,7 +43,7 @@ static const char* LogState(GameState state)
 	{
 	case GameState::None:
 		return "None";
-	case GameState::LoadingGame:
+		case GameState::Loading:
 		return "Loading";
 	case GameState::Active:
 		return "Active";
@@ -61,11 +64,14 @@ void GameInstanceWidget::DrawGameStateWidgets(GameSandbox* sandbox)
 		case GameState::None:
 			DrawGameStateWidgets_None(instance);
 			break;
-		case GameState::LoadingGame:
+		case GameState::Loading:
+			DrawGameStateWidgets_Loading(instance);
 			break;
 		case GameState::Active:
+			DrawGameStateWidgets_Active(instance);
 			break;
 		case GameState::EndGame:
+			DrawGameStateWidgets_End(instance);
 			break;
 	}
 }
@@ -76,14 +82,50 @@ void GameInstanceWidget::DrawGameStateWidgets_None(GameInstance& instance)
 
 	if (ImGui::Button("Begin Game"))
 	{
+		instance.Init(std::static_pointer_cast<raid::ILoadDelegate>(m_LoadDlgt));
 
+		raid::LoadContext ctx;
+		ctx.MapName = m_MapName;
+		ctx.LevelScript = "";
+		instance.BeginLoadGame(ctx);
 	}
 }
 
-void GameInstanceWidget::DrawMapStateWidgets(GameSandbox* sandbox)
+void GameInstanceWidget::DrawGameStateWidgets_Loading(GameInstance& instance)
 {
-
+	if (!m_LoadDlgt->IsMapLoaded())
+	{
+		if (ImGui::Button("OnMapLoaded"))
+		{
+			m_LoadDlgt->OnMapLoaded();
+		}
+	}
+	else if (!m_LoadDlgt->IsGameLoaded())
+	{
+		if (ImGui::Button("OnGameLoaded"))
+		{
+			m_LoadDlgt->OnGameLoaded();
+		}
+	}
 }
+
+void GameInstanceWidget::DrawGameStateWidgets_Active(GameInstance& instance)
+{
+	if (ImGui::Button("End Game"))
+	{
+		raid::LoadContext ctx;
+		instance.BeginEndGame(ctx);
+	}
+}
+
+void GameInstanceWidget::DrawGameStateWidgets_End(GameInstance& instance)
+{
+	if (ImGui::Button("Reset"))
+	{
+		instance.Reset();
+	}
+}
+
 
 } // namespace sandbox
 } // namespace raid

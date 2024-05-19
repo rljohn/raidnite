@@ -116,6 +116,7 @@
     <ClInclude Include="unit\targeting.h" />
     <ClInclude Include="entity\transform.h" />
     <ClInclude Include="game\game_instance.h" />
+    <ClInclude Include="game\loading.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -184,5 +185,6 @@
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="unit\targeting.cpp" />
     <ClCompile Include="game\game_instance.cpp" />
+    <ClCompile Include="game\loading.cpp" />
   </ItemGroup>
 </Project>
