@@ -32,7 +32,7 @@ TEST(EncounterStartStop, EncounterTests)
 	EXPECT_EQ(d1, 0);
 
 	// Begin the encounter: duration should remain empty
-	encounter.Begin(now);
+	encounter.Begin(now, false);
 	Frame d2 = encounter.GetDuration(now);
 	EXPECT_EQ(d2, 0);
 

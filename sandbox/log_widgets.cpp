@@ -28,23 +28,13 @@ void LogWidget::Draw(GameSandbox* sandbox)
 	if (encounters.size() == 0)
 		return;
 
-	int count = (int)(encounters.size() - 1);
-	m_EncounterIndex = std::clamp(m_EncounterIndex, 0, count);
-
-	int idx = 0;
-	const char* previewValue = "";
-	if (ImGui::BeginCombo("Encounters", previewValue))
+	for (const Encounter* e : encounters)
 	{
-		for (Encounter* encounter : encounters)
+		if (ImGui::TreeNode(e->GetName()))
 		{
-			
-			idx++;
+
 		}
-
-		ImGui::EndCombo();
 	}
-
-	Encounter* encounter = encounters[m_EncounterIndex];
 	
 }
 

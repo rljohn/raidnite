@@ -3,7 +3,9 @@
 
 #include "engine/encounter/encounter.h"
 #include "engine/game/combat.h"
+#include "engine/system/log/logging.h"
 #include "engine/system/check.h"
+#include "engine/engine.h"
 
 namespace raid
 {
@@ -45,7 +47,23 @@ Encounter* EncounterLog::CreateEncounter()
 	}
 	
 	return m_ActiveEncounter;
-}	
+}
+
+bool EncounterLog::AddEvent(EncounterEvent * evt)
+{
+	mainAssert(evt);
+	mainAssert(m_ActiveEncounter);
+
+	if (m_ActiveEncounter && evt)
+	{
+		m_ActiveEncounter->AddEvent(evt);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 void EncounterLog::Clear()
 {
@@ -62,6 +80,12 @@ void EncounterLog::OnGameEvent(const GameEvent* evt)
 {
 	switch (evt->GetType())
 	{
+	case GameEventType::GameStart:
+		OnGameStart();
+		break;
+	case GameEventType::GameEnd:
+		OnGameEnd();
+		break;
 	case GameEventType::ZoneEnter:
 		OnZoneEnter(); 
 		break;
@@ -85,53 +109,66 @@ void EncounterLog::OnGameEvent(const GameEvent* evt)
 	}
 }
 
-void EncounterLog::OnZoneEnter()
-{
-}
-
-void EncounterLog::OnZoneExit()
-{
-
-}
-
-void EncounterLog::OnCombatStart()
+void EncounterLog::OnGameStart()
 {
 	stry
 	{
 		CreateEncounter();
 		scheckall(m_ActiveEncounter);
+		m_ActiveEncounter->Begin(GetFrame(), false);
 
-		const Frame TODO = 0;
-
-		
-
-		EncounterEvent* start = CreateEvent<EncounterEventType::EncounterStart>(TODO);
+		EncounterEvent* start = CreateEvent<EncounterEventType::GameStart>();
 		scheckall(start);
 		m_ActiveEncounter->AddEvent(start);
+
+		m_StartFrame = GetFrame();
 	}
 	sfinally
 	{
 	}
 }
 
-void EncounterLog::OnCombatEnd()  
+void EncounterLog::OnGameEnd()
 {
+	mainAssert(m_ActiveEncounter);
 	if (m_ActiveEncounter)
 	{
-		const Frame TODO = 0;
-
-		if (EncounterEvent* end = CreateEvent<EncounterEventType::EncounterEnd>(TODO))
-		{
-			m_ActiveEncounter->AddEvent(end);
-		}
+		AddEvent<EncounterEventType::GameEnd>(); 
+		m_ActiveEncounter->End(GetFrame());
+		m_ActiveEncounter = nullptr;
 	}
-
-	m_ActiveEncounter = nullptr;
 }
 
-void EncounterLog::Begin(const GameFrame& frame)
+void EncounterLog::OnZoneEnter()
 {
-	m_StartFrame = frame.Frame;
+	AddEvent<EncounterEventType::ZoneEnter>();
+}
+
+void EncounterLog::OnZoneExit()
+{
+	AddEvent<EncounterEventType::ZoneExit>();
+}
+
+Frame EncounterLog::GetFrame() const
+{
+	if (Engine* engine = Game::GetEngine())
+	{
+		return engine->GetFrameCount();
+	}
+
+	return 0;
+}
+
+void EncounterLog::OnCombatStart()
+{
+	CreateEncounter();
+	AddEvent<EncounterEventType::EncounterStart>();
+}
+
+void EncounterLog::OnCombatEnd()  
+{
+	AddEvent<EncounterEventType::EncounterEnd>();
+	m_ActiveEncounter = nullptr;
 }
 
 void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)
@@ -142,6 +179,17 @@ void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)
 void EncounterLog::OnDamageEvent(const DamageEvent* damageEvent)
 {
 
+}
+
+Milliseconds EncounterLog::GetTimeSince(const Frame frame) const
+{
+	if (Engine* engine = Game::GetEngine())
+	{
+		Frame duration = frame - m_StartFrame;
+		return engine->FramesToMillis(duration);
+	}
+
+	return Milliseconds(0);
 }
 
 } // namespace raid

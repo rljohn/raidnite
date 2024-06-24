@@ -6,6 +6,7 @@
 #include "engine/system/inlist.h"
 #include "engine/system/pool.h"
 #include "engine/encounter/event.h"
+#include "engine/system/log/log_channels.h"
 
 namespace raid
 {
@@ -42,8 +43,12 @@ public:
 
 	void Begin(const GameFrame& frame);
 
+	Milliseconds GetTimeSince(const Frame frame) const;
+
 private:
 
+	void OnGameStart();
+	void OnGameEnd();
 	void OnZoneEnter();
 	void OnZoneExit();
 	void OnCombatStart();
@@ -52,9 +57,27 @@ private:
 	void OnDamageEvent(const DamageEvent* damageEvent);
 
 	template <EncounterEventType T>
-	EncounterEvent* CreateEvent(const Frame frame)
+	EncounterEvent* CreateEvent()
 	{
-		return EncounterEvents::CreateEvent<T>(frame, m_EventPool);
+		return EncounterEvents::CreateEvent<T>(GetFrame(), m_EventPool);
+	}
+
+	bool AddEvent(EncounterEvent* evt);
+
+	template <EncounterEventType T>
+	EncounterEvent* AddEvent()
+	{
+		EncounterEvent* evt = nullptr;
+		if (evt = CreateEvent<T>())
+		{
+			if (!AddEvent(evt))
+			{
+				delete evt;
+				evt = nullptr;
+			}
+		}
+
+		return evt;
 	}
 
 	EncounterEvent* LoadEvent()
@@ -66,6 +89,8 @@ private:
 
 		return nullptr;
 	}
+
+	Frame GetFrame() const;
 
 	Encounter* m_ActiveEncounter;
 	EventPool* m_EventPool;

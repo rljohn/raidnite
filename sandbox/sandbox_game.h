@@ -6,6 +6,7 @@
 #include "engine/game/game_instance.h"
 #include "engine/game/world.h"
 #include "engine/game/combat.h"
+#include "engine/system/pool.h"
 #include "engine/unit/group.h"
 #include "engine/unit/spawner.h"
 #include "engine/encounter/encounter_log.h"
@@ -18,6 +19,8 @@
 #include "game_instance_widgets.h"
 
 namespace raid {
+class Logger;
+
 namespace sandbox {
 
 class GameSandbox
@@ -43,6 +46,7 @@ private:
 	raid::DamageCalculator m_DamageCalculator;
 	raid::CombatSystem m_CombatSystem;
 	raid::GameInstance m_GameInstance;
+	raid::Logger* m_Logger;
 
 	// Game
 	raid::Group m_Party;
@@ -55,6 +59,11 @@ private:
 	EngineWidget m_EngineWidgets;
 	LogWidget m_LogWidgets;
 	GameInstanceWidget m_GameInstanceWidgets;
+
+	// 256,000 events - tweak as needed
+	static const int ENCOUNTER_POOL_SIZE = 256 * 1024;
+	using EventPool = IntrusivePool<EncounterEvent, ENCOUNTER_POOL_SIZE>;
+	EventPool* m_EventPool;
 };
 
 } // namespace sandbox

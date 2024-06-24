@@ -87,11 +87,8 @@ TEST_F(LoggingTest, FrameNumber)
 
 	{
 		LoggerRAII raii(logger);
-
-		LogSystem::ResetTickCount();
 		for (int i = 0; i < 100; i++)
 		{
-			LogSystem::Tick();
 			mainDisplay("Spam: {}", i);
 		}
 	}

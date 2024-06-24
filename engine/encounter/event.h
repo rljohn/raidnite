@@ -14,15 +14,19 @@ namespace raid
 enum EncounterEventType
 {
 	Invalid = 0,
-	EncounterStart = 1,
-	EncounterEnd = 2,
-	AbilityStart = 3,
-	AbilityEnd = 4,
-	HealthChanged = 5,
-	ManaChanged = 6,
-	AuraGained = 7,
-	AuraRefreshed = 8,
-	AuraRemoved = 9
+	GameStart,
+	GameEnd,
+	ZoneEnter,
+	ZoneExit,
+	EncounterStart,
+	EncounterEnd,
+	AbilityStart,
+	AbilityEnd,
+	HealthChanged,
+	ManaChanged,
+	AuraGained,
+	AuraRefreshed,
+	AuraRemoved,
 };
 
 struct EncounterEvent

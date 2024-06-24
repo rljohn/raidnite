@@ -10,6 +10,8 @@
 #include "thirdparty/spdlog/spdlog.h"
 #include "thirdparty/spdlog/sinks/basic_file_sink.h"
 
+#define MSVC_LOGGER (_DEBUG)
+
 namespace raid
 {
 
@@ -25,35 +27,38 @@ public:
 	template<typename... Args>
 	bool LogMessage(const LogChannel& channel, LogSeverity severity, const char* format, Args&&... args)
 	{
-		if (!m_SpdLog)
-			return false;
-
 		if (channel.Severity < severity)
 			return false;
 
-		switch(severity)
+		for (auto& logger : m_Loggers)
 		{
+			if (logger == nullptr)
+				continue;
+
+			switch (severity)
+			{
 			case LogSeverity::Fatal:
-				m_SpdLog->critical(format, std::forward<Args>(args)...);
+				logger->critical(format, std::forward<Args>(args)...);
 				break;
 			case LogSeverity::Display:
-				m_SpdLog->info(format, std::forward<Args>(args)...);
+				logger->info(format, std::forward<Args>(args)...);
 				break;
 			case LogSeverity::Error:
-				m_SpdLog->error(format, std::forward<Args>(args)...);
+				logger->error(format, std::forward<Args>(args)...);
 				break;
 			case LogSeverity::Assert:
-				m_SpdLog->error(format, std::forward<Args>(args)...);
+				logger->error(format, std::forward<Args>(args)...);
 				break;
 			case LogSeverity::Warning:
-				m_SpdLog->warn(format, std::forward<Args>(args)...);
+				logger->warn(format, std::forward<Args>(args)...);
 				break;
 			case LogSeverity::Verbose:
-				m_SpdLog->debug(format, std::forward<Args>(args)...);
+				logger->debug(format, std::forward<Args>(args)...);
 				break;
 			case LogSeverity::VeryVerbose:
-				m_SpdLog->trace(format, std::forward<Args>(args)...);
+				logger->trace(format, std::forward<Args>(args)...);
 				break;
+			}
 		}
 
 		return true;
@@ -62,8 +67,7 @@ public:
 private:
 
 	void PrintStartupMessage();
-
-	std::shared_ptr<spdlog::logger> m_SpdLog;
+	std::array<std::shared_ptr<spdlog::logger>, 2> m_Loggers;
 	std::string m_Name;
 };
 
@@ -77,16 +81,11 @@ public:
 	static Logger* GetDefaultLogger();
 
 	static void AssertBreakMsg(const char* msg);
-
-	static void ResetTickCount();
-	static int64_t GetTickCount();
-	static void Tick();
 	
 
 private:
 
 	static Logger* sm_DefaultLogger;
-	static int64_t sm_TickCount;
 };
 
 struct LoggerRAII

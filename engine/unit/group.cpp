@@ -17,7 +17,8 @@ Group::Group(int size)
 
 void Group::Init(int size)
 {
-    unitAssert(IsEmpty(), "Group::Init - Group must be empty");
+    unitAssertf(IsEmpty(), "Group::Init - Group must be empty");
+
     m_List.clear();
     m_List.reserve(size);
 }

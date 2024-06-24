@@ -15,8 +15,12 @@
 #include <algorithm>
 #include <utility>
 
+#undef CreateEvent
+
 #include "engine/entity/component.h"
 #include "engine/entity/entity.h"
+#include "engine/system/log/logging.h"
+#include "engine/system/log/log_channels.h"
 #include "engine/unit/buff.h"
 #include "engine/unit/power.h"
 #include "engine/system/stringutil.h"

@@ -34,6 +34,8 @@ bool GameInstance::BeginLoadGame(const LoadContext& context)
 
 void GameInstance::StartGame()
 {
+	mainVerbose("GameInstance::StartGame");
+
 	GameStartEvent e;
 	Game::DispatchGameEvent(&e);
 }
@@ -61,6 +63,8 @@ bool GameInstance::Load(const LoadContext& context)
 
 void GameInstance::EndGame()
 {
+	mainVerbose("GameInstance::EndGame");
+
 	GameEndEvent e;
 	Game::DispatchGameEvent(&e);
 }
@@ -84,7 +88,7 @@ void GameInstance::SetGameState(GameState state)
 	if (m_GameState == state)
 		return;
 
-	mainDisplay("SetGameState::%s", GameStateToString(state));
+	mainDisplay("SetGameState::{}", GameStateToString(state));
 	m_GameState = state;
 }
 
@@ -122,10 +126,12 @@ void GameInstance::UpdateGameLoad(const GameFrame& frame)
 		{
 			if (m_LoadType == LoadType::Starting)
 			{
+				StartGame();
 				SetGameState(GameState::Active);
 			}
 			else
 			{
+				EndGame();
 				SetGameState(GameState::EndGame);
 			}
 		}

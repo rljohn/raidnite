@@ -11,6 +11,8 @@ void ILoadDelegate::Reset()
 
 bool ILoadDelegate::BeginLoadGame(const LoadContext& ctx)
 {
+	mainVerbose("BeginLoadGame: Map: {}, LevelScript: {}", ctx.MapName, ctx.LevelScript);
+
 	Reset();
 	return LoadGameData(ctx);
 }

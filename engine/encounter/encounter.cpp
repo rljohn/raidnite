@@ -12,6 +12,7 @@ namespace raid
 Encounter::Encounter()
 	: m_StartFrame(0)
 	, m_EndFrame(0)
+	, m_IsCombat(false)
 {
 	m_Name[0] = '\0';
 }
@@ -26,9 +27,10 @@ void Encounter::Shutdown(EventPool* pool)
 	}
 }
 
-void Encounter::Begin(const Frame current)
+void Encounter::Begin(const Frame current, bool isCombat)
 {
 	m_StartFrame = current;
+	m_IsCombat = isCombat;
 }
 
 void Encounter::End(const Frame current)

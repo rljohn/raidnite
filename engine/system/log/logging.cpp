@@ -1,8 +1,10 @@
 #include "engine/pch.h"
+#include "engine/engine.h"
 #include "engine/system/log/logging.h"
 #include "engine/game/game.h"
 
 #include "spdlog/pattern_formatter.h"
+#include "spdlog/sinks/msvc_sink.h"
 
 namespace raid
 {
@@ -13,7 +15,13 @@ public:
 
 	void format(const spdlog::details::log_msg&, const std::tm&, spdlog::memory_buf_t& dest) override
 	{
-		std::string str = std::to_string(LogSystem::GetTickCount());
+		Frame frame = 0;
+		if (Engine* engine = Game::GetEngine())
+		{
+			frame = engine->GetFrameCount();
+		}
+
+		std::string str = std::to_string(frame);
 		dest.append(std::string(10 - str.length(), '0') + str);
 	}
 
@@ -35,7 +43,13 @@ bool Logger::Init(const char* name, const std::wstring& path)
 		m_Name = name;
 
 		spdlog::filename_t filename = stringutil::WideStringToUtf8(path);
-		m_SpdLog = spdlog::basic_logger_mt(m_Name, filename);
+		m_Loggers[0] = spdlog::basic_logger_mt(m_Name, filename);
+
+#if MSVC_LOGGER
+		m_Loggers[1] = std::make_shared<spdlog::logger>("msvc_logger", std::make_shared<spdlog::sinks::msvc_sink_mt>());
+#endif
+
+		spdlog::set_level(spdlog::level::trace);
 
 		PrintStartupMessage();
 
@@ -61,22 +75,21 @@ void Logger::PrintStartupMessage()
 
 	char buffer[32];
 	sprintf_s(buffer, "%04d/%02d/%02d %02d:%02d:%02d %s", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, suffix);
-	m_SpdLog->info("Log Started: {}", std::string(buffer));
+	m_Loggers[0]->info("Log Started: {}", std::string(buffer));
 }
 
 void Logger::Shutdown()
 {
-	if (m_SpdLog)
+	if (m_Loggers[0])
 	{
 		spdlog::drop(m_Name);
 	}
 
-	m_SpdLog = nullptr;
+	spdlog::drop("console");
 }
 
 
 Logger* LogSystem::sm_DefaultLogger = nullptr;
-int64_t LogSystem::sm_TickCount = 0;
 
 void LogSystem::SetDefaultLogger(Logger* logger)
 {
@@ -112,21 +125,6 @@ Logger* LogSystem::CreateLogger(const char* name, const std::wstring& path)
     }
     
     return nullptr;
-}
-
-void LogSystem::ResetTickCount()
-{
-	sm_TickCount = 0;
-}
-
-int64_t LogSystem::GetTickCount()
-{
-	return sm_TickCount;
-}
-
-void LogSystem::Tick()
-{
-	sm_TickCount++;
 }
 
 } // namespace raid

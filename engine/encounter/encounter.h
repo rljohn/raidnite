@@ -16,10 +16,11 @@ public:
 	Encounter();
 	void Shutdown(EventPool* pool);
 
-	void Begin(const Frame frame);
+	void Begin(const Frame frame, bool isCombat);
 	void End(const Frame frame);
 	
 	Frame GetDuration(const Frame current) const;
+	const char* GetName() const { return m_Name; }
 
 	inlist<EncounterEvent>& GetEvents() { return m_Events; }
 	const inlist<EncounterEvent>& GetEvents() const { return m_Events; }
@@ -30,6 +31,7 @@ private:
 
 	void UpdateName();
 
+	bool m_IsCombat;
 	char m_Name[64];
 	Frame m_StartFrame;
 	Frame m_EndFrame;

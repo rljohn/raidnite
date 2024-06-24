@@ -59,7 +59,8 @@ namespace LogChannels
 #define mainDisplay(fmt, ...) logMessage(fmt, LogChannels::Main, LogSeverity::Display, __VA_ARGS__)
 #define mainError(fmt, ...) logMessage(fmt, LogChannels::Main, LogSeverity::Error, __VA_ARGS__)
 #define mainWarning(fmt, ...) logMessage(fmt, LogChannels::Main, LogSeverity::Warning, __VA_ARGS__)
-#define mainAssert(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Main, LogSeverity::Error, __VA_ARGS__)
+#define mainAssert(cond) logAssert(cond, "{}", LogChannels::Main, LogSeverity::Error, #cond)
+#define mainAssertf(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Main, LogSeverity::Error, #cond)
 #define mainVerbose(fmt, ...) logMessage(fmt, LogChannels::Main, LogSeverity::Verbose, __VA_ARGS__)
 
 // Unit Channel
@@ -67,7 +68,8 @@ namespace LogChannels
 #define unitDisplay(fmt, ...) logMessage(fmt, LogChannels::Unit, LogSeverity::Display, __VA_ARGS__)
 #define unitError(fmt, ...) logMessage(fmt, LogChannels::Unit, LogSeverity::Error, __VA_ARGS__)
 #define unitWarning(fmt, ...) logMessage(fmt, LogChannels::Unit, LogSeverity::Warning, __VA_ARGS__)
-#define unitAssert(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Unit, LogSeverity::Error, __VA_ARGS__)
+#define unitAssert(cond) logAssert(cond, LogChannels::Unit, LogSeverity::Error, #cond)
+#define unitAssertf(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Unit, LogSeverity::Error, #cond)
 #define unitVerbose(fmt, ...) logMessage(fmt, LogChannels::Unit, LogSeverity::Verbose, __VA_ARGS__)
 
 // Map Channel
@@ -75,7 +77,8 @@ namespace LogChannels
 #define mapDisplay(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Display, __VA_ARGS__)
 #define mapError(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Error, __VA_ARGS__)
 #define mapWarning(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Warning, __VA_ARGS__)
-#define mapAssert(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Map, LogSeverity::Error, __VA_ARGS__)
+#define mapAssert(cond) logAssert(cond, "{}", LogChannels::Map, LogSeverity::Error, #cond)
+#define mapAssertf(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Map, LogSeverity::Error, #cond)
 #define mapVerbose(fmt, ...) logMessage(fmt, LogChannels::Map, LogSeverity::Verbose, __VA_ARGS__)
 
 } // namespace raid
