@@ -37,6 +37,7 @@ namespace raid
 	using Microseconds = std::chrono::microseconds;
 	using Milliseconds = std::chrono::milliseconds;
 	using Seconds = std::chrono::seconds;
+	using Minutes = std::chrono::minutes;
 	using TimeStamp = std::chrono::time_point<std::chrono::steady_clock>;
 	using Duration = Nanoseconds;
 	using TimeStep = Nanoseconds;

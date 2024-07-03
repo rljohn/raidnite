@@ -62,9 +62,4 @@ void Encounter::AddEvent(EncounterEvent* evt)
 	m_Events.push_back(evt->m_Node);
 }
 
-void Encounter::UpdateName()
-{
-
-}
-
 } // namespace raid

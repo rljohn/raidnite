@@ -123,6 +123,16 @@ void GameInstanceWidget::DrawGameStateWidgets_End(GameInstance& instance)
 	if (ImGui::Button("Reset"))
 	{
 		instance.Reset();
+
+		if (Game::GetEncounterLog())
+		{
+			Game::GetEncounterLog()->Clear();
+		}
+		
+		if (Game::GetEntityManager())
+		{
+			Game::GetEntityManager()->Reset();
+		}
 	}
 }
 

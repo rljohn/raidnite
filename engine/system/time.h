@@ -24,6 +24,10 @@ public:
 	// Conversation
 	static Seconds ToSeconds(const Duration& d);
 	static Milliseconds ToMillis(const Duration& d);
+
+	// Printing
+	using TimeDisplay = char[32];
+	static void GetHMS(const Duration& d, TimeDisplay& buffer);
 };
 
 } // namespace raid

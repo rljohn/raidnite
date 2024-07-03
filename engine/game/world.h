@@ -19,6 +19,7 @@ public:
 	// IEntityManager
 	Entity* FindEntity(const EntityId entityId) override;
 	void OnGameEvent(const GameEvent& e) override;
+	void Reset() override;
 
 	// IGameSystem
 	void Update(const GameFrame& frame);

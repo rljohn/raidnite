@@ -30,11 +30,13 @@ public:
 		if (channel.Severity < severity)
 			return false;
 
+		bool output = false;
 		for (auto& logger : m_Loggers)
 		{
 			if (logger == nullptr)
 				continue;
 
+			output = true;
 			switch (severity)
 			{
 			case LogSeverity::Fatal:
@@ -61,7 +63,7 @@ public:
 			}
 		}
 
-		return true;
+		return output;
 	}
 
 private:

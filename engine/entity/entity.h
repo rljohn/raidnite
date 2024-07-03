@@ -58,6 +58,7 @@ public:
     virtual void OnGameEvent(const GameEvent& e) = 0;
     virtual void RegisterEntity(Entity* unit) = 0;
     virtual void UnRegisterEntity(Entity* unit) = 0;
+    virtual void Reset() = 0;
 };
 
 } // namespace raid

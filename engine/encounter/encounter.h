@@ -19,6 +19,8 @@ public:
 	void Begin(const Frame frame, bool isCombat);
 	void End(const Frame frame);
 	
+	Frame GetStartFrame() const { return m_StartFrame; }
+	Frame GetEndFrame() const { return m_EndFrame; }
 	Frame GetDuration(const Frame current) const;
 	const char* GetName() const { return m_Name; }
 

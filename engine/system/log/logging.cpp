@@ -80,12 +80,14 @@ void Logger::PrintStartupMessage()
 
 void Logger::Shutdown()
 {
-	if (m_Loggers[0])
+	for (std::shared_ptr<spdlog::logger>& log : m_Loggers)
 	{
-		spdlog::drop(m_Name);
+		if (log)
+		{
+			spdlog::drop(log->name());
+			log = nullptr;
+		}
 	}
-
-	spdlog::drop("console");
 }
 
 

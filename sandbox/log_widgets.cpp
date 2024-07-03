@@ -30,9 +30,17 @@ void LogWidget::Draw(GameSandbox* sandbox)
 
 	for (const Encounter* e : encounters)
 	{
-		if (ImGui::TreeNode(e->GetName()))
-		{
+		EncounterLog::DisplayString buffer;
+		log->GetDisplayString(*e, buffer);
 
+		if (ImGui::TreeNode(buffer))
+		{
+			for (const auto& evt : e->GetEvents())
+			{
+				
+			}
+
+			ImGui::TreePop();
 		}
 	}
 	

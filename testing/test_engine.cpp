@@ -75,4 +75,14 @@ TEST(EngineTest, TimeFrames)
 	EXPECT_EQ(ms.count(), 1016);
 	seconds = RoundToSeconds(ms);
 	EXPECT_FLOAT_EQ(seconds, 1.02f);
+
+	Duration d = e.FramesToDuration(7800);
+
+	Time::TimeDisplay display;
+	Time::GetHMS(d, display);
+	EXPECT_STREQ(display, "02:09");
+	
+	d = e.FramesToDuration(7801);
+	Time::GetHMS(d, display);
+	EXPECT_STREQ(display, "02:10");
 }

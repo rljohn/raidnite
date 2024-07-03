@@ -42,6 +42,9 @@ void GameInstance::StartGame()
 
 bool GameInstance::BeginEndGame(const LoadContext& context)
 {
+	GameEndEvent e;
+	Game::DispatchGameEvent(&e);
+
 	m_LoadType = LoadType::Ending;
 	return Load(context);
 }
@@ -64,9 +67,6 @@ bool GameInstance::Load(const LoadContext& context)
 void GameInstance::EndGame()
 {
 	mainVerbose("GameInstance::EndGame");
-
-	GameEndEvent e;
-	Game::DispatchGameEvent(&e);
 }
 
 static const char* GameStateToString(GameState state)

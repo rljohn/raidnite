@@ -30,11 +30,19 @@ void World::OnGameEvent(const GameEvent& evt)
 	}
 }
 
+void World::Reset()
+{
+	// TODO
+	//	Destroy the entities?
+	
+	m_Entities.clear();
+}
+
 void World::Update(const GameFrame& frame)
 {
 	for (Entity* e : m_Entities)
 	{
-		
+		e->Update(frame);
 	}
 }
 

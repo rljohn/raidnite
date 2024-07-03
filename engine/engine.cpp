@@ -16,6 +16,7 @@ Engine::Engine()
 
 void Engine::Init(const Nanoseconds& frameTime)
 {
+	m_BaseTimeStep = frameTime;
 	m_TimeStep = frameTime;
 	m_LastUpdate = steady_clock::now();
 }
@@ -36,12 +37,12 @@ void Engine::Update(const TimeStamp& now, const Nanoseconds& duration)
 {
 	m_Accumulation += duration;
 
-	while (m_Accumulation >= m_TimeStep)
+	while (m_Accumulation >= m_BaseTimeStep)
 	{
-		const GameFrame frame{ m_FrameCount, m_TimeStep };
+		const GameFrame frame{ m_FrameCount, m_BaseTimeStep };
 		Game::Update(frame);
 
-		m_Accumulation -= m_TimeStep;
+		m_Accumulation -= m_BaseTimeStep;
 		m_FrameCount++;
 	}
 
@@ -52,6 +53,11 @@ Milliseconds Engine::FramesToMillis(const Frame frames) const
 {
 	Nanoseconds nanos = m_TimeStep * frames;
 	return std::chrono::duration_cast<Milliseconds>(nanos);
+}
+
+Duration Engine::FramesToDuration(const Frame frames) const
+{
+	return m_TimeStep * frames;
 }
 
 

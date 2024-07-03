@@ -10,10 +10,15 @@
 namespace raid
 {
 
+IEncounterLog::IEncounterLog()
+	: m_StartFrame(0)
+{
+}
+
 EncounterLog::EncounterLog()
-	: m_ActiveEncounter(nullptr)
+	: IEncounterLog()
+	, m_ActiveEncounter(nullptr)
 	, m_EventPool(nullptr)
-	, m_StartFrame(0)
 {
 }
 
@@ -181,15 +186,47 @@ void EncounterLog::OnDamageEvent(const DamageEvent* damageEvent)
 
 }
 
-Milliseconds EncounterLog::GetTimeSince(const Frame frame) const
+Milliseconds EncounterLog::GetTimeSince(const Frame frame, const Frame since) const
 {
 	if (Engine* engine = Game::GetEngine())
 	{
-		Frame duration = frame - m_StartFrame;
+		Frame duration = frame - since;
 		return engine->FramesToMillis(duration);
 	}
 
 	return Milliseconds(0);
+}
+
+void EncounterLog::GetDisplayString(const Encounter& e, DisplayString& buffer) const
+{
+	Time::TimeDisplay startDisplay, endDisplay, durationDisplay;
+
+	if (e.GetEndFrame() != 0)
+	{
+		Frame dt = e.GetEndFrame() - e.GetStartFrame();
+
+		Milliseconds start = GetTimeSince(e.GetStartFrame());
+		Milliseconds end = GetTimeSince(e.GetEndFrame());
+		Milliseconds duration = GetTimeSince(e.GetEndFrame(), e.GetStartFrame());
+		
+		Time::GetHMS(start, startDisplay);
+		Time::GetHMS(end, endDisplay);
+		Time::GetHMS(duration, durationDisplay);
+
+		sprintf_s(buffer, "%s - %s (%s)", startDisplay, endDisplay, durationDisplay);
+	}
+	else
+	{
+		mainAssert(e.GetStartFrame() != 0);
+
+		Milliseconds start = GetTimeSince(e.GetStartFrame());
+		Milliseconds duration = GetTimeSince(GetFrame(), e.GetStartFrame());
+
+		Time::GetHMS(start, startDisplay);
+		Time::GetHMS(duration, durationDisplay);
+
+		sprintf_s(buffer, "%s (%s)", startDisplay, durationDisplay);
+	}
 }
 
 } // namespace raid

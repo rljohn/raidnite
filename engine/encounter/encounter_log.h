@@ -17,7 +17,18 @@ class IEncounterLog
 {
 public:
 
+	IEncounterLog();
+
 	virtual const std::vector<Encounter*>& GetEncounterList() const = 0;
+	
+	using DisplayString = char[128];
+	virtual void GetDisplayString(const Encounter& encounter, DisplayString& buffer) const = 0;
+
+	virtual void Clear() = 0;
+
+protected:
+
+	Frame m_StartFrame;
 };
 
 class EncounterLog : public IEncounterLog
@@ -32,7 +43,7 @@ public:
 
 	bool Init(EventPool* pool = nullptr);
 	void Shutdown();
-	void Clear();
+	void Clear() override;
 
 	void OnGameEvent(const GameEvent* evt);
 
@@ -41,9 +52,14 @@ public:
 		return m_Encounters; 
 	}
 
-	void Begin(const GameFrame& frame);
 
-	Milliseconds GetTimeSince(const Frame frame) const;
+	Milliseconds GetTimeSince(const Frame frame, const Frame since) const;
+	Milliseconds GetTimeSince(const Frame frame) const 
+	{ 
+		return GetTimeSince(frame, m_StartFrame); 
+	}
+	
+	void GetDisplayString(const Encounter& encounter, DisplayString& buffer) const override;
 
 private:
 
