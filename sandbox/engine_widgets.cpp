@@ -23,14 +23,19 @@ void EngineWidget::Draw(GameSandbox* sandbox)
 	ImGui::Text("Time: %s", display);
 
 	int64_t nanos = engine.GetTimeStep().count();
-	if (ImGui::InputScalar("Time Step", ImGuiDataType_S64, &nanos))
+	if (ImGui::InputScalar("Tick Speed", ImGuiDataType_S64, &nanos))
 	{
 		engine.SetTimeStep(std::chrono::nanoseconds(nanos));
 	}
 
-	if (ImGui::Button("2x"))
+	if (ImGui::Button("0.5x"))
 	{
 		engine.SetTimeStep(std::chrono::nanoseconds(nanos*2));
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("2x"))
+	{
+		engine.SetTimeStep(std::chrono::nanoseconds(nanos/2));
 	}
 }
 

@@ -52,13 +52,14 @@ public:
 		return m_Encounters; 
 	}
 
-
+	// Helpers for measuring gametime since a specific point of reference.
 	Milliseconds GetTimeSince(const Frame frame, const Frame since) const;
 	Milliseconds GetTimeSince(const Frame frame) const 
 	{ 
 		return GetTimeSince(frame, m_StartFrame); 
 	}
 	
+	// Gets a 'HH:MM:SS' representation of an encounters duration.
 	void GetDisplayString(const Encounter& encounter, DisplayString& buffer) const override;
 
 private:

@@ -37,12 +37,12 @@ void Engine::Update(const TimeStamp& now, const Nanoseconds& duration)
 {
 	m_Accumulation += duration;
 
-	while (m_Accumulation >= m_BaseTimeStep)
+	while (m_Accumulation >= m_TimeStep)
 	{
-		const GameFrame frame{ m_FrameCount, m_BaseTimeStep };
+		const GameFrame frame{ m_FrameCount, m_TimeStep };
 		Game::Update(frame);
 
-		m_Accumulation -= m_BaseTimeStep;
+		m_Accumulation -= m_TimeStep;
 		m_FrameCount++;
 	}
 
@@ -51,13 +51,13 @@ void Engine::Update(const TimeStamp& now, const Nanoseconds& duration)
 
 Milliseconds Engine::FramesToMillis(const Frame frames) const
 {
-	Nanoseconds nanos = m_TimeStep * frames;
+	Nanoseconds nanos = m_BaseTimeStep * frames;
 	return std::chrono::duration_cast<Milliseconds>(nanos);
 }
 
 Duration Engine::FramesToDuration(const Frame frames) const
 {
-	return m_TimeStep * frames;
+	return m_BaseTimeStep * frames;
 }
 
 
