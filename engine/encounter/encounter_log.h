@@ -23,6 +23,7 @@ public:
 	
 	using DisplayString = char[128];
 	virtual void GetDisplayString(const Encounter& encounter, DisplayString& buffer) const = 0;
+	virtual void GetDisplayString(const EncounterEvent& e, DisplayString& buffer) const = 0;
 
 	virtual void Clear() = 0;
 
@@ -61,6 +62,7 @@ public:
 	
 	// Gets a 'HH:MM:SS' representation of an encounters duration.
 	void GetDisplayString(const Encounter& encounter, DisplayString& buffer) const override;
+	void GetDisplayString(const EncounterEvent& e, DisplayString& buffer) const override;
 
 private:
 
@@ -70,6 +72,8 @@ private:
 	void OnZoneExit();
 	void OnCombatStart();
 	void OnCombatEnd();
+	void OnEntityCreated(const UnitSpawnedEvent* spawnEvent);
+	void OnEntityDestroyed(const UnitDestroyedEvent* destroyEvent);
 	void OnEntityDied(const DeathEvent* deathDevent);
 	void OnDamageEvent(const DamageEvent* damageEvent);
 

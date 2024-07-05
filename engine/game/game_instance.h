@@ -33,6 +33,9 @@ public:
 
 	GameState GetGameState() const { return m_GameState; }
 
+	bool IsLoading() const { return GetGameState() == GameState::Loading; }
+	bool IsActive() const { return GetGameState() == GameState::Active; }
+
 	bool BeginLoadGame(const LoadContext& context);
 	void StartGame();
 

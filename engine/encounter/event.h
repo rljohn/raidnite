@@ -5,7 +5,8 @@
 #include "engine/system/inlist.h"
 #include "engine/system/pool.h"
 
-#include <iostream>  
+#include <iostream>
+
 using namespace std;
 
 namespace raid
@@ -20,6 +21,9 @@ enum EncounterEventType
 	ZoneExit,
 	EncounterStart,
 	EncounterEnd,
+	EntityCreated,
+	EntityDied,
+	EntityDestroyed,
 	AbilityStart,
 	AbilityEnd,
 	HealthChanged,
@@ -28,6 +32,8 @@ enum EncounterEventType
 	AuraRefreshed,
 	AuraRemoved,
 };
+
+class Entity;
 
 struct EncounterEvent
 {
@@ -94,6 +100,8 @@ public:
 		event.m_Type = EncounterEventType::AbilityStart;
 		event.m_ExtraData1.Int64 = spellId;
 	}
+
+	static void OnEntityCreated(EncounterEvent& event, Entity& entity);
 };
 
 } // namespace raid

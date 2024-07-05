@@ -21,7 +21,14 @@ namespace sandbox {
 	{
 		if (m_Map == nullptr)
 		{
-			CreateMapWidgets();
+			if (sandbox->GetGameInstance().IsLoading())
+			{
+				CreateMapWidgets();
+			}
+			else 
+			{
+				ImGui::Text("Waiting for Map Load State");
+			}
 		}
 		else
 		{

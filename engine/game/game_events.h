@@ -53,6 +53,26 @@ protected:
 	Entity* m_Entity;
 };
 
+struct UnitSpawnedEvent : public GameEvent, public EntityEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::UnitSpawned; }
+
+	UnitSpawnedEvent(Entity* e)
+		: EntityEvent(e)
+	{
+	}
+};
+
+struct UnitDestroyedEvent : public GameEvent, public EntityEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::UnitDestroyed; }
+
+	UnitDestroyedEvent(Entity* e)
+		: EntityEvent(e)
+	{
+	}
+};
+
 struct DeathEvent : public GameEvent, EntityEvent
 {
 	virtual GameEventType GetType() const { return GameEventType::Death; }

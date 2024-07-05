@@ -111,6 +111,18 @@ void EncounterLog::OnGameEvent(const GameEvent* evt)
 			OnEntityDied(deathDevent);
 		}
 		break;
+	case GameEventType::UnitSpawned:
+		{
+			const UnitSpawnedEvent* spawnEvent = static_cast<const UnitSpawnedEvent*>(evt);
+			OnEntityCreated(spawnEvent);
+		}
+		break;
+	case GameEventType::UnitDestroyed:
+		{
+			const UnitDestroyedEvent* destroyEvent = static_cast<const UnitDestroyedEvent*>(evt);
+			OnEntityDestroyed(destroyEvent);
+		}
+		break;
 	}
 }
 
@@ -176,6 +188,15 @@ void EncounterLog::OnCombatEnd()
 	m_ActiveEncounter = nullptr;
 }
 
+void EncounterLog::OnEntityCreated(const UnitSpawnedEvent* spawnEvent)
+{
+	AddEvent<EncounterEventType::EntityCreated>();
+}
+
+void EncounterLog::OnEntityDestroyed(const UnitDestroyedEvent* destroyEvent)
+{
+}
+
 void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)
 {
 
@@ -227,6 +248,16 @@ void EncounterLog::GetDisplayString(const Encounter& e, DisplayString& buffer) c
 
 		sprintf_s(buffer, "%s (%s)", startDisplay, durationDisplay);
 	}
+}
+
+void EncounterLog::GetDisplayString(const EncounterEvent& e, DisplayString& buffer) const
+{
+	Milliseconds ts = GetTimeSince(e.m_Frame);
+
+	Time::TimeDisplay display = { 0 };
+	Time::GetHMS(ts, display);
+
+	strcpy_s(buffer, display);
 }
 
 } // namespace raid

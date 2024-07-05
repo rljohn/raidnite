@@ -22,6 +22,12 @@ void PartyWidget::Init()
 
 void PartyWidget::Draw(GameSandbox* sandbox)
 {
+	if (!sandbox->GetGameInstance().IsActive())
+	{
+		ImGui::Text("No game instance active");
+		return;
+	}
+
 	if (sandbox->GetParty().IsValid())
 	{
 		DrawPartyWidgets(sandbox);

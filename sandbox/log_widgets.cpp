@@ -20,30 +20,106 @@ void LogWidget::Init()
 
 void LogWidget::Draw(GameSandbox* sandbox)
 {
-	IEncounterLog* log = raid::Game::GetEncounterLog();
-	if (!log)
-		return;
+    IEncounterLog* log = raid::Game::GetEncounterLog();
+    if (!log)
+        return;
 
-	const std::vector<Encounter*>& encounters = log->GetEncounterList();
-	if (encounters.size() == 0)
-		return;
+    const std::vector<Encounter*>& encounters = log->GetEncounterList();
+    if (encounters.size() == 0)
+        return;
 
-	for (const Encounter* e : encounters)
-	{
-		EncounterLog::DisplayString buffer;
-		log->GetDisplayString(*e, buffer);
+    int i = 0;
+    for (const Encounter* e : encounters)
+    {
+        EncounterLog::DisplayString buffer;
+        log->GetDisplayString(*e, buffer);
 
-		if (ImGui::TreeNode(buffer))
-		{
-			for (const auto& evt : e->GetEvents())
-			{
-				
-			}
+        char display[256] = { 0 };
+        sprintf_s(display, "%s###Log%d", buffer, i);
 
-			ImGui::TreePop();
-		}
-	}
-	
+        if (ImGui::TreeNode(display))
+        {
+            for (const auto& evt : e->GetEvents())
+            {
+                DrawEvent(log, evt);
+            }
+
+            ImGui::TreePop();
+        }
+    }
+}
+
+const char* EncounterEventTypeToString(EncounterEventType eventType)
+{
+    switch (eventType)
+    {
+    case EncounterEventType::Invalid: return "Invalid";
+    case EncounterEventType::GameStart: return "GameStart";
+    case EncounterEventType::GameEnd: return "GameEnd";
+    case EncounterEventType::ZoneEnter: return "ZoneEnter";
+    case EncounterEventType::ZoneExit: return "ZoneExit";
+    case EncounterEventType::EncounterStart: return "EncounterStart";
+    case EncounterEventType::EncounterEnd: return "EncounterEnd";
+    case EncounterEventType::EntityCreated: return "EntityCreated";
+    case EncounterEventType::EntityDied: return "EntityDied";
+    case EncounterEventType::EntityDestroyed: return "EntityDestroyed";
+    case EncounterEventType::AbilityStart: return "AbilityStart";
+    case EncounterEventType::AbilityEnd: return "AbilityEnd";
+    case EncounterEventType::HealthChanged: return "HealthChanged";
+    case EncounterEventType::ManaChanged: return "ManaChanged";
+    case EncounterEventType::AuraGained: return "AuraGained";
+    case EncounterEventType::AuraRefreshed: return "AuraRefreshed";
+    case EncounterEventType::AuraRemoved: return "AuraRemoved";
+    default: return "Unknown";
+    }
+}
+
+ void LogWidget::DrawEvent(IEncounterLog* log, const EncounterEvent & evt)
+{
+     EncounterLog::DisplayString buffer;
+     log->GetDisplayString(evt, buffer);
+
+     ImGui::Text("[%s] %s", buffer, EncounterEventTypeToString(evt.m_Type));
+
+     switch (evt.m_Type)
+     {
+     case EncounterEventType::Invalid:
+         break;
+     case EncounterEventType::GameStart:
+         break;
+     case EncounterEventType::GameEnd:
+         break;
+     case EncounterEventType::ZoneEnter:
+         break;
+     case EncounterEventType::ZoneExit:
+         break;
+     case EncounterEventType::EncounterStart:
+         break;
+     case EncounterEventType::EncounterEnd:
+         break;
+     case EncounterEventType::EntityCreated:
+         break;
+     case EncounterEventType::EntityDied:
+         break;
+     case EncounterEventType::EntityDestroyed:
+         break;
+     case EncounterEventType::AbilityStart:
+         break;
+     case EncounterEventType::AbilityEnd:
+         break;
+     case EncounterEventType::HealthChanged:
+         break;
+     case EncounterEventType::ManaChanged:
+         break;
+     case EncounterEventType::AuraGained:
+         break;
+     case EncounterEventType::AuraRefreshed:
+         break;
+     case EncounterEventType::AuraRemoved:
+         break;
+     default:
+         break;
+     }
 }
 
 void LogWidget::Shutdown()

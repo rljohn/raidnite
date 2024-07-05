@@ -32,7 +32,9 @@ enum class GameEventType
 	CombatStart,
 	CombatEnd,
 	Damage,
-	Death
+	Death,
+	UnitSpawned,
+	UnitDestroyed
 };
 
 class IGameSystem
