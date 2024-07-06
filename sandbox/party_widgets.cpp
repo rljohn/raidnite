@@ -13,7 +13,7 @@
 namespace raid {
 namespace sandbox {
 
-extern ImFont* HeHeXD;
+BOOL_XPARAM(QuickPlay);
 
 void PartyWidget::Init()
 {
@@ -43,7 +43,9 @@ void PartyWidget::Draw(GameSandbox* sandbox)
 		if (raid::Game::GetMap())
 		{
 			ImGui::SameLine();
-			if (ImGui::Button("Quick Party"))
+
+			AUTOMATION_HELPER(QuickPlay);
+			if (ImGui::Button("Quick Party") || AutoQuickPlay.Proceed())
 			{
 				sandbox->GetParty().Init(m_PartySize);
 				AddRandomUnit(sandbox, m_PartySize);

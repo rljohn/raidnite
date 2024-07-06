@@ -16,6 +16,8 @@ using namespace stringutil;
 
 namespace sandbox {
 
+BOOL_XPARAM(QuickPlay);
+
 GameInstanceWidget::GameInstanceWidget()
 {
 	StringSetEmpty(m_MapName);
@@ -80,7 +82,8 @@ void GameInstanceWidget::DrawGameStateWidgets_None(GameInstance& instance)
 {
 	ImGui::InputText("Map Name", m_MapName, COUNTOF(m_MapName));
 
-	if (ImGui::Button("Begin Game"))
+	AUTOMATION_HELPER(QuickPlay);
+	if (ImGui::Button("Begin Game") || AutoQuickPlay.Proceed())
 	{
 		instance.Init(std::static_pointer_cast<raid::ILoadDelegate>(m_LoadDlgt));
 
@@ -95,14 +98,16 @@ void GameInstanceWidget::DrawGameStateWidgets_Loading(GameInstance& instance)
 {
 	if (!m_LoadDlgt->IsMapLoaded())
 	{
-		if (ImGui::Button("OnMapLoaded"))
+		AUTOMATION_HELPER(QuickPlay);
+		if (ImGui::Button("OnMapLoaded") || (Game::GetMap() && AutoQuickPlay.Proceed()))
 		{
 			m_LoadDlgt->OnMapLoaded();
 		}
 	}
 	else if (!m_LoadDlgt->IsGameLoaded())
 	{
-		if (ImGui::Button("OnGameLoaded"))
+		AUTOMATION_HELPER(QuickPlay);
+		if (ImGui::Button("OnGameLoaded") || (Game::GetMap() && AutoQuickPlay.Proceed()))
 		{
 			m_LoadDlgt->OnGameLoaded();
 		}

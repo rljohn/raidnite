@@ -37,6 +37,40 @@ void EngineWidget::Draw(GameSandbox* sandbox)
 	{
 		engine.SetTimeStep(std::chrono::nanoseconds(nanos/2));
 	}
+
+	ImGui::Separator();
+
+	if (ImGui::CollapsingHeader("Arguments"))
+	{
+		if (ImGui::TreeNode("Enabled"))
+		{
+			for (size_t i = 0; i < SCommandLineManager::Instance().GetArgCount(); i++)
+			{
+				CommandLineArg* arg = SCommandLineManager::Instance().GetArg(i);
+				if (arg && arg->HasValue())
+				{
+					CommandLineArg::DisplayBuffer buffer;
+					arg->GetDisplay(buffer);
+					ImGui::Text("%s", buffer);
+				}
+			}
+
+			ImGui::TreePop();
+		}
+		if (ImGui::TreeNode("Disabled"))
+		{
+			for (size_t i = 0; i < SCommandLineManager::Instance().GetArgCount(); i++)
+			{
+				CommandLineArg* arg = SCommandLineManager::Instance().GetArg(i);
+				if (arg && !arg->HasValue())
+				{
+					ImGui::Text("%ls", arg->GetName().c_str());
+				}
+			}
+
+			ImGui::TreePop();
+		}
+	}
 }
 
 } // namespace sandbox

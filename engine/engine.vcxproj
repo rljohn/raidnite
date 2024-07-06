@@ -125,6 +125,7 @@
     <ClInclude Include="system\modifier.h" />
     <ClInclude Include="system\pool.h" />
     <ClInclude Include="system\check.h" />
+    <ClInclude Include="system\singleton.h" />
     <ClInclude Include="system\stringutil.h" />
     <ClInclude Include="system\time.h" />
     <ClInclude Include="types.h" />

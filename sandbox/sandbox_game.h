@@ -10,6 +10,7 @@
 #include "engine/unit/group.h"
 #include "engine/unit/spawner.h"
 #include "engine/encounter/encounter_log.h"
+#include "engine/system/args.h"
 
 // widgets
 #include "engine_widgets.h"
@@ -26,6 +27,8 @@ namespace sandbox {
 class GameSandbox
 {
 public:
+
+	GameSandbox();
 
 	void Init();
 	void Update();

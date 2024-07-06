@@ -118,6 +118,7 @@
     <ClInclude Include="game\game_instance.h" />
     <ClInclude Include="game\loading.h" />
     <ClInclude Include="system\args.h" />
+    <ClInclude Include="system\singleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">

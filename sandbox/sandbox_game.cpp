@@ -8,10 +8,19 @@
 // imgui
 #include "thirdparty/imgui/imgui.h"
 
+#include <string>
+
 namespace raid {
 namespace sandbox {
 
+BOOL_PARAM(QuickPlay, "Quickly gets into a game session");
+
 using namespace raid;
+
+GameSandbox::GameSandbox()
+	: m_Logger(nullptr)
+{
+}
 
 void GameSandbox::Init()
 {

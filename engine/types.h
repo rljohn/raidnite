@@ -14,6 +14,8 @@
 #define DEBUG_ONLY(...) __VA_ARGS__
 #endif
 
+#define WIDESTR(x) L ## #x
+
 #include <algorithm>
 #include <cstdint>
 #include <chrono>

@@ -7,16 +7,16 @@ using namespace raid;
 
 TEST(ArgsTest, AllTypes)
 {
-	size_t argCount = CommandLineManager::GetArgCount();
+	CommandLineManager manager;
 
 	{
-		BoolArgument bArg(L"boolArg");
-		IntArgument iArg1(L"intArg1");
-		IntArgument iArg2(L"intArg2");
-		IntArgument iArg3(L"intArg3");
-		StringArgument sArg1(L"strArg1");
-		StringArgument sArg2(L"strArg2");
-		StringArgument sArg3(L"strArg3");
+		BoolArgument bArg(manager, L"boolArg");
+		IntArgument iArg1(manager, L"intArg1");
+		IntArgument iArg2(manager, L"intArg2");
+		IntArgument iArg3(manager, L"intArg3");
+		StringArgument sArg1(manager, L"strArg1");
+		StringArgument sArg2(manager, L"strArg2");
+		StringArgument sArg3(manager, L"strArg3");
 
 		EXPECT_FALSE(bArg);
 		EXPECT_EQ(iArg1, 0);
@@ -33,7 +33,7 @@ TEST(ArgsTest, AllTypes)
 		EXPECT_FALSE(sArg3.HasValue());
 
 		const wchar_t* args = L"Game.exe -boolArg -intArg1=5 -intArg2 6 -strArg1=test -strArg2 \"test string\" -intArg3=foo -intArg3 bar -strArg3";
-		CommandLineManager::Init(args);
+		manager.Init(args);
 
 		EXPECT_TRUE(bArg);
 		EXPECT_EQ(iArg1, 5);
@@ -59,5 +59,5 @@ TEST(ArgsTest, AllTypes)
 	}
 
 	// all arguments unregistered
-	EXPECT_EQ(argCount, CommandLineManager::GetArgCount());
+	EXPECT_EQ(0, manager.GetArgCount());
 }

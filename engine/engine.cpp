@@ -22,12 +22,12 @@ void Engine::Init(const Nanoseconds& frameTime)
 	m_TimeStep = frameTime;
 	m_LastUpdate = steady_clock::now();
 
-	CommandLineManager::Init(::GetCommandLineW());
+	SCommandLineManager::Instance().Init(::GetCommandLineW());
 }
 
 void Engine::Shutdown()
 {
-	CommandLineManager::Shutdown();
+	SCommandLineManager::Instance().Shutdown();
 }
 
 void Engine::Update()

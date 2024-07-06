@@ -14,19 +14,19 @@ namespace raid
 // CommandLineArg
 ///////////////////////////////////
 
-CommandLineArg::CommandLineArg(const std::wstring& name)
+CommandLineArg::CommandLineArg(CommandLineManager& manager, const wchar_t* name)
     : m_Name(name)
     , m_HasValue(false)
+    , m_Owner(manager)
 {
-    // Auto-Register into the global args manager.
-    // TODO: DI?
-    CommandLineManager::AddArgument(this);
+    // Register at creation
+    m_Owner.AddArgument(this);
 }
 
 CommandLineArg::~CommandLineArg()
 {
     // Auto-Unregister when the argument is removed
-    CommandLineManager::RemoveArgument(this);
+    m_Owner.RemoveArgument(this);
 }
 
 bool IntArgument::Parse(const std::wstring& arg, const std::wstring& next)
@@ -89,8 +89,6 @@ bool StringArgument::Parse(const std::wstring& arg, const std::wstring& next)
 //////////////////////////////////////
 // CommandLineManager
 //////////////////////////////////////
-
-std::vector<CommandLineArg*> CommandLineManager::m_Args;
 
 bool CommandLineManager::Init(const wchar_t* args)
 {

@@ -22,5 +22,8 @@ inline void StringSetEmpty(char* str)
 	str[0] = '\0';
 }
 
-} // namespace raid
+static const char* LogBool(bool b) { return b ? "True" : "False"; }
+static const char* LogResult(bool b) { return b ? "Success" : "Fail"; }
+
+} // namespace stringutil
 } // namespace raid
