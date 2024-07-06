@@ -28,3 +28,28 @@ TEST(MapTest, InitMap)
 	// values should be filled
 	EXPECT_EQ(map.GetTile(5, 5)->GetPosition(), Position(5,5));
 }
+
+TEST(MapTest, NearestAvailableTile)
+{
+	Map map;
+	map.BuildMap(5, 5);
+
+	// Place an entity on the tile at position 2,2
+	Entity e;
+	Tile* tile = map.GetTile(2, 2);
+	tile->SetOccupant(&e);
+	tile->IsOccupied();
+
+	/*	xxxxx
+	*	xxxxx
+	*	xxoxx
+	*	xxxxx
+	*	xxxxx
+	*/
+
+	// TODO
+	//	Variant that accepts the incoming unit's origin, i.e. 0,0, so that we'd want '1,1'
+	//  Variant that randomizes the closest tile
+	// 
+	// Tile* t = map.GetNearestUnoccupiedTile(tile->GetPosition());
+}
