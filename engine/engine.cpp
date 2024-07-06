@@ -1,5 +1,6 @@
 #include "engine/pch.h"
 #include "engine.h"
+#include "engine/system/args.h"
 
 using namespace std::chrono;
 
@@ -10,6 +11,7 @@ Engine::Engine()
 	: m_FrameCount(0)
 	, m_Accumulation(0)
 	, m_TimeStep(0)
+	, m_BaseTimeStep(0)
 {
 	m_LastUpdate = steady_clock::now();
 }
@@ -19,11 +21,13 @@ void Engine::Init(const Nanoseconds& frameTime)
 	m_BaseTimeStep = frameTime;
 	m_TimeStep = frameTime;
 	m_LastUpdate = steady_clock::now();
+
+	CommandLineManager::Init(::GetCommandLineW());
 }
 
 void Engine::Shutdown()
 {
-
+	CommandLineManager::Shutdown();
 }
 
 void Engine::Update()

@@ -107,9 +107,13 @@
     <ClInclude Include="map\pathfinding.h" />
     <ClInclude Include="map\tile.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="system\args.h" />
     <ClInclude Include="system\container.h" />
     <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\fileutil.h" />
+    <ClCompile Include="system\args.cpp">
+      <FileType>CppHeader</FileType>
+    </ClCompile>
     <ClInclude Include="system\inlist.h" />
     <ClInclude Include="system\json.h" />
     <ClInclude Include="system\log\logging.h" />

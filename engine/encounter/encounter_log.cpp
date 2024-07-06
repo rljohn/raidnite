@@ -19,10 +19,16 @@ EncounterLog::EncounterLog()
 	: IEncounterLog()
 	, m_ActiveEncounter(nullptr)
 	, m_EventPool(nullptr)
+	, m_StartFrame(0)
 {
 }
 
-bool EncounterLog::Init(EventPool* pool)
+EncounterLog::~EncounterLog()
+{
+	Shutdown();
+}
+
+bool EncounterLog::Init(std::unique_ptr<EventPool> pool)
 {
 	m_OnGameEvent = [this](const GameEvent* evt)
 	{
@@ -31,7 +37,7 @@ bool EncounterLog::Init(EventPool* pool)
 
 	Game::GameEventDlgt().Register(m_OnGameEvent);
 	
-	m_EventPool = pool;
+	m_EventPool = std::move(pool);
 	return true;
 }
 
@@ -39,8 +45,6 @@ void EncounterLog::Shutdown()
 {
 	Game::GameEventDlgt().Unregister(m_OnGameEvent);
 	m_OnGameEvent = nullptr;
-
-	delete m_EventPool;
 	m_EventPool = nullptr;
 }
 
@@ -75,7 +79,7 @@ void EncounterLog::Clear()
 	while (!m_Encounters.empty())
 	{
 		Encounter* e = m_Encounters.back();
-		e->Shutdown(m_EventPool);
+		e->Shutdown(m_EventPool.get());
 
 		m_Encounters.pop_back();
 	}
@@ -134,7 +138,7 @@ void EncounterLog::OnGameStart()
 		scheckall(m_ActiveEncounter);
 		m_ActiveEncounter->Begin(GetFrame(), false);
 
-		EncounterEvent* start = CreateEvent<EncounterEventType::GameStart>();
+		EncounterEvent* start = CreateEncounterEvent<EncounterEventType::GameStart>();
 		scheckall(start);
 		m_ActiveEncounter->AddEvent(start);
 

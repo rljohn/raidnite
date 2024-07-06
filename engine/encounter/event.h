@@ -70,7 +70,7 @@ class EncounterEvents
 {
 public:
 
-	static EncounterEvent CreateEvent(const Frame frame, EventPool* pool, PlayerId source, PlayerId target = InvalidPlayerId)
+	static EncounterEvent Create(const Frame frame, EventPool* pool, PlayerId source, PlayerId target = InvalidPlayerId)
 	{
 		EncounterEvent rvo;
 		rvo.m_Source = source;
@@ -80,7 +80,7 @@ public:
 	}
 
 	template<EncounterEventType T>
-	static EncounterEvent* CreateEvent(const Frame frame, EventPool* pool)
+	static EncounterEvent* Create(const Frame frame, EventPool* pool)
 	{
 		if (!pool)
 			return nullptr;

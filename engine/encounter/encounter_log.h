@@ -39,10 +39,11 @@ class EncounterLog : public IEncounterLog
 public:
 
 	EncounterLog();
+	~EncounterLog();
 
 	Encounter* CreateEncounter();
 
-	bool Init(EventPool* pool = nullptr);
+	bool Init(std::unique_ptr<EventPool> pool);
 	void Shutdown();
 	void Clear() override;
 
@@ -78,9 +79,9 @@ private:
 	void OnDamageEvent(const DamageEvent* damageEvent);
 
 	template <EncounterEventType T>
-	EncounterEvent* CreateEvent()
+	EncounterEvent* CreateEncounterEvent()
 	{
-		return EncounterEvents::CreateEvent<T>(GetFrame(), m_EventPool);
+		return EncounterEvents::Create<T>(GetFrame(), m_EventPool.get());
 	}
 
 	bool AddEvent(EncounterEvent* evt);
@@ -89,7 +90,7 @@ private:
 	EncounterEvent* AddEvent()
 	{
 		EncounterEvent* evt = nullptr;
-		if (evt = CreateEvent<T>())
+		if (evt = CreateEncounterEvent<T>())
 		{
 			if (!AddEvent(evt))
 			{
@@ -113,8 +114,8 @@ private:
 
 	Frame GetFrame() const;
 
-	Encounter* m_ActiveEncounter;
-	EventPool* m_EventPool;
+	Encounter* m_ActiveEncounter = nullptr;
+	std::unique_ptr<EventPool> m_EventPool = nullptr;
 
 	GameEventDelegate::Function m_OnGameEvent;
 	std::vector<Encounter*> m_Encounters;

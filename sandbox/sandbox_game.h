@@ -63,7 +63,6 @@ private:
 	// 256,000 events - tweak as needed
 	static const int ENCOUNTER_POOL_SIZE = 256 * 1024;
 	using EventPool = IntrusivePool<EncounterEvent, ENCOUNTER_POOL_SIZE>;
-	EventPool* m_EventPool;
 };
 
 } // namespace sandbox

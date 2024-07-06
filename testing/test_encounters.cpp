@@ -73,7 +73,7 @@ void EncounterLogTest::TearDown()
 TEST_F(EncounterLogTest, InitShutdown)
 {
 	EncounterLog log;
-	log.Init();
+	log.Init(nullptr);
 	EXPECT_EQ(Game::GameEventDlgt().GetCount(), 1);
 
 	log.Shutdown();
@@ -102,10 +102,9 @@ TEST_F(EncounterLogTest, SaveLoad)
 
 	// Pool big enough for the two of us
 	using CustomPool = IntrusivePool<EncounterEvent, 10>;
-	CustomPool* pool = new CustomPool();
 
 	EncounterLog log;
-	log.Init(pool);
+	log.Init(std::make_unique<CustomPool>());
 
 	EncounterSerialization serializer;
 	EXPECT_FALSE(m_LogPath.empty());
@@ -127,9 +126,11 @@ TEST_F(EncounterLogTest, SaveLoad)
 
 	// load into a separate log
 	EncounterLog second;
-	second.Init(pool);
+	second.Init(std::make_unique<CustomPool>());
 	EXPECT_TRUE(serializer.Load(m_LogPath, second));
 
 	// verify matching logs
 	EXPECT_EQ(log.GetEncounterList().size(), second.GetEncounterList().size());
+
+	log.Shutdown();
 }

@@ -26,8 +26,7 @@ void GameSandbox::Init()
 	m_Engine.Init(timeStep);
 
 	// Encounter pooling
-	m_EventPool = new EventPool();
-	m_EncounterLog.Init(m_EventPool);
+	m_EncounterLog.Init(std::make_unique<EventPool>());
 
 	// Game Service Locators
 	Game::RegisterGameSystem(&m_GameInstance);
