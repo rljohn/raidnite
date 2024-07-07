@@ -113,7 +113,7 @@ bool Map::BuildPath(Tile* start, Tile* end, TilePath& out_path)
 	return out_path.m_Tiles.size() > 0;
 }
 
-std::vector<Position> Map::GetNeighbors(const Position& id) const
+std::vector<Position> Map::GetNeighbors(const Position& pos) const
 {
 	auto IsPassable = [this](const Position& p)
 	{
@@ -130,10 +130,11 @@ std::vector<Position> Map::GetNeighbors(const Position& id) const
 	};
 
 	std::vector<Position> results;
+	results.reserve(8);
 
 	for (const Position& dir : DIRS)
 	{
-		Position next{ id.GetX() + dir.GetX(), id.GetY() + dir.GetY()};
+		Position next{ pos.GetX() + dir.GetX(), pos.GetY() + dir.GetY()};
 		if (IsPositionValid(next.GetX(), next.GetY()) && IsPassable(next))
 		{
 			results.push_back(next);
@@ -162,23 +163,17 @@ std::vector<Position> Map::GetNeighbors(const Position& id) const
 			DiagonalDirection(Position(1, -1), Position(1, 0), Position(0, -1)),
 		};
 
-		for (DiagonalDirection dir : DIAGS)
+		for (const DiagonalDirection& dir : DIAGS)
 		{
-			Position next{ id.GetX() + dir.pos.GetX(), id.GetY() + dir.pos.GetY() };
-			Position req1{ id.GetX() + dir.req1.GetX(), id.GetY() + dir.req1.GetY() };
-			Position req2{ id.GetX() + dir.req2.GetX(), id.GetY() + dir.req2.GetY() };
+			Position next{ pos.GetX() + dir.pos.GetX(), pos.GetY() + dir.pos.GetY() };
+			Position req1{ pos.GetX() + dir.req1.GetX(), pos.GetY() + dir.req1.GetY() };
+			Position req2{ pos.GetX() + dir.req2.GetX(), pos.GetY() + dir.req2.GetY() };
 
 			if (IsPositionValid(next.GetX(), next.GetY()) && IsPassable(next) && IsPassable(req1) && IsPassable(req2))
 			{
 				results.push_back(next);
 			}
 		}
-	}
-
-	if ((id.GetX() + id.GetX()) % 2 == 0)
-	{
-		// see "Ugly paths" section for an explanation:
-		std::reverse(results.begin(), results.end());
 	}
 
 	return results;
@@ -198,6 +193,25 @@ double Map::GetCost(const Position& from, const Position& to)
 	{
 		// Double
 		return 1.001;
+	}
+}
+
+bool Map::GetNearestUnoccupiedTile(const Position& target, Position& out_result)
+{
+	return GetNearestUnoccupiedTile(target, target, out_result);
+}
+
+bool Map::GetNearestUnoccupiedTile(const Position& target, const Position& from, Position& out_result)
+{
+	Position tmp;
+	if (Pathfinding::FindClosestTile(this, from, target, tmp))
+	{
+		out_result = tmp;
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

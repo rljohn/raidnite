@@ -173,23 +173,25 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 	{
 		if (ImGui::Button(ICON_FK_PLUS_CIRCLE "Add Unit"))
 		{
-			Position pos = Position(0, 0);
 			Map* map = raid::Game::GetMap();
 			if (map)
 			{
-				pos = map->GetPlayerSpawnPosition();
-			}
+				Position tmp = map->GetPlayerSpawnPosition();
+				
+				Position spawnPosition;
+				map->GetNearestUnoccupiedTile(tmp, tmp, spawnPosition);
 
-			raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-			if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(pos)))
-			{
-				party.AddUnit(unit);
+				raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
+				if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, spawnPosition)))
+				{
+					party.AddUnit(unit);
 
-				NameComponent& names = unit->GetName();
-				names.SetName(m_NameBuf);
-				names.SetTag(m_TagBuf);
-				names.SetTitlePrefix(m_TitlePrefixBuf);
-				names.SetTitleSuffix(m_TitleSuffixBuf);
+					NameComponent& names = unit->GetName();
+					names.SetName(m_NameBuf);
+					names.SetTag(m_TagBuf);
+					names.SetTitlePrefix(m_TitlePrefixBuf);
+					names.SetTitleSuffix(m_TitleSuffixBuf);
+				}
 			}
 		}
 
@@ -223,7 +225,7 @@ void PartyWidget::AddRandomUnit(GameSandbox* sandbox, int numUnits)
 	for (int i = 0; i < numUnits; i++)
 	{
 		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(pos)))
+		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, pos)))
 		{
 			party.AddUnit(unit);
 

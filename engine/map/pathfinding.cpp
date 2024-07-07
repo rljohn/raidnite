@@ -48,11 +48,12 @@ Position Pathfinding::TileDistanceBetweenTiles(const Position& first, const Posi
 	return Position(first.GetX() - second.GetX(), first.GetY() - second.GetY());
 }
 
-double Pathfinding::DistanceBetweenTiles(const Position& point1, const Position& point2)
+double Pathfinding::DistanceBetweenTiles(const Position& pos1, const Position& pos2)
 {
-	double dx = point2.GetX() - point1.GetX();
-	double dy = point2.GetY() - point1.GetY();
-	return sqrt(dx * dx + dy * dy);
+	// Calculate the Chebyshev distance using GetX() and GetY() methods
+	int deltaX = std::abs(pos2.GetX() - pos1.GetX());
+	int deltaY = std::abs(pos2.GetY() - pos1.GetY());
+	return std::max(deltaX, deltaY);
 }
 
 struct PQElementCompare 
@@ -111,7 +112,15 @@ void Pathfinding::AStarSearch(Map* graph, const Position& start, const Position&
 			break;
 		}
 
-		for (Position next : graph->GetNeighbors(current))
+		std::vector<Position> results = graph->GetNeighbors(current);
+
+		// Reverse search order on alternating tiles to reduce ugly path.
+		if ((current.GetX() + current.GetY()) % 2 == 0)
+		{
+			std::reverse(results.begin(), results.end());
+		}
+
+		for (Position next : results)
 		{
 			double new_cost = cost_so_far[current] + graph->GetCost(current, next);
 			if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next]) 
@@ -172,6 +181,8 @@ bool Pathfinding::FindClosestTile(Map* graph, const Position& start, const Posit
 
 		// Add neighbours as candidates
 		std::vector<Position> neighbours = graph->GetNeighbors(goal);
+		std::reverse(neighbours.begin(), neighbours.end());
+
 		for (const Position& pos : neighbours)
 		{
 			// A valid tile we're not already after

@@ -5,18 +5,20 @@
 namespace raid
 {
 
+class Map;
+
 class IEntitySpawner
 {
 public:
 
-	virtual Entity* SpawnEntity(const Position& pos) = 0;
+	virtual Entity* SpawnEntity(Map* map, const Position& pos) = 0;
 };
 
 class UnitSpawner : public IEntitySpawner, public Entity
 {
 public:
 
-	Entity* SpawnEntity(const Position& pos) override;
+	Entity* SpawnEntity(Map* map, const Position& pos) override;
 };
 
 } // namespace raid

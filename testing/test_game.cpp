@@ -64,7 +64,7 @@ TEST_F(GameTest, SpawnUnit)
 {
 	UnitSpawner spawner;
 
-	Entity* e = spawner.SpawnEntity(Position(0,0));
+	Entity* e = spawner.SpawnEntity(nullptr, Position(0,0));
 	EXPECT_NE(e, nullptr);
 
 	EXPECT_EQ(m_World.FindEntity(e->GetId()), e);

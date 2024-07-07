@@ -34,11 +34,13 @@ TEST(MapTest, NearestAvailableTile)
 	Map map;
 	map.BuildMap(5, 5);
 
+	Position pos(2, 2);
+
 	// Place an entity on the tile at position 2,2
 	Entity e;
-	Tile* tile = map.GetTile(2, 2);
+	Tile* tile = map.GetTile(pos);
 	tile->SetOccupant(&e);
-	tile->IsOccupied();
+	EXPECT_TRUE(tile->IsOccupied());
 
 	/*	xxxxx
 	*	xxxxx
@@ -47,9 +49,77 @@ TEST(MapTest, NearestAvailableTile)
 	*	xxxxx
 	*/
 
-	// TODO
-	//	Variant that accepts the incoming unit's origin, i.e. 0,0, so that we'd want '1,1'
-	//  Variant that randomizes the closest tile
-	// 
-	// Tile* t = map.GetNearestUnoccupiedTile(tile->GetPosition());
+	// Order is: Right, Left, Down, Up, UpRight, DownLeft, UpLeft, DownRight
+
+	Position offsets[] =
+	{
+		Position(1,0),		// 3,2
+		Position(-1, 0),	// 1,2
+		Position(0, -1),	// 2,1
+		Position(0, 1),		// 2,3
+		Position(1, 1),		// 3,3
+		Position(-1, -1),	// 1,1
+		Position(-1, 1),	// 1,3
+		Position(1, -1)		// 3,1
+	};
+
+	for (const Position& offset : offsets)
+	{
+		Position result;
+		bool success = map.GetNearestUnoccupiedTile(pos, result);
+		EXPECT_TRUE(success);
+		EXPECT_EQ(result, pos + offset);
+		map.GetTile(result)->SetOccupant(&e);
+	}
+}
+
+TEST(MapTest, NearestAvailableTileFrom)
+{
+	Map map;
+	map.BuildMap(5, 5);
+
+	Position pos(2, 2);
+
+	// Place an entity on the tile at position 2,2
+	Entity e;
+	Tile* tile = map.GetTile(pos);
+	tile->SetOccupant(&e);
+	EXPECT_TRUE(tile->IsOccupied());
+
+	/*	xxxxx
+	*	xxxxx
+	*	xxoxx
+	*	xxxxx
+	*	xxYxx
+	*/
+
+	// Default Order is: Right, Left, Down, Up, DownRight, UpLeft, DownLeft, UpRight
+	// Unlike the previous test, we want to factor in the unit's current position
+	// and ensure it chooses the available position that is closest to that.
+	Position start(2, 4);
+
+	Position offsets[] =
+	{
+		Position(0, 1),
+		Position(1, 1),
+		Position(-1, 1),
+		Position(1, 0),
+		Position(-1, 0),
+		Position(0, -1),
+		Position(-1, -1),
+		Position(1, -1),
+	};
+
+	// Fill in each tile to prove the tile filling algorithms is working correctly.
+	for (const Position& offset : offsets)
+	{
+		Position result;
+		bool success = map.GetNearestUnoccupiedTile(pos, start, result);
+		EXPECT_TRUE(success);
+
+		Position expectation = pos + offset;
+		EXPECT_EQ(result.GetX(), expectation.GetX());
+		EXPECT_EQ(result.GetY(), expectation.GetY());
+		map.GetTile(result)->SetOccupant(&e);
+	}
 }
