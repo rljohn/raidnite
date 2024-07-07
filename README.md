@@ -17,7 +17,7 @@ Lower level systems to support the game. This includes low-level utilies and gen
 - [x] Logging
 - [x] Asserts
 - [x] Delegates
-- [x] File Utility
+- [x] Filesystem Utility
 - [x] Intrusive Lists and Pools
 - [x] Time Utility
 - [x] Entities and Components
@@ -25,20 +25,21 @@ Lower level systems to support the game. This includes low-level utilies and gen
 - [x] Localization
 - [x] Service Locator for generic subsystems
 - [x] Game Events
-- [x] Combat Log serialization
+- [x] Combat Log + Serialization
 - [x] Attributes (Strength, Armor, etc).
 - [x] Powers (Mana, Energy, etc.)
 - [x] Modifiers for Powers and Attributes (Buffs, Debuffs)
 - [x] Damage Events and Damage/Resist Calculations
 - [x] Aggro Table
+- [x] Command Line Arguments (Bools, Ints, Strings)
+- [x] 2D Tile Map
+- [x] Pathfinding
+- [x] Party / Groups
 - [ ] State Machine
 - [ ] States
 - [ ] Abilities
 - [ ] Talents (Spell Modifiers)
-- [ ] Party / Groups
 - [ ] Factions
-- [ ] Map
-- [ ] Pathfinding
 - [ ] Unit AI
 - [ ] ... and more.
 
