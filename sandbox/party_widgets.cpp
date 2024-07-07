@@ -3,6 +3,7 @@
 
 // engine
 #include "engine/entity/transform.h"
+#include "engine/system/automation.h"
 
 // sandbox
 #include "sandbox_imgui.h"

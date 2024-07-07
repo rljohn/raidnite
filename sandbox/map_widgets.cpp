@@ -8,6 +8,7 @@
 // engine
 #include "engine/game/game.h"
 #include "engine/system/stringutil.h"
+#include "engine/system/automation.h"
 
 namespace raid {
 namespace sandbox {

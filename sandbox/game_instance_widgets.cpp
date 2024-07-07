@@ -10,6 +10,7 @@
 #include "engine/game/game_instance.h"
 #include "engine/game/loading.h"
 #include "engine/system/stringutil.h"
+#include "engine/system/automation.h"
 
 namespace raid {
 using namespace stringutil;
@@ -17,6 +18,7 @@ using namespace stringutil;
 namespace sandbox {
 
 BOOL_XPARAM(QuickPlay);
+STRING_XPARAM(MapName);
 
 GameInstanceWidget::GameInstanceWidget()
 {
@@ -27,6 +29,12 @@ void GameInstanceWidget::Init()
 {
 	SetEnabled(true);
 	m_LoadDlgt = std::make_shared<LoadDlgt>();
+
+	if (Arg_MapName.HasValue())
+	{
+		std::string name = stringutil::WideStringToUtf8(Arg_MapName.GetValue());
+		strcpy_s(m_MapName, name.c_str());
+	}
 }
 
 void GameInstanceWidget::Draw(GameSandbox* sandbox)

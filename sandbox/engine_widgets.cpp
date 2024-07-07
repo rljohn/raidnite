@@ -42,33 +42,45 @@ void EngineWidget::Draw(GameSandbox* sandbox)
 
 	if (ImGui::CollapsingHeader("Arguments"))
 	{
-		if (ImGui::TreeNode("Enabled"))
+		for (size_t i = 0; i < SCommandLineManager::Instance().GetArgCount(); i++)
 		{
-			for (size_t i = 0; i < SCommandLineManager::Instance().GetArgCount(); i++)
+			if (CommandLineArg* arg = SCommandLineManager::Instance().GetArg(i))
 			{
-				CommandLineArg* arg = SCommandLineManager::Instance().GetArg(i);
-				if (arg && arg->HasValue())
+				if (arg->GetType() == CommandLineArg::Type::Bool)
 				{
-					CommandLineArg::DisplayBuffer buffer;
-					arg->GetDisplay(buffer);
-					ImGui::Text("%s", buffer);
+					if (BoolArgument* b = static_cast<BoolArgument*>(arg))
+					{
+						bool enabled = b->GetValue();
+						if (ImGui::Checkbox(stringutil::WideStringToUtf8(b->GetName()).c_str(), &enabled))
+						{
+							b->SetValue(enabled);
+						}
+					}
+				}
+				else if (arg->GetType() == CommandLineArg::Type::Int)
+				{
+					if (IntArgument* i = static_cast<IntArgument*>(arg))
+					{
+						int value = i->GetValue();
+						if (ImGui::InputInt(stringutil::WideStringToUtf8(i->GetName()).c_str(), &value))
+						{
+							i->SetValue(value);
+						}
+					}
+				}
+				else if (arg->GetType() == CommandLineArg::Type::String)
+				{
+					if (StringArgument* s = static_cast<StringArgument*>(arg))
+					{
+						char buffer[1024] = { 0 };
+						strcpy_s(buffer, stringutil::WideStringToUtf8(s->GetValue()).c_str());
+						if (ImGui::InputText(stringutil::WideStringToUtf8(s->GetName()).c_str(), buffer, COUNTOF(buffer)))
+						{
+							s->SetValue(stringutil::Utf8StringToWide(std::string(buffer)).c_str());
+						}
+					}
 				}
 			}
-
-			ImGui::TreePop();
-		}
-		if (ImGui::TreeNode("Disabled"))
-		{
-			for (size_t i = 0; i < SCommandLineManager::Instance().GetArgCount(); i++)
-			{
-				CommandLineArg* arg = SCommandLineManager::Instance().GetArg(i);
-				if (arg && !arg->HasValue())
-				{
-					ImGui::Text("%ls", arg->GetName().c_str());
-				}
-			}
-
-			ImGui::TreePop();
 		}
 	}
 }

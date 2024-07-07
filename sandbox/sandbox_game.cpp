@@ -14,6 +14,7 @@ namespace raid {
 namespace sandbox {
 
 BOOL_PARAM(QuickPlay, "Quickly gets into a game session");
+STRING_PARAM(MapName, "Pre-fill map loading widget with map name");
 
 using namespace raid;
 

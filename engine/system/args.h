@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -20,6 +22,15 @@ public:
 
     CommandLineArg(CommandLineManager& manager, const wchar_t* name);
     virtual ~CommandLineArg();
+
+    enum class Type
+    {
+        Bool,
+        Int,
+        String
+    };
+
+    virtual Type GetType() const = 0;
 
     // Pure virtual parse function that each type of Arg will implement
     virtual bool Parse(const std::wstring& arg, const std::wstring& next) = 0;
@@ -47,6 +58,8 @@ class BoolArgument : public CommandLineArg
 public:
     BoolArgument(CommandLineManager& manager, const wchar_t* name)
         : CommandLineArg(manager, name), m_Value(false) {}
+
+    Type GetType() const override { return Type::Bool; }
 
     bool Parse(const std::wstring& arg, const std::wstring& /* next */ ) override
     {
@@ -86,6 +99,8 @@ public:
     {
     }
 
+    Type GetType() const override { return Type::Int; }
+
     bool Parse(const std::wstring& arg, const std::wstring& next) override;
 
     void Reset() { m_Value = 0; m_HasValue = false; }
@@ -112,6 +127,8 @@ public:
         : CommandLineArg(manager, name)
     {
     }
+
+    Type GetType() const override { return Type::String; }
 
     bool Parse(const std::wstring& arg, const std::wstring& next) override;
 
@@ -188,39 +205,10 @@ class SCommandLineManager : public Singleton<CommandLineManager>
 #else
 #define BOOL_PARAM(name, desc) SHIPPING_BOOL_PARAM(name, desc)
 #define BOOL_XPARAM(name) SHIPPING_BOOL_XPARAM(name)
-#define INT_PARAM(name, des) SHIPPING_BOOL_PARAM(name, desc)
-#define INT_XPARAM(name) SHIPPING_BOOL_XPARAM(name)
-#define STRING_PARAM(name, des) SHIPPING_INT_PARAM(name, desc)
+#define INT_PARAM(name, des) SHIPPING_INT_PARAM(name, desc)
+#define INT_XPARAM(name) SHIPPING_INT_XPARAM(name)
+#define STRING_PARAM(name, des) SHIPPING_STRING_PARAM(name, desc)
 #define STRING_XPARAM(name) SHIPPING_STRING_XPARAM(name)
 #endif
-
-// Helper struct to run ONE time if an argument is passed (for automation)
-struct ArgAutomationHelper
-{
-    bool HasProcessed = false;
-
-    ArgAutomationHelper(const BoolArgument& arg)
-        : Arg(arg)
-    {
-    }
-
-    bool Proceed()
-    {
-        if (HasProcessed)
-            return false;
-
-        HasProcessed = true;
-        return Arg.GetValue();
-    }
-
-    const BoolArgument& Arg;
-};
-
-#define AUTOMATION_HELPER(name) \
-    static ArgAutomationHelper Auto ## name(Arg_ ## name); \
-
-#define AUTOMATION_HELPERX(name) \
-    BOOL_XPARAM(name) \
-    static ArgAutomationHelper Auto ## name(Arg_ ## name); \
 
 } // namespace raid
