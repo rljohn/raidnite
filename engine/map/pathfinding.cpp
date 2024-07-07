@@ -180,7 +180,7 @@ bool Pathfinding::FindClosestTile(Map* graph, const Position& start, const Posit
 		}
 
 		// Add neighbours as candidates
-		std::vector<Position> neighbours = graph->GetNeighbors(goal);
+		std::vector<Position> neighbours = graph->GetNeighbors(p);
 		std::reverse(neighbours.begin(), neighbours.end());
 
 		for (const Position& pos : neighbours)

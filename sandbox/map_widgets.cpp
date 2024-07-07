@@ -127,17 +127,15 @@ const char* MapWidget::GetMapIcon(GameSandbox* sandbox, const int x, const int y
 	static char buffer[8] = { 0 };
 	buffer[0] = '\0';
 
-	raid::Group& group = sandbox->GetParty();
-	for (size_t idx = 0; idx < group.GetSize(); idx++)
+	Tile* t = m_Map->GetTile(x, y);
+	if (t->IsOccupied())
 	{
-		Entity* e = group.GetEntity(idx);
-		if (TransformComponent* transform = e->GetComponent<TransformComponent>())
+		if (Entity* e = t->GetOccupant())
 		{
-			auto& pos = transform->GetPosition();
-			if (pos.GetX() == x && pos.GetY() == y)
+			if (NameComponent* name = e->GetComponent<NameComponent>())
 			{
-				sprintf_s(buffer, "P%lld", idx+1);
-				return buffer;
+				const std::string& n = name->GetName();
+				strncpy_s(buffer, n.c_str(), 3);
 			}
 		}
 	}

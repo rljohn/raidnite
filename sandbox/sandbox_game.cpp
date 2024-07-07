@@ -50,6 +50,7 @@ void GameSandbox::Init()
 	m_Widgets.push_back(&m_PartyWidgets);
 	m_Widgets.push_back(&m_LogWidgets);
 	m_Widgets.push_back(&m_GameInstanceWidgets);
+	m_Widgets.push_back(&m_UnitWidgets);
 
 	for (Widget* w : m_Widgets)
 	{

@@ -23,6 +23,13 @@ public:
     {
     }
 
+    Vector2(const Vector2& other)
+        : m_X(other.m_X)
+        , m_Y(other.m_Y)
+    {
+
+    }
+
     // Getter methods
     const T& GetX() const { return m_X; }
     const T& GetY() const { return m_Y; }
@@ -75,6 +82,13 @@ public:
             return Vector2(m_X / scalar, m_Y / scalar);
         }
 
+        return *this;
+    }
+
+    Vector2& operator=(const Vector2& other)
+    {
+        m_X = other.m_X;
+        m_Y = other.m_Y;
         return *this;
     }
 

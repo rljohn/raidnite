@@ -14,7 +14,7 @@ void Map::BuildMap(const int width, const int height)
 	{
 		for (int j = 0; j < height; j++)
 		{
-			m_Tiles[i][j].SetPosition(Position(j, i));
+			m_Tiles[i][j].SetPosition(Position(i, j));
 		}
 	}
 

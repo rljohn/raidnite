@@ -3,6 +3,7 @@
 #include "unit.h"
 #include "engine/game/game_events.h"
 #include "engine/map/map.h"
+#include "engine/system/log/logging.h"
 
 namespace raid
 {
@@ -26,7 +27,7 @@ Entity* UnitSpawner::SpawnEntity(Map* map, const Position& pos)
 		{
 			if (Tile* tile = map->GetTile(pos))
 			{
-				tile->SetOccupant(unit);
+				unit->OccupyTile(*tile);
 			}
 			else
 			{
@@ -41,6 +42,35 @@ Entity* UnitSpawner::SpawnEntity(Map* map, const Position& pos)
 	}
 
 	return nullptr;
+}
+
+void UnitSpawner::DestroyEntity(Map* map, Entity* entity)
+{
+	if (map)
+	{
+		if (TransformComponent* t = entity->GetComponent<TransformComponent>())
+		{
+			const Position& p = t->GetOccupyingTile();
+			if (Tile* tile = map->GetTile(p))
+			{
+				mapAssert(tile->GetOccupant() == entity);
+				if (tile->GetOccupant() == entity)
+				{
+					tile->SetOccupant(nullptr);
+				}
+			}
+		}
+	}
+
+	if (Game::GetEntityManager())
+	{
+		Game::GetEntityManager()->UnRegisterEntity(entity);
+	}
+
+	UnitDestroyedEvent e(entity);
+	Game::DispatchGameEvent(&e);
+
+	delete entity;
 }
 
 } // namespace raid

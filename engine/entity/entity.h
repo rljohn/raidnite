@@ -59,6 +59,8 @@ public:
     virtual void RegisterEntity(Entity* unit) = 0;
     virtual void UnRegisterEntity(Entity* unit) = 0;
     virtual void Reset() = 0;
+    virtual size_t GetEntityCount() const = 0;
+    virtual Entity* GetEntity(size_t idx) = 0;
 };
 
 } // namespace raid

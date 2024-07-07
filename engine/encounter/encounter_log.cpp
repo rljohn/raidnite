@@ -199,6 +199,7 @@ void EncounterLog::OnEntityCreated(const UnitSpawnedEvent* spawnEvent)
 
 void EncounterLog::OnEntityDestroyed(const UnitDestroyedEvent* destroyEvent)
 {
+	AddEvent<EncounterEventType::EntityDestroyed>();
 }
 
 void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)

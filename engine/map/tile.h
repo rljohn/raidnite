@@ -21,6 +21,7 @@ public:
 	// is in transit.
 	bool IsOccupied() const;
 	void SetOccupant(Entity* e);
+	Entity* GetOccupant() const { return m_Occupant; }
 
 	// Entities may pass through tiles on the way to their occupied tile.
 	void OnEntityEnter(Entity* e);

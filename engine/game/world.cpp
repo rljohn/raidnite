@@ -38,6 +38,21 @@ void World::Reset()
 	m_Entities.clear();
 }
 
+size_t World::GetEntityCount() const
+{
+	return m_Entities.size();
+}
+
+Entity* World::GetEntity(size_t idx)
+{
+	if (idx < m_Entities.size())
+	{
+		return m_Entities[idx];
+	}
+
+	return nullptr;
+}
+
 void World::Update(const GameFrame& frame)
 {
 	for (Entity* e : m_Entities)

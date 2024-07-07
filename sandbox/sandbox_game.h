@@ -18,6 +18,7 @@
 #include "map_widgets.h"
 #include "party_widgets.h"
 #include "game_instance_widgets.h"
+#include "unit_widgets.h"
 
 namespace raid {
 class Logger;
@@ -62,6 +63,7 @@ private:
 	EngineWidget m_EngineWidgets;
 	LogWidget m_LogWidgets;
 	GameInstanceWidget m_GameInstanceWidgets;
+	UnitWidget m_UnitWidgets;
 
 	// 256,000 events - tweak as needed
 	static const int ENCOUNTER_POOL_SIZE = 256 * 1024;

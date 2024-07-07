@@ -99,6 +99,7 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="sandbox_game.cpp" />
     <ClCompile Include="sandbox_imgui.cpp" />
+    <ClCompile Include="unit_widgets.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +112,7 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="sandbox_game.h" />
     <ClInclude Include="sandbox_imgui.h" />
+    <ClInclude Include="unit_widgets.h" />
     <ClInclude Include="widgets.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

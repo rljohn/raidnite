@@ -31,6 +31,9 @@
     <ClCompile Include="game_instance_widgets.cpp">
       <Filter>widgets</Filter>
     </ClCompile>
+    <ClCompile Include="unit_widgets.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -54,6 +57,9 @@
       <Filter>widgets</Filter>
     </ClInclude>
     <ClInclude Include="game_instance_widgets.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="unit_widgets.h">
       <Filter>widgets</Filter>
     </ClInclude>
   </ItemGroup>

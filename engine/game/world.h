@@ -20,6 +20,8 @@ public:
 	Entity* FindEntity(const EntityId entityId) override;
 	void OnGameEvent(const GameEvent& e) override;
 	void Reset() override;
+	size_t GetEntityCount() const override;
+	Entity* GetEntity(size_t idx) override;
 
 	// IGameSystem
 	void Update(const GameFrame& frame);
