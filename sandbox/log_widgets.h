@@ -18,7 +18,7 @@ public:
 	void DrawEvent(IEncounterLog* log, const EncounterEvent& evt);
 	void Shutdown() override;
 
-	const char* GetName() override { return "Log"; }
+	const char* GetName() override { return "Event Log"; }
 
 private:
 

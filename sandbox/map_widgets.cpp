@@ -124,6 +124,9 @@ void MapWidget::DrawMapWidgets(GameSandbox* sandbox)
 
 const char* MapWidget::GetMapIcon(GameSandbox* sandbox, const int x, const int y) const
 {
+	static char buffer[8] = { 0 };
+	buffer[0] = '\0';
+
 	raid::Group& group = sandbox->GetParty();
 	for (size_t idx = 0; idx < group.GetSize(); idx++)
 	{
@@ -133,12 +136,13 @@ const char* MapWidget::GetMapIcon(GameSandbox* sandbox, const int x, const int y
 			auto& pos = transform->GetPosition();
 			if (pos.GetX() == x && pos.GetY() == y)
 			{
-				return ICON_FK_CIRCLE_O;
+				sprintf_s(buffer, "P%lld", idx+1);
+				return buffer;
 			}
 		}
 	}
 
-	return nullptr;
+	return buffer;
 }
 
 void MapWidget::Shutdown()

@@ -224,8 +224,11 @@ void PartyWidget::AddRandomUnit(GameSandbox* sandbox, int numUnits)
 	raid::Group& party = sandbox->GetParty();
 	for (int i = 0; i < numUnits; i++)
 	{
+		Position spawnPos;
+		map->GetNearestUnoccupiedTile(pos, spawnPos);
+
 		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, pos)))
+		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, spawnPos)))
 		{
 			party.AddUnit(unit);
 

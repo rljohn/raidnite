@@ -36,13 +36,11 @@ bool Map::IsPositionValid(const int x, const int y) const
 {
 	if (x < 0 || x >= GetWidth())
 	{
-		mapError("Invalid tile x: {}", x);
 		return false;
 	}
 
 	if (y < 0 || y >= GetHeight())
 	{
-		mapError("Invalid tile y: {}", y);
 		return false;
 	}
 
@@ -52,7 +50,10 @@ bool Map::IsPositionValid(const int x, const int y) const
 Tile* Map::GetTile(const int x, const int y)
 {
 	if (!IsPositionValid(x, y))
+	{
+		mapError("Invalid tile: {},{}", x, y);
 		return nullptr;
+	}
 
 	return &m_Tiles[x][y];
 }
