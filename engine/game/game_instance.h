@@ -26,7 +26,7 @@ class GameInstance : public IGameSystem
 
 public:
 
-	void Init(std::shared_ptr< ILoadDelegate> loadDlgt);
+	void Init(std::shared_ptr<ILoadDelegate> loadDlgt);
 	void Update(const GameFrame& frame) override;
 	void Shutdown();
 	void Reset();

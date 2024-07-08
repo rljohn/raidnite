@@ -22,11 +22,11 @@ void MapWidget::Init()
 
 void MapWidget::Draw(GameSandbox* sandbox)
 {
-	if (m_Map == nullptr)
+	if (sandbox->GetMap() == nullptr)
 	{
 		if (sandbox->GetGameInstance().IsLoading())
 		{
-			CreateMapWidgets();
+			CreateMapWidgets(sandbox);
 		}
 		else 
 		{
@@ -39,7 +39,7 @@ void MapWidget::Draw(GameSandbox* sandbox)
 	}
 }
 
-void MapWidget::CreateMapWidgets()
+void MapWidget::CreateMapWidgets(GameSandbox* sandbox)
 {
 	ImGui::SliderInt("Width", &m_Width, 0, 100);
 	ImGui::SliderInt("Height", &m_Height, 0, 100);
@@ -47,9 +47,7 @@ void MapWidget::CreateMapWidgets()
 	AUTOMATION_HELPER(QuickPlay);
 	if (ImGui::Button("Create Map") || AutoQuickPlay.Proceed())
 	{
-		m_Map = new Map();
-		m_Map->BuildMap(m_Width, m_Height);
-		Game::SetMap(m_Map);
+		sandbox->BuildMap(m_Width, m_Height);
 	}
 }
 
@@ -57,11 +55,11 @@ void MapWidget::DrawMapWidgets(GameSandbox* sandbox)
 {
 	ImVec4* colors = ImGui::GetStyle().Colors;
 
-	ImGui::Text("Map Created: %d x %d", m_Map->GetWidth(), m_Map->GetHeight());
+	ImGui::Text("Map Created: %d x %d", sandbox->GetMap()->GetWidth(), sandbox->GetMap()->GetHeight());
 	if (ImGui::BeginTable("Map Tiles", 11, ImGuiTableFlags_Borders))
 	{
 		ImGui::TableSetupColumn("",ImGuiTableColumnFlags_NoResize ); // Empty column for row headers
-		for (int i = 0; i < m_Map->GetHeight(); i++)
+		for (int i = 0; i < sandbox->GetMap()->GetHeight(); i++)
 		{
 			char buf[16] = { 0 };
 			sprintf_s(buf, "%d", i);
@@ -69,20 +67,20 @@ void MapWidget::DrawMapWidgets(GameSandbox* sandbox)
 		}
 
 		ImGui::TableHeadersRow();
-		for (int i = 0; i < m_Map->GetHeight(); i++)
+		for (int i = 0; i < sandbox->GetMap()->GetHeight(); i++)
 		{
 			char buf[16] = { 0 };
 			sprintf_s(buf, "%d", i);
 		}
 
-		for (int i = 0; i < m_Map->GetHeight(); i++)
+		for (int i = 0; i < sandbox->GetMap()->GetHeight(); i++)
 		{
 			ImGui::TableNextRow();
 			ImGui::TableSetColumnIndex(0);
 			ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, ImGui::GetColorU32(colors[ImGuiCol_TableHeaderBg]));
 			ImGui::Text("%d", i);
 
-			for (int j = 0; j < m_Map->GetWidth(); j++)
+			for (int j = 0; j < sandbox->GetMap()->GetWidth(); j++)
 			{
 				ImGui::TableSetColumnIndex(j+1);
 
@@ -102,24 +100,17 @@ void MapWidget::DrawMapWidgets(GameSandbox* sandbox)
 	{
 		ImGui::PushID("Player Spawn");
 		ImGui::Text("Player Spawn");
-		const Position pos = m_Map->GetPlayerSpawnPosition();
+		const Position pos = sandbox->GetMap()->GetPlayerSpawnPosition();
 		int x = pos.GetX(); int y = pos.GetY();
-		if (ImGui::SliderInt("X", &x, 0, m_Map->GetWidth() - 1))
+		if (ImGui::SliderInt("X", &x, 0, sandbox->GetMap()->GetWidth() - 1))
 		{
-			m_Map->SetPlayerSpawnPosition(Position(x, y));
+			sandbox->GetMap()->SetPlayerSpawnPosition(Position(x, y));
 		}
-		if (ImGui::SliderInt("Y", &y, 0, m_Map->GetHeight() - 1))
+		if (ImGui::SliderInt("Y", &y, 0, sandbox->GetMap()->GetHeight() - 1))
 		{
-			m_Map->SetPlayerSpawnPosition(Position(x, y));
+			sandbox->GetMap()->SetPlayerSpawnPosition(Position(x, y));
 		}
 		ImGui::PopID();
-	}
-
-	if (ImGui::Button("Destroy Map"))
-	{
-		Game::SetMap(nullptr);
-		delete m_Map;
-		m_Map = nullptr;
 	}
 }
 
@@ -128,7 +119,7 @@ const char* MapWidget::GetMapIcon(GameSandbox* sandbox, const int x, const int y
 	static char buffer[8] = { 0 };
 	buffer[0] = '\0';
 
-	Tile* t = m_Map->GetTile(x, y);
+	Tile* t = sandbox->GetMap()->GetTile(x, y);
 	if (t->IsOccupied())
 	{
 		if (Entity* e = t->GetOccupant())

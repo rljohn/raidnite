@@ -19,14 +19,12 @@ public:
 
 private:
 
-	void CreateMapWidgets();
+	void CreateMapWidgets(GameSandbox* sandbox);
 	void DrawMapWidgets(GameSandbox* sandbox);
 	const char* GetMapIcon(GameSandbox* sandbox, const int x, const int y) const;
 
 	int m_Width = 10;
 	int m_Height = 10;
-
-	Map* m_Map = nullptr;
 };
 
 } // namespace sandbox

@@ -2,6 +2,7 @@
 #include "game_instance.h"
 
 #include "engine/game/game_events.h"
+#include "engine/map/map.h"
 #include "engine/system/log/logging.h"
 
 namespace raid

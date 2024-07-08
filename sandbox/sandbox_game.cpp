@@ -20,6 +20,7 @@ using namespace raid;
 
 GameSandbox::GameSandbox()
 	: m_Logger(nullptr)
+	, m_Map(nullptr)
 {
 }
 
@@ -37,6 +38,13 @@ void GameSandbox::Init()
 
 	// Encounter pooling
 	m_EncounterLog.Init(std::make_unique<EventPool>());
+
+	// Game Evens
+	m_OnGameEvent = [this](const GameEvent* evt)
+	{
+		this->OnGameEvent(evt);
+	};
+	Game::GameEventDlgt().Register(m_OnGameEvent);
 
 	// Game Service Locators
 	Game::RegisterGameSystem(&m_GameInstance);
@@ -108,6 +116,8 @@ void GameSandbox::Update()
 
 void GameSandbox::Shutdown()
 {
+	Game::GameEventDlgt().Unregister(m_OnGameEvent);
+
 	for (Widget* w : m_Widgets)
 	{
 		w->Shutdown();
@@ -126,6 +136,30 @@ void GameSandbox::Shutdown()
 	LogSystem::SetDefaultLogger(nullptr);
 	delete m_Logger;
 	m_Logger = nullptr;
+}
+
+void GameSandbox::BuildMap(const int width, const int height)
+{
+	mainAssert(m_Map == nullptr);
+	m_Map = new Map();
+	m_Map->BuildMap(width, height);
+	Game::SetMap(m_Map);
+}
+
+void GameSandbox::OnGameEvent(const GameEvent* evt)
+{
+	if (evt->GetType() == GameEventType::GameEnd)
+	{
+		if (m_Map)
+		{
+			m_Map->Shutdown();
+			delete m_Map;
+			m_Map = nullptr;
+		}
+		
+		m_World.Reset();
+		m_Party.Shutdown();
+	}
 }
 
 } // namespace sandbox

@@ -30,14 +30,10 @@ public:
 	void RegisterEntity(Entity* unit) override;
 	void UnRegisterEntity(Entity* unit) override;
 
-	const Entity& GetWorldEntity();
-
 private:
 
 	using EntityList = std::vector<Entity*>;
 	EntityList m_Entities;
-	Entity m_WorldEntity;
-
 	EntityId m_NextUnitId;
 };
 

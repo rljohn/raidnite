@@ -22,6 +22,13 @@ void Map::BuildMap(const int width, const int height)
 	m_Height = height;
 }
 
+void Map::Shutdown()
+{
+	m_Width = 0;
+	m_Height = 0;
+	m_Tiles.clear();
+}
+
 int Map::GetWidth() const
 {
 	return m_Width;

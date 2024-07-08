@@ -12,6 +12,7 @@ class Map
 public:
 
 	void BuildMap(const int width, const int height);
+	void Shutdown();
 
 	// Dimensions
 	int GetWidth() const;

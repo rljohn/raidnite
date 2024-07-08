@@ -32,10 +32,15 @@ void World::OnGameEvent(const GameEvent& evt)
 
 void World::Reset()
 {
-	// TODO
-	//	Destroy the entities?
+	while (!m_Entities.empty())
+	{
+		Entity* e = m_Entities.back();
+		m_Entities.pop_back();
+		delete e;
+	}
 	
 	m_Entities.clear();
+	m_NextUnitId = InvalidEntityId;
 }
 
 size_t World::GetEntityCount() const
@@ -64,18 +69,18 @@ void World::Update(const GameFrame& frame)
 void World::RegisterEntity(Entity* unit)
 {
 	m_Entities.push_back(unit);
-	unit->SetId(++m_NextUnitId);
+
+	EntityId nextId = ++m_NextUnitId;
+	if (nextId == InvalidEntityId)
+		nextId = ++m_NextUnitId;
+
+	unit->SetId(nextId);
 	unit->Init();
 }
 
 void World::UnRegisterEntity(Entity* unit)
 {
 	VectorRemove<Entity*>(m_Entities, unit);
-}
-
-const Entity& World::GetWorldEntity()
-{
-	return m_WorldEntity;
 }
 
 WorldRAII::WorldRAII()

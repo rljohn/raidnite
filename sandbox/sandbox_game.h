@@ -39,8 +39,13 @@ public:
 	raid::GameInstance& GetGameInstance() { return m_GameInstance; }
 	raid::Group& GetParty() { return m_Party; }
 	raid::UnitSpawner& GetUnitSpawner() { return m_UnitSpawner; }
+	
+	raid::Map* GetMap() { return m_Map; }
+	void BuildMap(const int width, const int height);
 
 private:
+
+	void OnGameEvent(const GameEvent* evt);
 
 	raid::Engine m_Engine;
 
@@ -53,8 +58,12 @@ private:
 	raid::Logger* m_Logger;
 
 	// Game
+	GameEventDelegate::Function m_OnGameEvent;
 	raid::Group m_Party;
 	raid::UnitSpawner m_UnitSpawner;
+
+	// Map
+	Map* m_Map;
 
 	// Widgets
 	std::vector<Widget*> m_Widgets;
