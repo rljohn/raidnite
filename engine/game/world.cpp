@@ -58,6 +58,16 @@ Entity* World::GetEntity(size_t idx)
 	return nullptr;
 }
 
+void World::AddEntityListener(IEntityListener* listener)
+{
+	m_Listeners.push_back(listener);
+}
+
+void World::RemoveEntityListener(IEntityListener* listener)
+{
+	VectorRemove(m_Listeners, listener);
+}
+
 void World::Update(const GameFrame& frame)
 {
 	for (Entity* e : m_Entities)
@@ -81,6 +91,11 @@ void World::RegisterEntity(Entity* unit)
 void World::UnRegisterEntity(Entity* unit)
 {
 	VectorRemove<Entity*>(m_Entities, unit);
+
+	for (IEntityListener* listener : m_Listeners)
+	{
+		listener->OnEntityRemoved(unit);
+	}
 }
 
 WorldRAII::WorldRAII()

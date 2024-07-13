@@ -25,7 +25,7 @@ class Logger;
 
 namespace sandbox {
 
-class GameSandbox
+class GameSandbox 
 {
 public:
 

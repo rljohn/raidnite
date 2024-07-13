@@ -1,13 +1,14 @@
 #pragma once
 
 #include "engine/system/container.h"
+#include "engine/entity/entity.h"
 
 namespace raid
 {
 
 class Entity;
 
-class Group
+class Group : public IEntityListener
 {
 public:
 
@@ -17,8 +18,12 @@ public:
     void Init(int size);
     void Shutdown();
 
+    // IEntityListener
+    void OnEntityRemoved(const Entity* entity);
+
+    // Public Functinos
     bool AddUnit(Entity* entity);
-    void RemoveUnit(Entity* entity);
+    void RemoveUnit(const Entity* entity);
     void RemoveUnitAt(size_t index);
     bool Contains(Entity* entity) const;
     bool IsEmpty() const;

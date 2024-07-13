@@ -60,6 +60,7 @@ bool Unit::OccupyTile(Tile& t)
 
 	t.SetOccupant(this);
 	m_Transform.SetOccupyingTile(t.GetPosition());
+	return true;
 }
 
 bool Unit::IsInCombat() const

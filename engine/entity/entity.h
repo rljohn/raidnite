@@ -50,6 +50,13 @@ private:
     EntityId m_Id;
 };
 
+class IEntityListener
+{
+public:
+
+    virtual void OnEntityRemoved(const Entity* entity) = 0;
+};
+
 class IEntityManager
 {
 public:
@@ -61,6 +68,10 @@ public:
     virtual void Reset() = 0;
     virtual size_t GetEntityCount() const = 0;
     virtual Entity* GetEntity(size_t idx) = 0;
+    virtual void AddEntityListener(IEntityListener* listener) = 0;
+    virtual void RemoveEntityListener(IEntityListener* listener) = 0;
 };
+
+
 
 } // namespace raid

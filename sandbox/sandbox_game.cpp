@@ -46,8 +46,13 @@ void GameSandbox::Init()
 	};
 	Game::GameEventDlgt().Register(m_OnGameEvent);
 
-	// Game Service Locators
+	// Game Systems
 	Game::RegisterGameSystem(&m_GameInstance);
+
+	// Setup Entity listenres
+	m_World.AddEntityListener(&m_Party);
+
+	// Game Service Locators
 	Game::SetEngine(&m_Engine);
 	Game::SetEntityManager(&m_World);
 	Game::SetEncounterLog(&m_EncounterLog);

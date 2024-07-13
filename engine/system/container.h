@@ -38,6 +38,12 @@ namespace raid
 	}
 
 	template <typename T>
+	bool VectorRemoveConst(std::vector<T*>& v, const T* value)
+	{
+		return VectorRemove(v, const_cast<T*>(value));
+	}
+
+	template <typename T>
 	bool VectorContains(const std::vector<T>& v, const T& value)
 	{
 		return std::find(v.begin(), v.end(), value) != v.end();

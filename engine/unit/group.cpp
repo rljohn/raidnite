@@ -32,6 +32,11 @@ void Group::Shutdown()
     m_List = std::vector<Entity*>();
 }
 
+void Group::OnEntityRemoved(const Entity* entity)
+{
+    RemoveUnit(entity);
+}
+
 bool Group::AddUnit(Entity* entity)
 {
     if (entity == nullptr)
@@ -56,9 +61,9 @@ bool Group::AddUnit(Entity* entity)
     return true;
 }
 
-void Group::RemoveUnit(Entity* entity)
+void Group::RemoveUnit(const Entity* entity)
 {
-    VectorRemove(m_List, entity);
+    VectorRemoveConst(m_List, entity);
 }
 
 void Group::RemoveUnitAt(size_t index)

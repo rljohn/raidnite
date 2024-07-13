@@ -22,6 +22,8 @@ public:
 	void Reset() override;
 	size_t GetEntityCount() const override;
 	Entity* GetEntity(size_t idx) override;
+	void AddEntityListener(IEntityListener* listener) override;
+	void RemoveEntityListener(IEntityListener* listener) override;
 
 	// IGameSystem
 	void Update(const GameFrame& frame);
@@ -35,6 +37,9 @@ private:
 	using EntityList = std::vector<Entity*>;
 	EntityList m_Entities;
 	EntityId m_NextUnitId;
+
+	using Listeners = std::vector<IEntityListener*>;
+	Listeners m_Listeners;
 };
 
 // Utility (mostly for testing) to ensure the combat system is set and destroyed.
