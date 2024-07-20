@@ -4,6 +4,7 @@
 #include "sandbox_game.h"
 
 #include "engine/system/log/logging.h"
+#include "engine/unit/states/state.h"
 
 #include <optional>
 
@@ -25,6 +26,14 @@ void UnitWidget::Draw(GameSandbox* sandbox)
 	{
 		return;
 	}
+
+	DrawSpawnWidgets(sandbox, map);
+	ImGui::Separator();
+	DrawEntityWidgets(sandbox, map);
+}
+
+void UnitWidget::DrawSpawnWidgets(GameSandbox* sandbox, Map* map)
+{
 
 	if (ImGui::BeginCombo("Enemies", m_UnitList[m_UnitListIdx].c_str()))
 	{
@@ -62,15 +71,20 @@ void UnitWidget::Draw(GameSandbox* sandbox)
 			NameComponent& names = unit->GetName();
 			names.SetName(m_UnitList[m_UnitListIdx]);
 
-			
+
 		}
 	}
+}
 
-	ImGui::Separator();
-	ImGui::Text("Entities");
-
-	if (IEntityManager* mgr = Game::GetEntityManager())
+void UnitWidget::DrawEntityWidgets(GameSandbox* sandbox, Map* map)
+{
+	if (ImGui::CollapsingHeader("Entities"))
 	{
+
+		IEntityManager* mgr = Game::GetEntityManager();
+		if (!mgr)
+			return;
+
 		size_t count = mgr->GetEntityCount();
 		for (size_t i = 0; i < count; i++)
 		{
@@ -80,7 +94,7 @@ void UnitWidget::Draw(GameSandbox* sandbox)
 				std::optional<Position> pos;
 				Position occ;
 
-				if (TransformComponent * t = e->GetComponent<TransformComponent>())
+				if (TransformComponent* t = e->GetComponent<TransformComponent>())
 				{
 					pos = t->GetPosition();
 					occ = t->GetOccupyingTile();
@@ -90,9 +104,9 @@ void UnitWidget::Draw(GameSandbox* sandbox)
 				{
 					if (pos.has_value())
 					{
-						ImGui::Text("%lld: %s (%d,%d) (Occ: %d,%d)", 
-							i , name->GetName().c_str(),
-							pos.value().GetX(), pos.value().GetY(), 
+						ImGui::Text("%lld: %s (%d,%d) (Occ: %d,%d)",
+							i, name->GetName().c_str(),
+							pos.value().GetX(), pos.value().GetY(),
 							occ.GetX(), occ.GetY());
 					}
 					else
@@ -109,10 +123,24 @@ void UnitWidget::Draw(GameSandbox* sandbox)
 					spawner.DestroyEntity(map, e);
 					i--;
 				}
+
+				if (StateMachineComponent* state = e->GetComponent<StateMachineComponent>())
+				{
+					DrawEntityState(state);
+				}
 			}
 			ImGui::PopID();
+
+			if (i < count - 1)
+				ImGui::Separator();
 		}
 	}
+}
+
+void UnitWidget::DrawEntityState(StateMachineComponent* state)
+{
+	StateType t = state->GetCurrentStateType();
+	ImGui::Text("State: %s", StateTypeToString(t));
 }
 
 void UnitWidget::Shutdown()

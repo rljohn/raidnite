@@ -41,7 +41,7 @@ void ImGuiFramework::InitFonts()
 	ImGuiIO& io = ImGui::GetIO();
 	io.Fonts->AddFontDefault();
 
-	const int fontSize = 13.0f;
+	const float fontSize = 13.0f;
 	const ImWchar icons_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
 
 	ImFontConfig icons_config;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "engine/entity/component.h"
-#include "thirdparty/spdlog/fmt/bundled/format.h"
 
 namespace raid
 {
@@ -14,7 +13,8 @@ enum class StateType
 
 	COUNT
 };
-auto format_as(StateType f) { return fmt::underlying(f); }
+
+const char* StateTypeToString(StateType e);
 
 class UnitState
 {
@@ -33,11 +33,14 @@ class StateMachineComponent : public Component
 {
 public:
 
+	StateMachineComponent(Entity& parent);
+
 	bool AddState(UnitState* state);
 	bool HasState(StateType t);
+	bool SetState(StateType t);
 
 	UnitState* GetCurrentState();
-	StateType GetCurrentStateType();
+	StateType GetCurrentStateType() const;
 
 	void Update();
 

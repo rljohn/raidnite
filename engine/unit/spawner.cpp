@@ -12,6 +12,7 @@ Entity* UnitSpawner::SpawnEntity(Map* map, const Position& pos)
 {
 	if (Unit* unit = new Unit())
 	{
+		unit->GetStateMachine().SetState(StateType::Idle);
 		unit->GetTransform().SetPosition(pos);
 
 		// Every spawned unit must have a Health attribute.

@@ -3,6 +3,7 @@
 
 // engine
 #include "engine/entity/transform.h"
+#include "engine/unit/ai/ai.h"
 #include "engine/system/automation.h"
 
 // sandbox
@@ -130,33 +131,50 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 
 		// POSITION
 		TransformComponent* transform = unit->GetComponent<TransformComponent>();
-		if (transform)
+		AIComponent* ai = unit->GetComponent<AIComponent>();
+		if (transform && ai)
 		{
-			Position pos = transform->GetPosition();
+			bool apply = false;
+
+			const Position pos = transform->GetPosition();
+			Position desire = ai->GetDesiredPosition();
+
 			ImGui::Text("Pos: %d,%d", pos.GetX(), pos.GetY());
 			ImGui::SameLine();
+
+			if (pos != desire)
+			{
+				ImGui::Text("=> %d,%d", desire.GetX(), desire.GetY());
+				ImGui::SameLine();
+			}
+
 			if (ImGui::Button(ICON_FK_ARROW_LEFT))
 			{
-				pos.SetX(pos.GetX() - 1);
-				transform->SetPosition(pos);
+				desire.SetX(desire.GetX() - 1);
+				apply = true;
 			}
 			ImGui::SameLine();
 			if (ImGui::Button(ICON_FK_ARROW_RIGHT))
 			{
-				pos.SetX(pos.GetX() + 1);
-				transform->SetPosition(pos);
+				desire.SetX(desire.GetX() + 1);
+				apply = true;
 			}
 			ImGui::SameLine();
 			if (ImGui::Button(ICON_FK_ARROW_UP))
 			{
-				pos.SetY(pos.GetY() - 1);
-				transform->SetPosition(pos);
+				desire.SetY(desire.GetY() - 1);
+				apply = true;
 			}
 			ImGui::SameLine();
 			if (ImGui::Button(ICON_FK_ARROW_DOWN))
 			{
-				pos.SetY(pos.GetY() + 1);
-				transform->SetPosition(pos);
+				desire.SetY(desire.GetY() + 1);
+				apply = true;
+			}
+
+			if (apply)
+			{
+				transform->SetPosition(desire);
 			}
 		}
 
@@ -182,17 +200,7 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 				Position spawnPosition;
 				map->GetNearestUnoccupiedTile(tmp, tmp, spawnPosition);
 
-				raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-				if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, spawnPosition)))
-				{
-					party.AddUnit(unit);
-
-					NameComponent& names = unit->GetName();
-					names.SetName(m_NameBuf);
-					names.SetTag(m_TagBuf);
-					names.SetTitlePrefix(m_TitlePrefixBuf);
-					names.SetTitleSuffix(m_TitleSuffixBuf);
-				}
+				AddUnit(sandbox, map, spawnPosition, m_NameBuf, m_TagBuf, m_TitlePrefixBuf, m_TitleSuffixBuf);
 			}
 		}
 
@@ -222,27 +230,37 @@ void PartyWidget::AddRandomUnit(GameSandbox* sandbox, int numUnits)
 		pos = map->GetPlayerSpawnPosition();
 	}
 
-	raid::Group& party = sandbox->GetParty();
 	for (int i = 0; i < numUnits; i++)
 	{
 		Position spawnPos;
 		map->GetNearestUnoccupiedTile(pos, spawnPos);
 
-		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
-		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, spawnPos)))
-		{
-			party.AddUnit(unit);
+		static int count = 0;
 
-			static int count = 0;
-			NameComponent& names = unit->GetName();
+		char buf[32] = { 0 };
+		sprintf_s(buf, "Random Unit %d", ++count);
 
-			char buf[32] = { 0 };
-			sprintf_s(buf, "Random Unit %d", ++count);
-			names.SetName(buf);
-			names.SetTag("Random");
-		}
+		AddUnit(sandbox, map, spawnPos, buf, "Random", "", "");
+	}	
+}
+
+void PartyWidget::AddUnit(GameSandbox* sandbox, Map* map, const Position& spawnPos, const char* name, const char* tag, const char* prefix, const char* suffix)
+{
+	raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
+	if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, spawnPos)))
+	{
+		unit->CreateAi<AIComponent>();
+
+		static int count = 0;
+		NameComponent& names = unit->GetName();
+		names.SetName(name);
+		names.SetTag(tag);
+		names.SetTitlePrefix(prefix);
+		names.SetTitleSuffix(suffix);
+
+		raid::Group& party = sandbox->GetParty();
+		party.AddUnit(unit);
 	}
-	
 }
 
 } // namespace sandbox

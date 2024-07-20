@@ -1,9 +1,32 @@
 #include "engine/pch.h"
 #include "engine/unit/states/state.h"
+#include "engine/unit/states/state_idle.h"
 #include "engine/system/log/logging.h"
+
+#include "thirdparty/spdlog/fmt/bundled/format.h"
 
 namespace raid
 {
+
+auto format_as(StateType f) { return fmt::underlying(f); }
+
+const char* StateTypeToString(StateType e)
+{
+	switch (e)
+	{
+	case StateType::Invalid: return "Invalid";
+	case StateType::Idle: return "Idle";
+	case StateType::Moving: return "Moving";
+	}
+
+	return "Invalid";
+}
+
+StateMachineComponent::StateMachineComponent(Entity& parent)
+	: Component(parent)
+{
+	AddState(new UnitState_Idle());
+}
 
 bool StateMachineComponent::AddState(UnitState* state)
 {
@@ -26,7 +49,18 @@ bool StateMachineComponent::AddState(UnitState* state)
 
 bool StateMachineComponent::HasState(StateType t)
 {
-	return GetState(GetCurrentStateType());
+	return GetState(t) != nullptr;
+}
+
+bool StateMachineComponent::SetState(StateType t)
+{
+	if (HasState(t))
+	{
+		m_CurrentState = t;
+		return true;
+	}
+
+	return false;
 }
 
 bool StateMachineComponent::ValidateState(StateType t)
@@ -39,7 +73,7 @@ UnitState* StateMachineComponent::GetCurrentState()
 	return GetState(m_CurrentState);
 }
 
-StateType StateMachineComponent::GetCurrentStateType()
+StateType StateMachineComponent::GetCurrentStateType() const
 {
 	return m_CurrentState;
 }

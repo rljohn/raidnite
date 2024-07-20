@@ -9,17 +9,18 @@ namespace raid
 {
 
 Unit::Unit()
-	: m_Powers(AddComponent<PowerComponent>())
+	: m_Transform(AddComponent<TransformComponent>())
+	, m_Powers(AddComponent<PowerComponent>())
 	, m_Attributes(AddComponent<AttributesComponent>())
 	, m_Buffs(AddComponent<BuffsComponent>())
 	, m_DamageReceiver(AddComponent<DamageReceiver>())
 	, m_AggroTable(AddComponent<AggroTable>())
 	, m_Name(AddComponent<NameComponent>())
 	, m_Targeting(AddComponent<TargetingComponent>())
-	, m_Movement(AddComponent<MovementComponent>())
-	, m_Transform(AddComponent<TransformComponent>())
+	, m_StateMachine(AddComponent<StateMachineComponent>())
+	, m_Movement(AddComponent<MovementComponent>(m_Transform))
+	, m_AiController(nullptr)
 {
-
 }
 
 void Unit::BeginFrame()
@@ -35,6 +36,11 @@ void Unit::UpdateFrame(GameFrame& frame)
 void Unit::EndFrame()
 {
 
+}
+
+void Unit::OnGameEvent(const GameEvent& evt)
+{
+	Entity::OnGameEvent(evt);
 }
 
 void Unit::AddBuff(Buff* buff)

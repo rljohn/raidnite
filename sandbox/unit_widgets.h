@@ -5,6 +5,10 @@
 #include "engine/types.h"
 
 namespace raid {
+
+class Map;
+class StateMachineComponent;
+
 namespace sandbox {
 
 class UnitWidget : public Widget
@@ -18,6 +22,10 @@ public:
 	const char* GetName() override { return "Units"; }
 
 private:
+
+	void DrawSpawnWidgets(GameSandbox* sandbox, Map* map);
+	void DrawEntityWidgets(GameSandbox* sandbox, Map* map);
+	void DrawEntityState(StateMachineComponent* state);
 
 	std::vector<std::string> m_UnitList;
 	int m_UnitListIdx = 0;

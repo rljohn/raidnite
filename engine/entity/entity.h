@@ -23,9 +23,11 @@ public:
     template <typename T, typename... Args>
     T& AddComponent(Args&&... args)
     {
+        static_assert(std::is_base_of<Component, T>::value,
+            "AddComponent type must be derived from Component");
+
         T* component = new T(*this, std::forward<Args>(args)...);
-        m_Components[typeid(T)] = component;
-        return *component;
+        return AddComponent(component);
     }
 
     template <typename T>
@@ -43,6 +45,15 @@ public:
     virtual void OnInit() {}
     virtual void Update(const GameFrame& /* frame */);
     virtual void OnGameEvent(const GameEvent& evt);
+
+protected:
+
+    template <typename T>
+    T& AddComponent(T* component)
+    {
+        m_Components[typeid(T)] = component;
+        return *component;
+    }
 
 private:
 

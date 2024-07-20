@@ -16,6 +16,9 @@ enum class AttributeType
 	// Level
 	Level,
 
+	// Movement
+	Speed,
+
 	// Base Stats
 	Stamina,
 	Intellect,
@@ -47,6 +50,7 @@ struct IAttribute
 	IAttribute(float value);
 
 	float GetValue() const { return m_CurrentValue; }
+	operator float() const { return GetValue(); }
 
 	// Dirty Flag - Recalculate
 	bool NeedsRecalculate() const { return m_NeedsCalculation; }
@@ -93,6 +97,7 @@ public:
 	void SetupAttributes()
 	{
 		AddAttribute<AttributeType::Level>();
+		AddAttribute<AttributeType::Speed>();
 
 		AddAttribute<AttributeType::Stamina>();
 		AddAttribute<AttributeType::Intellect>();

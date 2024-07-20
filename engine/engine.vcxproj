@@ -131,6 +131,7 @@
     <ClInclude Include="system\time.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="unit\aggro.h" />
+    <ClInclude Include="unit\ai\ai.h" />
     <ClInclude Include="unit\attribute.h" />
     <ClInclude Include="unit\buff.h" />
     <ClInclude Include="unit\effects\damage_effect.h" />
@@ -140,9 +141,9 @@
     <ClInclude Include="unit\spawner.h" />
     <ClInclude Include="unit\states\state.h" />
     <ClInclude Include="unit\states\state_idle.h" />
-    <ClInclude Include="unit\states\state_movement.h" />
     <ClInclude Include="unit\targeting.h" />
     <ClInclude Include="unit\unit.h" />
+    <ClInclude Include="unit\unit_component.h" />
     <ClInclude Include="unit\unit_utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +164,7 @@
     <ClCompile Include="system\log\log_channels.cpp" />
     <ClCompile Include="system\stringutil.cpp" />
     <ClCompile Include="unit\aggro.cpp" />
+    <ClCompile Include="unit\ai\ai.cpp" />
     <ClCompile Include="unit\attribute.cpp" />
     <ClCompile Include="entity\component.cpp" />
     <ClCompile Include="game\combat.cpp" />
@@ -187,6 +189,7 @@
     <ClCompile Include="unit\states\state.cpp" />
     <ClCompile Include="unit\targeting.cpp" />
     <ClCompile Include="unit\unit.cpp" />
+    <ClCompile Include="unit\unit_component.cpp" />
     <ClCompile Include="unit\unit_utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

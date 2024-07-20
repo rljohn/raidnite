@@ -5,8 +5,9 @@
 #include "widgets.h"
 
 namespace raid {
-namespace sandbox {
+class Map;
 
+namespace sandbox {
 class PartyWidget : public Widget
 {
 public:
@@ -21,6 +22,9 @@ private:
 
 	void DrawPartyWidgets(GameSandbox* sandbox);
 	void AddRandomUnit(GameSandbox* sandbox, int numUnits);
+
+	void AddUnit(GameSandbox* sandbox, Map* map, const Position& spawnPos, const char* name, 
+				 const char* tag, const char* prefix, const char* suffix);
 
 	int m_PartySize = 4;
 	char m_NameBuf[16] = {0};
