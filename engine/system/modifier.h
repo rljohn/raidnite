@@ -14,9 +14,9 @@ struct IModifier
 	virtual ModifierType GetModifierType() const = 0;
 	
 	IModifier() : m_Modifier(0) {}
-	IModifier(float modifier) : m_Modifier(modifier) { }
+	IModifier(double modifier) : m_Modifier(modifier) { }
 
-	float Apply(float value) const
+	double Apply(double value) const
 	{
 		if (GetModifierType() == ModifierType::AddSubtract)
 		{
@@ -30,12 +30,12 @@ struct IModifier
 		return value;
 	}
 
-	void SetModifier(float modifier) 
+	void SetModifier(double modifier)
 	{
 		m_Modifier = modifier; 
 	}
 	
-	float GetModifier() const
+	double GetModifier() const
 	{ 
 		return m_Modifier; 
 	}
@@ -54,14 +54,14 @@ struct IModifier
 
 private:
 
-	float m_Modifier;
+	double m_Modifier;
 };
 
 template <ModifierType M>
 struct Modifier : IModifier
 {
 	Modifier() : IModifier() {}
-	Modifier(float modifier) : IModifier(modifier) { }
+	Modifier(double modifier) : IModifier(modifier) { }
 
 	ModifierType GetModifierType() const override { return M; }
 };

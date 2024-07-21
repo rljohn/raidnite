@@ -11,6 +11,7 @@ Engine::Engine()
 	: m_FrameCount(0)
 	, m_Accumulation(0)
 	, m_TimeStep(0)
+	, m_TimeStepSecs(0)
 	, m_BaseTimeStep(0)
 {
 	m_LastUpdate = steady_clock::now();
@@ -19,7 +20,7 @@ Engine::Engine()
 void Engine::Init(const Nanoseconds& frameTime)
 {
 	m_BaseTimeStep = frameTime;
-	m_TimeStep = frameTime;
+	SetTimeStep(frameTime);
 	m_LastUpdate = steady_clock::now();
 
 	SCommandLineManager::Instance().Init(::GetCommandLineW());
@@ -43,7 +44,7 @@ void Engine::Update(const TimeStamp& now, const Nanoseconds& duration)
 
 	while (m_Accumulation >= m_TimeStep)
 	{
-		const GameFrame frame{ m_FrameCount, m_TimeStep };
+		const GameFrame frame{ m_FrameCount, m_TimeStep, m_TimeStepSecs };
 		Game::Update(frame);
 
 		m_Accumulation -= m_TimeStep;
@@ -51,6 +52,12 @@ void Engine::Update(const TimeStamp& now, const Nanoseconds& duration)
 	}
 
 	m_LastUpdate = now;
+}
+
+void Engine::SetTimeStep(Nanoseconds nanos)
+{
+	m_TimeStep = nanos;
+	m_TimeStepSecs = std::chrono::duration_cast<TimeStepSeconds>(nanos);
 }
 
 Milliseconds Engine::FramesToMillis(const Frame frames) const

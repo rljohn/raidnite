@@ -9,7 +9,7 @@
 
 namespace raid
 {
-	void BE_Damage::Init(EntityId source, SpellId spell, DamageType type, float value)
+	void BE_Damage::Init(EntityId source, SpellId spell, DamageType type, double value)
 	{
 		m_Source = source;
 		m_SpellId = spell;
@@ -17,7 +17,7 @@ namespace raid
 		m_Value = value;
 	}
 
-	bool BE_Damage::GetLevel(EntityId id, float& out_value) const
+	bool BE_Damage::GetLevel(EntityId id, double& out_value) const
 	{
 		if (IEntityManager* locator = Game::GetEntityManager())
 		{

@@ -43,6 +43,7 @@ namespace raid
 	using TimeStamp = std::chrono::time_point<std::chrono::steady_clock>;
 	using Duration = Nanoseconds;
 	using TimeStep = Nanoseconds;
+	using TimeStepSeconds = std::chrono::duration<double>;
 	using Frame = uint64_t;
 
 	// Abilities

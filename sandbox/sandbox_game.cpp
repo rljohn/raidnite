@@ -48,6 +48,7 @@ void GameSandbox::Init()
 
 	// Game Systems
 	Game::RegisterGameSystem(&m_GameInstance);
+	Game::RegisterGameSystem(&m_World);
 
 	// Setup Entity listenres
 	m_World.AddEntityListener(&m_Party);

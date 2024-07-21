@@ -26,23 +26,23 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 
 		// If the source entity is still alive, retrieve it.
 		// Fallback to the provided value if unavailable.
-		float sourceLevel = e.SourceLevel;
+		double sourceLevel = e.SourceLevel;
 		Entity* source = locator->FindEntity(e.Source);
 		if (source)
 		{
-			float level;
+			double level;
 			if (UnitStatics::GetUnitLevel(*source, level))
 			{
 				sourceLevel = level;
 			}
 		}
 
-		float resistPercent = 0;
+		double resistPercent = 0;
 		switch (e.Type)
 		{
 			case DamageType::Physical:
 			{
-				float armor;
+				double armor;
 				if (UnitStatics::GetAttribute<AttributeType::Armor>(*target, armor))
 				{
 					resistPercent = calculator->CalculateArmorResistPercent(sourceLevel, armor);
@@ -52,7 +52,7 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 
 			case DamageType::Fire:
 			{
-				float armor;
+				double armor;
 				if (UnitStatics::GetAttribute<AttributeType::FireResist>(*target, armor))
 				{
 					resistPercent = calculator->CalculateResistPercent(sourceLevel, armor);
@@ -62,7 +62,7 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 
 			case DamageType::Frost:
 			{
-				float armor;
+				double armor;
 				if (UnitStatics::GetAttribute<AttributeType::FrostResist>(*target, armor))
 				{
 					resistPercent = calculator->CalculateResistPercent(sourceLevel, armor);
@@ -72,7 +72,7 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 
 			case DamageType::Earth:
 			{
-				float armor;
+				double armor;
 				if (UnitStatics::GetAttribute<AttributeType::EarthResist>(*target, armor))
 				{
 					resistPercent = calculator->CalculateResistPercent(sourceLevel, armor);
@@ -81,8 +81,8 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 			break;
 		}
 
-		float baseDamage = e.Value;
-		float actualDamage = (1.0f - resistPercent) * baseDamage;
+		double baseDamage = e.Value;
+		double actualDamage = (1.0f - resistPercent) * baseDamage;
 
 		DamageEvent evt(target);
 		evt.BaseDamage = baseDamage;

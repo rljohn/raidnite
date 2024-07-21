@@ -86,3 +86,12 @@ TEST(EngineTest, TimeFrames)
 	Time::GetHMS(d, display);
 	EXPECT_STREQ(display, "02:10");
 }
+
+TEST(EngineTest, FrameDelta)
+{
+	const std::chrono::nanoseconds frameTime(16666666);
+
+	Engine e;
+	e.Init(frameTime);
+
+}

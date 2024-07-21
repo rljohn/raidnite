@@ -7,19 +7,19 @@ namespace raid
 {
 	struct BE_Damage : IBuffEffect
 	{
-		void Init(EntityId source, SpellId spell, DamageType type, float value);
+		void Init(EntityId source, SpellId spell, DamageType type, double value);
 
 		void OnAdd(Entity& owner);
 		void OnRemove() override;
 
 	protected:
 
-		bool GetLevel(EntityId id, float& out_value) const;
+		bool GetLevel(EntityId id, double& out_value) const;
 
 		EntityId m_Source;
 		EntityId m_TargetId;
 		SpellId m_SpellId;
 		DamageType m_DamageType;
-		float m_Value;
+		double m_Value;
 	};
 }

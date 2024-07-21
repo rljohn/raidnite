@@ -20,6 +20,7 @@ struct GameFrame
 {
 	const int64_t Frame;
 	const TimeStep TimeStep;
+	const TimeStepSeconds TimeStepSecs;
 };
 
 enum class GameEventType

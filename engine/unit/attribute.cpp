@@ -14,7 +14,7 @@ IAttribute::IAttribute()
 
 }
 
-IAttribute::IAttribute(float value)
+IAttribute::IAttribute(double value)
 	: m_BaseValue(value)
 	, m_CurrentValue(value)
 	, m_NeedsCalculation(false)

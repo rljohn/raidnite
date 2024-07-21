@@ -99,6 +99,7 @@
     <ClInclude Include="game\damage.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\game_instance.h" />
+    <ClInclude Include="game\game_logic.h" />
     <ClInclude Include="game\loading.h" />
     <ClInclude Include="game\world.h" />
     <ClInclude Include="game\zone.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="system\container.h" />
     <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\fileutil.h" />
+    <ClCompile Include="game\game_logic.cpp" />
     <ClCompile Include="system\args.cpp">
       <FileType>CppHeader</FileType>
     </ClCompile>

@@ -18,11 +18,11 @@ public:
 	struct DamageParams
 	{
 		EntityId Source = InvalidEntityId;
-		float SourceLevel = 0;
+		double SourceLevel = 0;
 		EntityId Target = InvalidEntityId;
 		DamageType Type = DamageType::Invalid;
 		SpellId Spell = InvalidSpellId;
-		float Value = 0;
+		double Value = 0;
 	};
 
 	virtual void BuildDamageEvent(const DamageParams& damage) = 0;

@@ -4,7 +4,7 @@
 namespace raid
 {
 
-void UnitStatics::InitUnitHealth(Unit& unit, float min, float max)
+void UnitStatics::InitUnitHealth(Unit& unit, double min, double max)
 {
 	IPower* health = unit.GetPower<PowerType::Health>();
 	if (health)
@@ -13,7 +13,7 @@ void UnitStatics::InitUnitHealth(Unit& unit, float min, float max)
 	}
 }
 
-bool UnitStatics::GetUnitLevel(const Entity& entity, float& out_level)
+bool UnitStatics::GetUnitLevel(const Entity& entity, double& out_level)
 {
 	if (AttributesComponent* attrs = entity.GetComponent<AttributesComponent>())
 	{

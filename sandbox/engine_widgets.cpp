@@ -54,7 +54,7 @@ void EngineWidget::Draw(GameSandbox* sandbox)
 						if (ImGui::Checkbox(stringutil::WideStringToUtf8(b->GetName()).c_str(), &enabled))
 						{
 							b->SetValue(enabled);
-						}
+		 				}
 					}
 				}
 				else if (arg->GetType() == CommandLineArg::Type::Int)

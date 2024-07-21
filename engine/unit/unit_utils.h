@@ -12,11 +12,11 @@ class UnitStatics
 {
 public:
 
-	static void InitUnitHealth(Unit& unit, float min, float max);
-	static bool GetUnitLevel(const Entity& entity, float& out_level);
+	static void InitUnitHealth(Unit& unit, double min, double max);
+	static bool GetUnitLevel(const Entity& entity, double& out_level);
 
 	template<AttributeType ATTR>
-	static bool GetAttribute(const Entity& entity, float& out_value)
+	static bool GetAttribute(const Entity& entity, double& out_value)
 	{
 		if (AttributesComponent* attrs = entity.GetComponent<AttributesComponent>())
 		{

@@ -121,6 +121,7 @@
     <ClInclude Include="system\automation.h" />
     <ClInclude Include="unit\ai\ai.h" />
     <ClInclude Include="unit\unit_component.h" />
+    <ClInclude Include="game\game_logic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -193,5 +194,6 @@
     <ClCompile Include="system\args.cpp" />
     <ClCompile Include="unit\ai\ai.cpp" />
     <ClCompile Include="unit\unit_component.cpp" />
+    <ClCompile Include="game\game_logic.cpp" />
   </ItemGroup>
 </Project>

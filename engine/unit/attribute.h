@@ -47,10 +47,10 @@ struct IAttribute
 	virtual AttributeType GetAttributeType() const = 0;
 
 	IAttribute();
-	IAttribute(float value);
+	IAttribute(double value);
 
-	float GetValue() const { return m_CurrentValue; }
-	operator float() const { return GetValue(); }
+	double GetValue() const { return m_CurrentValue; }
+	operator double() const { return GetValue(); }
 
 	// Dirty Flag - Recalculate
 	bool NeedsRecalculate() const { return m_NeedsCalculation; }
@@ -65,8 +65,8 @@ protected:
 
 	std::vector<IModifier*> m_Modifiers;
 
-	float m_BaseValue;
-	float m_CurrentValue;
+	double m_BaseValue;
+	double m_CurrentValue;
 
 	bool m_NeedsCalculation;
 };
@@ -74,7 +74,7 @@ protected:
 template <AttributeType T>
 struct Attribute : IAttribute
 {
-	Attribute(float value)
+	Attribute(double value)
 		: IAttribute(value)
 	{
 	}
@@ -117,7 +117,7 @@ public:
 	}
 
 	template<AttributeType T>
-	void AddAttribute(float value = 0)
+	void AddAttribute(double value = 0)
 	{
 		m_Attributes.emplace(T, new Attribute<T>(value));
 	}
@@ -171,7 +171,7 @@ public:
 	{
 	}
 
-	BE_AttributeModifier(float modifier)
+	BE_AttributeModifier(double modifier)
 		: Modifier<MOD>(modifier)
 	{
 	}
