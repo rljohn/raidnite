@@ -49,6 +49,8 @@ struct IAttribute
 	IAttribute();
 	IAttribute(double value);
 
+	void SetValue(double value);
+
 	double GetValue() const { return m_CurrentValue; }
 	operator double() const { return GetValue(); }
 
@@ -92,6 +94,7 @@ public:
 	AttributesComponent(Entity& parent)
 		: Component(parent)
 	{
+		SetupAttributes();
 	}
 
 	void SetupAttributes()

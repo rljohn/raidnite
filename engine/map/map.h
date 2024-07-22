@@ -38,6 +38,7 @@ public:
 
 	// Pathfinding
 	bool BuildPath(Tile* start, Tile* end, TilePath& out_path);
+	bool BuildPath(const Position& start, const Position& end, TilePath& out_path);
 	std::vector<Position> GetNeighbors(const Position& p) const;
 	double GetCost(const Position& from, const Position& to);
 

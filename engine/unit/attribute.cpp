@@ -22,6 +22,12 @@ IAttribute::IAttribute(double value)
 
 }
 
+void IAttribute::SetValue(double value)
+{
+	m_BaseValue = value;
+	Recalculate();
+}
+
 void IAttribute::Recalculate()
 {
 	m_CurrentValue = m_BaseValue;

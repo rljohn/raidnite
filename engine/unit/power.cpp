@@ -7,16 +7,16 @@
 namespace raid
 {
 
-void PowerValue::Init(float min, float max)
+void PowerValue::Init(double min, double max)
 {
 	m_MinValue = min;
 	m_MaxValue = max;
 	m_CurrentValue = max;
 }
 
-bool PowerValue::SetCurrent(float value)
+bool PowerValue::SetCurrent(double value)
 {
-	float newValue = Clamp(value);
+	double newValue = Clamp(value);
 
 	if (m_CurrentValue != newValue)
 	{
@@ -27,24 +27,24 @@ bool PowerValue::SetCurrent(float value)
 	return false;
 }
 
-void PowerValue::SetMax(float max)
+void PowerValue::SetMax(double max)
 {
 	m_MaxValue = max;
 }
 
-void PowerValue::SetMin(float min)
+void PowerValue::SetMin(double min)
 {
 	m_MinValue = min;
 }
 
-float PowerValue::GetPercent() const
+double PowerValue::GetPercent() const
 {
-	float range = m_MaxValue - m_MinValue;
-	float fill = m_CurrentValue - m_MinValue;
+	double range = m_MaxValue - m_MinValue;
+	double fill = m_CurrentValue - m_MinValue;
 
 	if (range > 0)
 	{
-		return (fill / range) * 100.0f;
+		return (fill / range) * 100.0;
 	}
 	else
 	{
@@ -52,22 +52,22 @@ float PowerValue::GetPercent() const
 	}
 }
 
-float PowerValue::Clamp(float value) const
+double PowerValue::Clamp(double value) const
 {
 	return std::clamp(value, m_MinValue, m_MaxValue);
 }
 
-void IPower::SetMax(float max)
+void IPower::SetMax(double max)
 { 
 	m_ModifiedValue.SetMax(max);
 }
 
-void IPower::SetMin(float min)
+void IPower::SetMin(double min)
 { 
 	m_ModifiedValue.SetMin(min);
 }
 
-void IPower::SetCurrent(float current)
+void IPower::SetCurrent(double current)
 { 
 	if (m_ModifiedValue.SetCurrent(current))
 	{
@@ -75,17 +75,17 @@ void IPower::SetCurrent(float current)
 	}
 }
 
-void IPower::SetPercent(float percent) 
+void IPower::SetPercent(double percent)
 {
-	percent = std::max(percent, 0.0f);
-	float range = GetMax() - GetMin();
-	float newCurrent = GetMin() + (percent * range);
+	percent = std::max(percent, 0.0);
+	double range = GetMax() - GetMin();
+	double newCurrent = GetMin() + (percent * range);
 	SetCurrent(newCurrent);
 }
 
 void IPower::Recalculate()
 {
-	float current = GetCurrent();
+	double current = GetCurrent();
 
 	// Restore base values for min/end
 	SetMin(m_BaseValue.GetMin());
@@ -110,9 +110,9 @@ void IPower::Recalculate()
 	m_NeedsCalculation = false;
 }
 
-void IPower::Increment(float value)
+void IPower::Increment(double value)
 {
-	float newValue = m_ModifiedValue.GetCurrent() + value;
+	double newValue = m_ModifiedValue.GetCurrent() + value;
 	m_ModifiedValue.SetCurrent(newValue);
 }
 

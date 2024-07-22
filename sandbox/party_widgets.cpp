@@ -110,19 +110,19 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 
 			if (m_ShowHealthWidgets)
 			{
-				float min = hp->GetMin();
-				float max = hp->GetMax();
-				float current = hp->GetCurrent();
+				double min = hp->GetMin();
+				double max = hp->GetMax();
+				double current = hp->GetCurrent();
 
-				if (ImGui::InputScalar("Min HP", ImGuiDataType_Float, &min))
+				if (ImGui::InputScalar("Min HP", ImGuiDataType_Double, &min))
 				{
 					hp->SetBaseValues(min, max);
 				}
-				if (ImGui::InputScalar("Max HP", ImGuiDataType_Float, &max))
+				if (ImGui::InputScalar("Max HP", ImGuiDataType_Double, &max))
 				{
 					hp->SetBaseValues(min, max);
 				}
-				if (ImGui::InputScalar("Current HP", ImGuiDataType_Float, &current))
+				if (ImGui::InputScalar("Current HP", ImGuiDataType_Double, &current))
 				{
 					hp->SetCurrent(current);
 				}

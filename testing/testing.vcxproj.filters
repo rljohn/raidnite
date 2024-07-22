@@ -16,6 +16,7 @@
     <ClCompile Include="test_math.cpp" />
     <ClCompile Include="test_engine.cpp" />
     <ClCompile Include="test_args.cpp" />
+    <ClCompile Include="test_movement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

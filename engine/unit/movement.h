@@ -26,6 +26,8 @@ public:
 	void Update(const GameFrame& frame) override;
 
 	void ResetPath();
+	void SetPath(const TilePath& path);
+	const TilePath& GetPath() { return m_Path; }
 
 private:
 
@@ -34,7 +36,6 @@ private:
 	TransformComponent& m_Transform;
 	IAttribute* m_SpeedAttribute;
 	float m_ConstantSpeed;
-	Position m_TargetPosition;
 	TilePath m_Path;
 
 };

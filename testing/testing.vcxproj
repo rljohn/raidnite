@@ -128,6 +128,7 @@
     <ClCompile Include="test_logging.cpp" />
     <ClCompile Include="test_map.cpp" />
     <ClCompile Include="test_math.cpp" />
+    <ClCompile Include="test_movement.cpp" />
     <ClCompile Include="test_system.cpp" />
     <ClCompile Include="test_unit.cpp" />
   </ItemGroup>

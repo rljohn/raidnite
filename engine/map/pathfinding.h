@@ -30,6 +30,23 @@ namespace raid
 
 		Tile* GetDestination();
 
+		void operator=(const TilePath& other)
+		{
+			this->m_Tiles = other.m_Tiles;
+		}
+
+		const Tile* operator[](int index) const
+		{
+			return m_Tiles[index];
+		}
+
+		Tile* operator[](int index)
+		{
+			return m_Tiles[index];
+		}
+
+		size_t length() const { return m_Tiles.size(); }
+
 		std::vector<Tile*> m_Tiles;
 	};
 

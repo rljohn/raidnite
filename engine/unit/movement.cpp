@@ -24,6 +24,11 @@ void MovementComponent::ResetPath()
 	m_Path.Reset();
 }
 
+void MovementComponent::SetPath(const TilePath& path)
+{
+	m_Path = path;
+}
+
 float MovementComponent::GetSpeed() const
 {
 	if (m_SpeedAttribute)

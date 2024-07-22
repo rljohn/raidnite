@@ -96,7 +96,6 @@ bool Map::IsAvailable(const Position& position)
 
 bool Map::BuildPath(Tile* start, Tile* end, TilePath& out_path)
 {
-	out_path.m_Tiles.clear();
 	if (start == nullptr || end == nullptr)
 	{
 		out_path.Reset();
@@ -106,8 +105,15 @@ bool Map::BuildPath(Tile* start, Tile* end, TilePath& out_path)
 	const Position& startPos = start->GetPosition();
 	const Position& endPos = end->GetPosition();
 
+	return BuildPath(startPos, endPos, out_path);
+}
+
+bool Map::BuildPath(const Position& start, const Position& end, TilePath& out_path)
+{
+	out_path.Reset();
+
 	// That tile isn't available, find another one
-	if (!IsAvailable(endPos))
+	if (!IsAvailable(end))
 	{
 		out_path.Reset();
 		return false;
@@ -116,8 +122,8 @@ bool Map::BuildPath(Tile* start, Tile* end, TilePath& out_path)
 	// Build a path
 	std::unordered_map<Position, Position> came_from;
 	std::unordered_map<Position, double> cost_so_far;
-	Pathfinding::AStarSearch(this, startPos, endPos, came_from, cost_so_far);
-	Pathfinding::ReconstructPath(this, startPos, endPos, came_from, out_path);
+	Pathfinding::AStarSearch(this, start, end, came_from, cost_so_far);
+	Pathfinding::ReconstructPath(this, start, end, came_from, out_path);
 	return out_path.m_Tiles.size() > 0;
 }
 

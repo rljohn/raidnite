@@ -28,7 +28,7 @@ enum class PowerField
 struct IPowerModifier : public IModifier
 {
 	IPowerModifier() : IModifier() { }
-	IPowerModifier(float modifier) : IModifier(modifier) { }
+	IPowerModifier(double modifier) : IModifier(modifier) { }
 
 	virtual PowerField GetPowerField() const = 0;
 };
@@ -37,7 +37,7 @@ template<ModifierType MOD, PowerField FIELD>
 struct PowerModifier : public IPowerModifier
 {
 	PowerModifier() : IPowerModifier() { }
-	PowerModifier(float modifier) : IPowerModifier(modifier) { }
+	PowerModifier(double modifier) : IPowerModifier(modifier) { }
 
 	ModifierType GetModifierType() const override { return MOD; }
 	PowerField GetPowerField() const override { return FIELD; }
@@ -54,7 +54,7 @@ public:
 	{
 	}
 
-	PowerValue(float max)
+	PowerValue(double max)
 		: m_CurrentValue(max)
 		, m_MinValue(0)
 		, m_MaxValue(max)
@@ -62,18 +62,18 @@ public:
 	}
 
 	// Init
-	void Init(float min, float max);
+	void Init(double min, double max);
 
 	// Set Functions
-	bool SetCurrent(float current);
-	void SetMax(float max);
-	void SetMin(float min);
+	bool SetCurrent(double current);
+	void SetMax(double max);
+	void SetMin(double min);
 
 	// Get Functions
-	float GetCurrent() const { return m_CurrentValue; }
-	float GetMin() const { return m_MinValue; }
-	float GetMax() const { return m_MaxValue; }
-	float GetPercent() const;
+	double GetCurrent() const { return m_CurrentValue; }
+	double GetMin() const { return m_MinValue; }
+	double GetMax() const { return m_MaxValue; }
+	double GetPercent() const;
 
 	// Queries
 	bool IsEmpty() const { return m_CurrentValue == m_MinValue; }
@@ -81,11 +81,11 @@ public:
 
 protected:
 
-	float Clamp(float newValue) const;
+	double Clamp(double newValue) const;
 
-	float m_CurrentValue;
-	float m_MinValue;
-	float m_MaxValue;
+	double m_CurrentValue;
+	double m_MinValue;
+	double m_MaxValue;
 	
 };
 
@@ -96,7 +96,7 @@ public:
 	virtual PowerType GetPowerType() const = 0;
 
 	// Base Values
-	void SetBaseValues(float min, float max)
+	void SetBaseValues(double min, double max)
 	{
 		m_BaseValue.SetMin(min);
 		m_BaseValue.SetMax(max);
@@ -104,20 +104,20 @@ public:
 	}
 
 	// Clamped set of current value
-	void SetCurrent(float current);
-	void SetPercent(float percent);
+	void SetCurrent(double current);
+	void SetPercent(double percent);
 	
 	// Getters
-	float GetCurrent() const { return m_ModifiedValue.GetCurrent(); }
-	float GetMin() const  {  return m_ModifiedValue.GetMin(); }
-	float GetMax() const  {  return m_ModifiedValue.GetMax(); }
-	float GetPercent() const { return m_ModifiedValue.GetPercent(); }
+	double GetCurrent() const { return m_ModifiedValue.GetCurrent(); }
+	double GetMin() const  {  return m_ModifiedValue.GetMin(); }
+	double GetMax() const  {  return m_ModifiedValue.GetMax(); }
+	double GetPercent() const { return m_ModifiedValue.GetPercent(); }
 
 	// Utilities
 	void ReFill() { m_ModifiedValue.SetCurrent(m_ModifiedValue.GetMax()); }
 	bool IsEmpty() const { return m_ModifiedValue.GetCurrent() == m_ModifiedValue.GetMin(); }
 	void SetEmpty() { m_ModifiedValue.SetCurrent(m_ModifiedValue.GetMin()); }
-	void Increment(float value);
+	void Increment(double value);
 
 	// Modifiers
 	void AddModifier(IPowerModifier* modifier);
@@ -129,14 +129,14 @@ public:
 	void Recalculate();
 
 	// Change Events
-	using PowerChangedDelegate = Delegate<float /* min */, float /* max */, float /* current */>;
+	using PowerChangedDelegate = Delegate<double /* min */, double /* max */, double /* current */>;
 	PowerChangedDelegate& PowerChanged() { return m_PowerChanged; }
 
 protected:
 
 	// Internal Setters
-	void SetMax(float max);
-	void SetMin(float min);
+	void SetMax(double max);
+	void SetMin(double min);
 
 	PowerValue m_BaseValue;
 	PowerValue m_ModifiedValue;
@@ -156,19 +156,19 @@ public:
 	{
 	}
 
-	Power(float min, float max)
+	Power(double min, double max)
 		: IPower() 
 	{
 		Init(min, max);
 	}
 
-	Power(float max) 
+	Power(double max)
 		: IPower()
 	{
 		Init(0, max);
 	}
 
-	void Init(float min, float max)
+	void Init(double min, double max)
 	{
 		m_BaseValue.Init(min, max);
 		m_ModifiedValue.Init(min, max);
@@ -189,7 +189,7 @@ public:
 	}
 
 	template<PowerType T>
-	void AddPower(float max)
+	void AddPower(double max)
 	{
 		m_Powers.emplace(T, new Power<T>(max));
 	}
@@ -245,7 +245,7 @@ public:
 	{
 	}
 
-	BE_PowerModifier(float modifier)
+	BE_PowerModifier(double modifier)
 		: PowerModifier<MOD, FIELD>(modifier)
 	{
 	}
@@ -304,7 +304,7 @@ public:
 
 private:
 
-	float m_RestorePercentage;
+	double m_RestorePercentage;
 };
 
 // Declare common power modifiers

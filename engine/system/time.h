@@ -28,6 +28,9 @@ public:
 	// Printing
 	using TimeDisplay = char[32];
 	static void GetHMS(const Duration& d, TimeDisplay& buffer);
+
+	// Math
+	static int NanosInSeconds(const Nanoseconds& nanos, const Seconds& seconds);
 };
 
 } // namespace raid

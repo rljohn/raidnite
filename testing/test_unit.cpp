@@ -45,20 +45,20 @@ TEST(UnitTest, PowerPercent)
 
 	// 50% HP check
 	p.SetCurrent(100);
-	EXPECT_FLOAT_EQ(p.GetPercent(), 50);
+	EXPECT_EQ(p.GetPercent(), 50);
 
 	// 10% hp check
 	p.SetBaseValues(p.GetMin(), 1000);
 	p.Recalculate();
-	EXPECT_FLOAT_EQ(p.GetPercent(), 10);
+	EXPECT_EQ(p.GetPercent(), 10);
 
 	// 0% hp check
 	p.SetEmpty();
-	EXPECT_FLOAT_EQ(p.GetPercent(), 0);
+	EXPECT_EQ(p.GetPercent(), 0);
 
 	// 100%
 	p.ReFill();
-	EXPECT_FLOAT_EQ(p.GetPercent(), 100);
+	EXPECT_EQ(p.GetPercent(), 100);
 }
 
 TEST(UnitTest, AttributeBasics)

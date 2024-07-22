@@ -94,4 +94,23 @@ TEST(EngineTest, FrameDelta)
 	Engine e;
 	e.Init(frameTime);
 
+	class TestGameSystem : public IGameSystem
+	{
+	public:
+
+		TestGameSystem() {}
+
+		void Update(const GameFrame& frame) override
+		{
+			EXPECT_NEAR(frame.TimeStepSecs.count(), 0.01667, 0.00001);
+		}
+	};
+
+	TestGameSystem system;
+
+	TimeStamp now = std::chrono::steady_clock::now();
+
+	Game::RegisterGameSystem(&system);
+	e.Update(now, frameTime);
+	Game::UnregisterGameSystem(&system);
 }
