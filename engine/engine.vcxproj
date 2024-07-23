@@ -164,6 +164,7 @@
     <ClCompile Include="system\fileutil.cpp" />
     <ClCompile Include="system\log\logging.cpp" />
     <ClCompile Include="system\log\log_channels.cpp" />
+    <ClCompile Include="system\math\vector2.cpp" />
     <ClCompile Include="system\stringutil.cpp" />
     <ClCompile Include="unit\aggro.cpp" />
     <ClCompile Include="unit\ai\ai.cpp" />

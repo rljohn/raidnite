@@ -31,11 +31,11 @@ public:
 
 private:
 
-	float GetSpeed() const;
+	double GetSpeed() const;
 
 	TransformComponent& m_Transform;
 	IAttribute* m_SpeedAttribute;
-	float m_ConstantSpeed;
+	double m_ConstantSpeed;
 	TilePath m_Path;
 
 };

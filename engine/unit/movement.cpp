@@ -1,6 +1,8 @@
 #include "engine/pch.h"
 #include "movement.h"
 
+#include "engine/game/game_logic.h"
+
 namespace raid
 {
 
@@ -14,9 +16,14 @@ void MovementComponent::Init()
 
 void MovementComponent::Update(const GameFrame& frame)
 {
-	float speed = GetSpeed();
+	double speed = GetSpeed();
 	if (speed == 0)
+	{
 		return;
+	}
+
+	double tilesPerSecond = GameLogic::GetTilesPerSecond(speed);
+	double distance = frame.TimeStepSecs.count() * tilesPerSecond;
 }
 
 void MovementComponent::ResetPath()
@@ -29,7 +36,7 @@ void MovementComponent::SetPath(const TilePath& path)
 	m_Path = path;
 }
 
-float MovementComponent::GetSpeed() const
+double MovementComponent::GetSpeed() const
 {
 	if (m_SpeedAttribute)
 	{

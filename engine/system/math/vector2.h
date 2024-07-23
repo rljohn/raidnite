@@ -141,4 +141,11 @@ private:
 using IntVector2D = Vector2<int>;
 using Vector2D = Vector2<double>;
 
+class VectorMath
+{
+public:
+
+    static Vector2D TranslateTo(const Vector2D& start, const Vector2D& end, double distance);
+};
+
 } // namespace raid

@@ -1,7 +1,7 @@
 #pragma once
 
-namespace raid
-{
+namespace raid {
+namespace GameLogic {
 
 double GetTilesPerSecond(const double speedStat)
 {
@@ -9,4 +9,5 @@ double GetTilesPerSecond(const double speedStat)
 	return speedStat / 100.0;
 }
 
+} // namespace GameLogic
 } // namespace raid
