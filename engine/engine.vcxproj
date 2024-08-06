@@ -125,6 +125,7 @@
     <ClInclude Include="system\math\random.h" />
     <ClInclude Include="system\math\vector2.h" />
     <ClInclude Include="system\math\vector3.h" />
+    <ClInclude Include="system\math\vector_math.h" />
     <ClInclude Include="system\modifier.h" />
     <ClInclude Include="system\pool.h" />
     <ClInclude Include="system\check.h" />
@@ -165,6 +166,8 @@
     <ClCompile Include="system\log\logging.cpp" />
     <ClCompile Include="system\log\log_channels.cpp" />
     <ClCompile Include="system\math\vector2.cpp" />
+    <ClCompile Include="system\math\vector3.cpp" />
+    <ClCompile Include="system\math\vector_math.cpp" />
     <ClCompile Include="system\stringutil.cpp" />
     <ClCompile Include="unit\aggro.cpp" />
     <ClCompile Include="unit\ai\ai.cpp" />

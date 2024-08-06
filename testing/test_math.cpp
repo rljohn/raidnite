@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "test.h"
 
-#include "engine/system/math/vector2.h"
-#include "engine/system/math/vector3.h"
+#include "engine/system/math/vector_math.h"
 #include "engine/system/math/random.h"
 
 TEST(Vector2DTest, Magnitude) {

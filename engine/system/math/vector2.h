@@ -30,6 +30,14 @@ public:
 
     }
 
+    // Cast constructor
+    template<typename U>
+    Vector2(const Vector2<U>& other)
+    {
+        m_X = (T)other.GetX();
+        m_Y = (T)other.GetY();
+    }
+
     // Getter methods
     const T& GetX() const { return m_X; }
     const T& GetY() const { return m_Y; }
@@ -60,6 +68,13 @@ public:
     Vector2 operator+(const Vector2& other) const
     {
         return Vector2(m_X + other.m_X, m_Y + other.m_Y);
+    }
+
+    // Addition assignment operator
+    void operator+=(const Vector2& other)
+    {
+        m_X += other.m_X;
+        m_Y += other.m_Y;
     }
 
     // Subtraction operator
@@ -140,12 +155,5 @@ private:
 
 using IntVector2D = Vector2<int>;
 using Vector2D = Vector2<double>;
-
-class VectorMath
-{
-public:
-
-    static Vector2D TranslateTo(const Vector2D& start, const Vector2D& end, double distance);
-};
 
 } // namespace raid

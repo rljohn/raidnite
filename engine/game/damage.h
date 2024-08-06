@@ -34,14 +34,14 @@ namespace raid
 	{
 	public:
 
-		virtual float CalculateArmorResistPercent(float enemy_level, float armor) = 0;
-		virtual float CalculateResistPercent(float enemy_level, float resist) = 0;
+		virtual double CalculateArmorResistPercent(double enemy_level, double armor) = 0;
+		virtual double CalculateResistPercent(double enemy_level, double resist) = 0;
 	};
 
 	class DamageCalculator : public IDamageCalculator
 	{
-		float CalculateArmorResistPercent(float enemy_level, float armor) override;
-		float CalculateResistPercent(float enemy_level, float resist) override;
+		double CalculateArmorResistPercent(double enemy_level, double armor) override;
+		double CalculateResistPercent(double enemy_level, double resist) override;
 	};
 
 } // namespace

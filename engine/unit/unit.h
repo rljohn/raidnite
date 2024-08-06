@@ -80,19 +80,28 @@ public:
 
 private:
 
+	///////////////////////
 	// Built-In Components
+	///////////////////////
+
+	TransformComponent& m_Transform;
 	PowerComponent& m_Powers;
 	AttributesComponent& m_Attributes;
 	BuffsComponent& m_Buffs;
 	DamageReceiver& m_DamageReceiver;
 	AggroTable& m_AggroTable;
 	NameComponent& m_Name;
-	MovementComponent& m_Movement;
-	TransformComponent& m_Transform;
 	TargetingComponent& m_Targeting;
 	StateMachineComponent& m_StateMachine;
 
-	// Custom Components
+	// Dependency: Transform
+	MovementComponent& m_Movement;
+
+	///////////////////////
+	// Optional Components
+	///////////////////////
+
+	// Dependency: Movement
 	AIComponent* m_AiController;
 };
 

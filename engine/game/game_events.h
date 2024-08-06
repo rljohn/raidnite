@@ -92,8 +92,8 @@ struct DamageEvent : public GameEvent, EntityEvent
 	{
 	}
 
-	float BaseDamage = 0;
-	float ActualDamage = 0;
+	double BaseDamage = 0;
+	double ActualDamage = 0;
 	DamageType DamageType = DamageType::Invalid;
 };
 

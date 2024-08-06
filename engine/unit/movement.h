@@ -14,13 +14,7 @@ class MovementComponent : public Component
 {
 public:
 
-	MovementComponent(Entity& parent, TransformComponent& transform)
-		: Component(parent)
-		, m_Transform(transform)
-		, m_SpeedAttribute(nullptr)
-		, m_ConstantSpeed(0.0f)
-	{
-	}
+	MovementComponent(Entity& parent, TransformComponent& transform);
 
 	void Init() override;
 	void Update(const GameFrame& frame) override;
@@ -31,12 +25,14 @@ public:
 
 private:
 
+	void CalculatePosition();
 	double GetSpeed() const;
 
 	TransformComponent& m_Transform;
 	IAttribute* m_SpeedAttribute;
 	double m_ConstantSpeed;
 	TilePath m_Path;
+	int m_TilePathIndex;
 
 };
 

@@ -2451,7 +2451,7 @@ FMT_CONSTEXPR auto parse_width(const Char* begin, const Char* end,
     FMT_CONSTEXPR void operator()(basic_string_view<Char> id) {
       handler.on_dynamic_width(id);
     }
-    FMT_CONSTEXPR void on_error(const char* message) {
+    FMT_CONSTEXPR void on_error(const char* message) const {
       if (message) handler.on_error(message);
     }
   };
@@ -2485,7 +2485,7 @@ FMT_CONSTEXPR auto parse_precision(const Char* begin, const Char* end,
     FMT_CONSTEXPR void operator()(basic_string_view<Char> id) {
       handler.on_dynamic_precision(id);
     }
-    FMT_CONSTEXPR void on_error(const char* message) {
+    FMT_CONSTEXPR void on_error(const char* message) const {
       if (message) handler.on_error(message);
     }
   };
@@ -2642,7 +2642,7 @@ FMT_CONSTEXPR auto parse_replacement_field(const Char* begin, const Char* end,
     FMT_CONSTEXPR void operator()(basic_string_view<Char> id) {
       arg_id = handler.on_arg_id(id);
     }
-    FMT_CONSTEXPR void on_error(const char* message) {
+    FMT_CONSTEXPR void on_error(const char* message) const {
       if (message) handler.on_error(message);
     }
   };

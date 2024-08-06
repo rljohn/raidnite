@@ -64,11 +64,18 @@ TEST(MovementTest, Basic)
 	// EXPECT_TRUE(ai->IsMoving());
 
 	// speed is set at 1 tile per second. We want to move 5 tiles = 5 seconds
-	const int iterations = Time::NanosInSeconds(frameTime, Seconds(1));
-	for (int i = 0; i < iterations; i++)
+	Vector2D progress(start.GetX(), start.GetY());
+	for (int tiles = 0; tiles < 5; tiles++)
 	{
-		engine.Update(now, frameTime);
-		now += frameTime;
+		const int iterations = Time::NanosInSeconds(frameTime, Seconds(1));
+		for (int i = 0; i < iterations; i++)
+		{
+			engine.Update(now, frameTime);
+			now += frameTime;
+		}
+
+		progress += Vector2D(1, 0);
+		EXPECT_EQ(unit->GetTransform().GetPosition(), target);
 	}
 
 	EXPECT_EQ(unit->GetTransform().GetPosition(), target);

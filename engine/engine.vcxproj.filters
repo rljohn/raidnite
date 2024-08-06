@@ -122,6 +122,7 @@
     <ClInclude Include="unit\ai\ai.h" />
     <ClInclude Include="unit\unit_component.h" />
     <ClInclude Include="game\game_logic.h" />
+    <ClInclude Include="system\math\vector_math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -196,5 +197,7 @@
     <ClCompile Include="unit\unit_component.cpp" />
     <ClCompile Include="game\game_logic.cpp" />
     <ClCompile Include="system\math\vector2.cpp" />
+    <ClCompile Include="system\math\vector3.cpp" />
+    <ClCompile Include="system\math\vector_math.cpp" />
   </ItemGroup>
 </Project>
