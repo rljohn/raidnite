@@ -173,7 +173,7 @@ bool Pathfinding::FindClosestTile(Map* graph, const Position& start, const Posit
 		candidates.pop_back();
 
 		// Check if this tile is available?
-		if (graph->IsAvailable(p))
+		if (graph->CanOccupy(p))
 		{
 			out_result = p;
 			return true;

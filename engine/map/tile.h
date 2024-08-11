@@ -23,6 +23,14 @@ public:
 	void SetOccupant(Entity* e);
 	Entity* GetOccupant() const { return m_Occupant; }
 
+	// Tiles can be enabled/disabled for movement.
+	bool AllowsMovement() const { return m_AllowsMovement; }
+	void SetMovementEnabled(bool enabled) { m_AllowsMovement = enabled; }
+
+	// Tiles can be enabled/disabled for occupancy
+	bool AllowsOccupancy() const { return m_AllowsOccupancy; }
+	void SetOccupancyAllowed(bool allowed) { m_AllowsOccupancy = allowed; }
+
 	// Entities may pass through tiles on the way to their occupied tile.
 	void OnEntityEnter(Entity* e);
 	void OnEntityExit(Entity* e);
@@ -37,6 +45,8 @@ private:
 
 	Position m_Position;
 	Entity* m_Occupant;
+	bool m_AllowsMovement;
+	bool m_AllowsOccupancy;
 	std::vector<Entity*> m_ActiveEntities;
 };
 

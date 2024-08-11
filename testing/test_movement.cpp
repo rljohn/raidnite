@@ -43,6 +43,10 @@ TEST(MovementTest, Basic)
 	Position target(5, 0);
 	ai->SetDesiredPosition(target);
 
+	Tile* targetTile = map.GetTile(target);
+	ASSERT_NE(targetTile, nullptr);
+	ASSERT_EQ(targetTile->GetOccupant(), unit);
+
 	MovementComponent* movement = unit->GetComponent<MovementComponent>();
 	ASSERT_NE(movement, nullptr);
 	const TilePath& path = movement->GetPath();
@@ -144,6 +148,57 @@ TEST(MovementTest, SkipFirstTile)
 	EXPECT_EQ(path[1]->GetPosition(), Position(1, 1));
 	EXPECT_EQ(mover->GetTilePathIndex(), 1);
 	
+	spawner.DestroyEntity(&map, unit);
+
+	Game::SetMap(nullptr);
+	Game::SetEntityManager(nullptr);
+	Game::UnregisterGameSystem(&world);
+}
+
+TEST(MovementTest, AllowMovement)
+{
+	const std::chrono::nanoseconds frameTime(16666666);
+
+	Engine engine;
+	engine.Init(frameTime);
+
+	World world;
+	Map map;
+
+	Game::SetMap(&map);
+	Game::SetEntityManager(&world);
+	Game::RegisterGameSystem(&world);
+
+	map.BuildMap(10, 10);
+
+	Position start(0, 0);
+
+	UnitSpawner spawner;
+	Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(&map, start));
+	ASSERT_NE(unit, nullptr);
+
+	// Disable movement at 1,0
+	Tile* t = map.GetTile(1, 0);
+	ASSERT_NE(unit, nullptr);
+	t->SetMovementEnabled(false);
+
+	// add AI to the component so it can process paths and movement
+	AIComponent* ai = unit->CreateAi<AIComponent>();
+	ASSERT_NE(ai, nullptr);
+	ai->SetDesiredPosition(Position(2, 0));
+
+	// The path should flow: 0,0 -> 0,1 -> 1,1 -> 2,1 -> 2,0
+	MovementComponent* mover = unit->GetComponent<MovementComponent>();
+	ASSERT_NE(mover, nullptr);
+
+	const TilePath& path = mover->GetPath();
+	ASSERT_EQ(path.length(), 5);
+	ASSERT_EQ(path[0]->GetPosition(), Position(0, 0));
+	ASSERT_EQ(path[1]->GetPosition(), Position(0, 1));
+	ASSERT_EQ(path[2]->GetPosition(), Position(1, 1));
+	ASSERT_EQ(path[3]->GetPosition(), Position(2, 1));
+	ASSERT_EQ(path[4]->GetPosition(), Position(2, 0));
+
 	spawner.DestroyEntity(&map, unit);
 
 	Game::SetMap(nullptr);

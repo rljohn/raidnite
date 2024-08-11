@@ -70,6 +70,22 @@ Tile* Map::GetTile(const Position& position)
 	return GetTile(position.GetX(), position.GetY());
 }
 
+const Tile* Map::GetTile(const int x, const int y) const
+{
+	if (!IsPositionValid(x, y))
+	{
+		mapError("Invalid tile: {},{}", x, y);
+		return nullptr;
+	}
+
+	return &m_Tiles[x][y];
+}
+
+const Tile* Map::GetTile(const Position& position) const
+{
+	return GetTile(position.GetX(), position.GetY());
+}
+
 bool Map::HasTile(const Position& position) const
 {
 	if (!IsPositionValid(position.GetX(), position.GetY()))
@@ -82,16 +98,22 @@ bool Map::HasTile(const Position& position) const
 	return true;
 }
 
-bool Map::IsOccupied(const Position& position)
+bool Map::CanOccupy(const Position& position) const
 {
-	Tile* tile = GetTile(position);
+	const Tile* tile = GetTile(position);
+	return tile ? (tile->AllowsOccupancy() && !tile->IsOccupied()) : false;
+}
+
+bool Map::IsOccupied(const Position& position) const
+{
+	const Tile* tile = GetTile(position);
 	return tile ? tile->IsOccupied() : false;
 }
 
-bool Map::IsAvailable(const Position& position)
+bool Map::IsMovementAllowed(const Position& position) const
 {
-	Tile* tile = GetTile(position);
-	return tile && !tile->IsOccupied();
+	const Tile* tile = GetTile(position);
+	return tile && tile->AllowsMovement();
 }
 
 bool Map::BuildPath(Tile* start, Tile* end, TilePath& out_path)
@@ -113,7 +135,7 @@ bool Map::BuildPath(const Position& start, const Position& end, TilePath& out_pa
 	out_path.Reset();
 
 	// That tile isn't available, find another one
-	if (!IsAvailable(end))
+	if (!CanOccupy(end))
 	{
 		out_path.Reset();
 		return false;
@@ -131,7 +153,7 @@ std::vector<Position> Map::GetNeighbors(const Position& pos) const
 {
 	auto IsPassable = [this](const Position& p)
 	{
-		return HasTile(p);
+		return HasTile(p) && IsMovementAllowed(p);
 	};
 
 	static std::array<Position, 4> DIRS =

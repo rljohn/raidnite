@@ -22,11 +22,14 @@ public:
 	bool IsPositionValid(const int x, const int y) const;
 	Tile* GetTile(const int x, const int y);
 	Tile* GetTile(const Position& position);
+	const Tile* GetTile(const int x, const int y) const;
+	const Tile* GetTile(const Position& position) const;
 	bool HasTile(const Position& position) const;
 
 	// Tile Availability
-	bool IsOccupied(const Position& position);
-	bool IsAvailable(const Position& position);
+	bool CanOccupy(const Position& position) const;
+	bool IsOccupied(const Position& position) const;
+	bool IsMovementAllowed(const Position& position) const;
 
 	// Scale
 	void SetMapScale(const Vector2D& scale) { m_MapScale = scale; }
