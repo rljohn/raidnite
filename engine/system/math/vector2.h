@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <ostream>
 
 namespace raid
 {
@@ -145,6 +146,10 @@ public:
     T Cross(const Vector2& other) const
     {
         return (m_X * other.m_X) - (m_Y * other.m_X);
+    }
+
+    friend void PrintTo(const Vector2& point, std::ostream* os) {
+        *os << "(" << point.m_X << "," << point.m_Y << ")";
     }
 
 private:

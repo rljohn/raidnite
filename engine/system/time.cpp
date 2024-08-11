@@ -73,11 +73,18 @@ void Time::GetHMS(const Duration& d, TimeDisplay& buffer)
     }
 }
 
-int Time::NanosInSeconds(const Nanoseconds& nanos, const Seconds& seconds)
+int Time::CountNanosInSeconds(const Nanoseconds& nanos, const Seconds& seconds)
 {
     // Convert M seconds to nanoseconds
     Nanoseconds tmp = std::chrono::duration_cast<Nanoseconds>(seconds);
-    return tmp.count() / nanos.count();
+    return (int)(tmp.count() / nanos.count());
+}
+
+int Time::CountNanosInMillis(const Nanoseconds& nanos, const Milliseconds& seconds)
+{
+    // Convert M seconds to nanoseconds
+    Nanoseconds tmp = std::chrono::duration_cast<Nanoseconds>(seconds);
+    return (int)(tmp.count() / nanos.count());
 }
 
 } // namespace raid

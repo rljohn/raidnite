@@ -19,6 +19,8 @@ Engine::Engine()
 
 void Engine::Init(const Nanoseconds& frameTime)
 {
+	mainAssert(frameTime != Nanoseconds(0));
+
 	m_BaseTimeStep = frameTime;
 	SetTimeStep(frameTime);
 	m_LastUpdate = steady_clock::now();

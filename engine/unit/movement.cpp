@@ -46,6 +46,11 @@ void MovementComponent::Update(const GameFrame& frame)
 	Location newLoc = VectorMath::TranslateTo(location, next, distance);
 	m_Transform.SetLocation(newLoc);
 	CalculatePosition();
+
+	if (newLoc == next)
+	{
+		IncrementTilePathIndex();
+	}
 }
 
 void MovementComponent::CalculatePosition()
@@ -59,16 +64,37 @@ void MovementComponent::CalculatePosition()
 	}
 }
 
+void MovementComponent::IncrementTilePathIndex()
+{
+	m_TilePathIndex++;
+
+	if (m_TilePathIndex >= m_Path.length())
+	{
+		// TODO
+		//  Event - Reached end of path
+		ResetPath();
+	}
+}
+
 void MovementComponent::ResetPath()
 {
 	m_Path.Reset();
 	m_TilePathIndex = 0;
 }
 
-void MovementComponent::SetPath(const TilePath& path)
+void MovementComponent::SetPath(const TilePath& path, bool allowSkip)
 {
 	m_Path = path;
-	m_TilePathIndex = 0;
+
+	// Skip the starting tile, we're already in it!
+	if (path.length() > 1)
+	{
+		m_TilePathIndex = 1;
+	}
+	else
+	{
+		m_TilePathIndex = 0;
+	}
 }
 
 double MovementComponent::GetSpeed() const

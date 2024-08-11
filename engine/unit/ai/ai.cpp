@@ -4,6 +4,7 @@
 #include "engine/unit/unit.h"
 #include "engine/map/map.h"
 #include "engine/map/pathfinding.h"
+#include "engine/system/math/vector_math.h"
 
 namespace raid
 {

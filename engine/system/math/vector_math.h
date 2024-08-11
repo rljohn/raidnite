@@ -10,6 +10,10 @@ namespace VectorMath {
 	Vector2D FromVector3(const Vector3D& other);
 	Vector3D FromVector2(const Vector2D& other);
 	Location FromPosition(const Position& position);
+
+	// Distance
+	double DistanceBetween(const Vector2D& a, const Vector2D& b);
+	double DistanceBetween(const Vector3D& a, const Vector3D& b);
 	
 	// Translation
 	Vector2D TranslateTo(const Vector2D& start, const Vector2D& end, double distance);

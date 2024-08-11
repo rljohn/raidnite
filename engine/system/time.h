@@ -30,7 +30,8 @@ public:
 	static void GetHMS(const Duration& d, TimeDisplay& buffer);
 
 	// Math
-	static int NanosInSeconds(const Nanoseconds& nanos, const Seconds& seconds);
+	static int CountNanosInSeconds(const Nanoseconds& nanos, const Seconds& seconds);
+	static int CountNanosInMillis(const Nanoseconds& nanos, const Milliseconds& seconds);
 };
 
 } // namespace raid

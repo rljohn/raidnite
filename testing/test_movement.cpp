@@ -14,6 +14,7 @@ TEST(MovementTest, Basic)
 {
 	const std::chrono::nanoseconds frameTime(16666666);
 	Engine engine;
+	engine.Init(frameTime);
 
 	World world;
 	Map map;
@@ -64,10 +65,10 @@ TEST(MovementTest, Basic)
 	// EXPECT_TRUE(ai->IsMoving());
 
 	// speed is set at 1 tile per second. We want to move 5 tiles = 5 seconds
-	Vector2D progress(start.GetX(), start.GetY());
+	Position progress(start.GetX(), start.GetY());
 	for (int tiles = 0; tiles < 5; tiles++)
 	{
-		const int iterations = Time::NanosInSeconds(frameTime, Seconds(1));
+		const int iterations = Time::CountNanosInSeconds(frameTime, Seconds(1));
 		for (int i = 0; i < iterations; i++)
 		{
 			engine.Update(now, frameTime);
@@ -75,10 +76,74 @@ TEST(MovementTest, Basic)
 		}
 
 		progress += Vector2D(1, 0);
-		EXPECT_EQ(unit->GetTransform().GetPosition(), target);
+
+		const Position& pos = unit->GetTransform().GetPosition();
+		EXPECT_EQ(pos, progress);
 	}
 
 	EXPECT_EQ(unit->GetTransform().GetPosition(), target);
+	spawner.DestroyEntity(&map, unit);
+
+	Game::SetMap(nullptr);
+	Game::SetEntityManager(nullptr);
+	Game::UnregisterGameSystem(&world);
+}
+
+TEST(MovementTest, SkipFirstTile)
+{
+	const std::chrono::nanoseconds frameTime(16666666);
+	
+	Engine engine;
+	engine.Init(frameTime);
+
+	World world;
+	Map map;
+
+	Game::SetMap(&map);
+	Game::SetEntityManager(&world);
+	Game::RegisterGameSystem(&world);
+
+	map.BuildMap(10, 10);
+
+	Position start(0, 0);
+
+	UnitSpawner spawner;
+	Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(&map, start));
+	ASSERT_NE(unit, nullptr);
+
+	// setup speed, 100 speed = 1 unit per second
+	IAttribute* speed = unit->GetAttribute<AttributeType::Speed>();
+	ASSERT_NE(speed, nullptr);
+	speed->SetValue(100);
+
+	// add AI to the component so it can process paths and movement
+	AIComponent* ai = unit->CreateAi<AIComponent>();
+
+	TimeStamp now = std::chrono::steady_clock::now();
+
+	// set a target position of 5,0
+	Position target(5, 0);
+	ai->SetDesiredPosition(target);
+
+	// start moving to the new position - 400ms is enough to move nearly half a tile
+	const int iterations = Time::CountNanosInMillis(frameTime, Milliseconds(400));
+	for (int i = 0; i < iterations; i++)
+	{
+		engine.Update(now, frameTime);
+		now += frameTime;
+	}
+
+	target = Position(3, 3);
+	ai->SetDesiredPosition(target);
+
+	MovementComponent* mover = unit->GetComponent<MovementComponent>();
+	ASSERT_NE(mover, nullptr);
+
+	const TilePath& path = mover->GetPath();
+	EXPECT_EQ(path[0]->GetPosition(), Position(0, 0));
+	EXPECT_EQ(path[0]->GetPosition(), Position(1, 1));
+	EXPECT_EQ(mover->GetTilePathIndex(), 1);
+	
 	spawner.DestroyEntity(&map, unit);
 
 	Game::SetMap(nullptr);

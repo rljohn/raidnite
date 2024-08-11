@@ -20,12 +20,15 @@ public:
 	void Update(const GameFrame& frame) override;
 
 	void ResetPath();
-	void SetPath(const TilePath& path);
+	void SetPath(const TilePath& path, bool allowSkip = true);
 	const TilePath& GetPath() { return m_Path; }
+
+	int GetTilePathIndex() const { return m_TilePathIndex; }
 
 private:
 
 	void CalculatePosition();
+	void IncrementTilePathIndex();
 	double GetSpeed() const;
 
 	TransformComponent& m_Transform;

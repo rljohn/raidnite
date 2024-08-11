@@ -20,6 +20,18 @@ Location FromPosition(const Position& position)
 	return Location(position.GetX(), position.GetY(), 0);
 }
 
+double DistanceBetween(const Vector2D& a, const Vector2D& b)
+{
+	Vector2D distance = a - b;
+	return distance.Magnitude();
+}
+
+double DistanceBetween(const Vector3D& a, const Vector3D& b)
+{
+	Vector3D distance = a - b;
+	return distance.Magnitude();
+}
+
 Vector2D TranslateTo(const Vector2D& start, const Vector2D& end, double distance)
 {
 	Vector2D direction = (end - start);
