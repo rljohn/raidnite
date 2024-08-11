@@ -56,6 +56,7 @@ public:
 	NameComponent& GetName() { return m_Name; }
 	TransformComponent& GetTransform() { return m_Transform; }
 	StateMachineComponent& GetStateMachine() { return m_StateMachine; }
+	AttributesComponent& GetAttributes() { return m_Attributes; }
 	
 	template<typename T, typename... Args>
 	T& AddUnitComponent(Args&&... args)

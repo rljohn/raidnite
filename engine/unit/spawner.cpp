@@ -15,6 +15,9 @@ Entity* UnitSpawner::SpawnEntity(Map* map, const Position& pos)
 		unit->GetStateMachine().SetState(StateType::Idle);
 		unit->GetTransform().SetPosition(pos);
 
+		// Setup attributes
+		unit->GetAttributes().SetupAttributes();
+
 		// Every spawned unit must have a Health attribute.
 		unit->AddPower<PowerType::Health>(0);
 

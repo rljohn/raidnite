@@ -141,7 +141,7 @@ TEST(MovementTest, SkipFirstTile)
 
 	const TilePath& path = mover->GetPath();
 	EXPECT_EQ(path[0]->GetPosition(), Position(0, 0));
-	EXPECT_EQ(path[0]->GetPosition(), Position(1, 1));
+	EXPECT_EQ(path[1]->GetPosition(), Position(1, 1));
 	EXPECT_EQ(mover->GetTilePathIndex(), 1);
 	
 	spawner.DestroyEntity(&map, unit);

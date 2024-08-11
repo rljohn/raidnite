@@ -94,7 +94,6 @@ public:
 	AttributesComponent(Entity& parent)
 		: Component(parent)
 	{
-		SetupAttributes();
 	}
 
 	void SetupAttributes()
