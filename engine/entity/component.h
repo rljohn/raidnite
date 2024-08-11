@@ -29,6 +29,8 @@ public:
 
 protected:
 
+    Entity* GetParent() { return &m_Parent; }
+
     Entity& m_Parent;
 };
 

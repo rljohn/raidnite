@@ -66,14 +66,32 @@ void MovementComponent::CalculatePosition()
 
 void MovementComponent::IncrementTilePathIndex()
 {
+	Tile* previous = GetNextTile();
 	m_TilePathIndex++;
+	Tile* current = GetNextTile();
 
-	if (m_TilePathIndex >= m_Path.length())
+	if (previous != current)
+	{
+		previous->OnEntityExit(GetParent());
+		current->OnEntityEnter(GetParent());
+	}
+
+	if (!current)
 	{
 		// TODO
 		//  Event - Reached end of path
 		ResetPath();
 	}
+}
+
+Tile* MovementComponent::GetNextTile()
+{
+	if (m_TilePathIndex < m_Path.length())
+	{
+		return m_Path[m_TilePathIndex];
+	}
+
+	return nullptr;
 }
 
 void MovementComponent::ResetPath()

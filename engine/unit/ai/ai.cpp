@@ -38,6 +38,12 @@ void AIComponent::BuildPath()
 	{
 		m_Movement.SetPath(path);
 	}
+
+	Tile* tile = path.GetDestination();
+	if (tile)
+	{
+		tile->SetOccupant(GetParent());
+	}
 }
 
 } // namespace raid

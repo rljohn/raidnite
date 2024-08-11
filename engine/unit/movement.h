@@ -30,6 +30,7 @@ private:
 	void CalculatePosition();
 	void IncrementTilePathIndex();
 	double GetSpeed() const;
+	Tile* GetNextTile();
 
 	TransformComponent& m_Transform;
 	IAttribute* m_SpeedAttribute;

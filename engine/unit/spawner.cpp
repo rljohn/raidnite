@@ -31,6 +31,7 @@ Entity* UnitSpawner::SpawnEntity(Map* map, const Position& pos)
 		{
 			if (Tile* tile = map->GetTile(pos))
 			{
+				tile->OnEntityEnter(unit);
 				unit->OccupyTile(*tile);
 			}
 			else
