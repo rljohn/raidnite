@@ -136,16 +136,18 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 		{
 			bool apply = false;
 
-			const Position pos = transform->GetPosition();
+			const Position& pos = transform->GetPosition();
+			const Location& loc = transform->GetLocation();
+
 			Position desire = ai->GetDesiredPosition();
 
+			ImGui::Text("Loc: %.2f, %.2f, %.2f", loc.GetX(), loc.GetY(), loc.GetZ());
 			ImGui::Text("Pos: %d,%d", pos.GetX(), pos.GetY());
-			ImGui::SameLine();
 
 			if (pos != desire)
 			{
-				ImGui::Text("=> %d,%d", desire.GetX(), desire.GetY());
 				ImGui::SameLine();
+				ImGui::Text("=> %d,%d", desire.GetX(), desire.GetY());
 			}
 
 			if (ImGui::Button(ICON_FK_ARROW_LEFT))
@@ -172,9 +174,11 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 				apply = true;
 			}
 
+			desire.Clamp(Position::Zero(), Position(sandbox->GetMap()->GetWidth(), sandbox->GetMap()->GetHeight()));
+
 			if (apply)
 			{
-				transform->SetPosition(desire);
+				ai->SetDesiredPosition(desire);
 			}
 		}
 
@@ -250,6 +254,11 @@ void PartyWidget::AddUnit(GameSandbox* sandbox, Map* map, const Position& spawnP
 	if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, spawnPos)))
 	{
 		unit->CreateAi<AIComponent>();
+
+		if (IAttribute* speed = unit->GetAttribute<AttributeType::Speed>())
+		{
+			speed->SetValue(100);
+		}
 
 		static int count = 0;
 		NameComponent& names = unit->GetName();

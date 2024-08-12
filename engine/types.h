@@ -70,7 +70,8 @@ namespace raid
 
 	// Map
 	using Position = IntVector2D;
-	using Location = Vector3D;
+	static const Position InvalidPosition = Position(-1, -1);
+	using Location = Vector3D;;
 	using Rotation = Vector3D;
 
 	// Array helper

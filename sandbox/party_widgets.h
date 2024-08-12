@@ -26,7 +26,7 @@ private:
 	void AddUnit(GameSandbox* sandbox, Map* map, const Position& spawnPos, const char* name, 
 				 const char* tag, const char* prefix, const char* suffix);
 
-	int m_PartySize = 4;
+	int m_PartySize = 1;
 	char m_NameBuf[16] = {0};
 	char m_TagBuf[16] = { 0 };
 	char m_TitlePrefixBuf[16] = { 0 };

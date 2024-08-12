@@ -42,7 +42,17 @@ void AIComponent::BuildPath()
 	Tile* tile = path.GetDestination();
 	if (tile)
 	{
+		const Position& previous = m_Unit.GetTransform().GetOccupyingTile();
+		if (map->IsPositionValid(previous.GetX(), previous.GetY()))
+		{
+			if (Tile* prevTile = map->GetTile(previous))
+			{
+				prevTile->SetOccupant(nullptr);
+			}
+		}
+
 		tile->SetOccupant(GetParent());
+		m_Unit.GetTransform().SetOccupyingTile(tile->GetPosition());
 	}
 }
 

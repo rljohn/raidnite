@@ -120,16 +120,28 @@ const char* MapWidget::GetMapIcon(GameSandbox* sandbox, const int x, const int y
 	buffer[0] = '\0';
 
 	Tile* t = sandbox->GetMap()->GetTile(x, y);
-	if (t->IsOccupied())
+	if (!t) return buffer;
+
+	bool drawOccupant = true;
+	Entity* occupant = t->GetOccupant();
+
+	for(const Entity* e : t->GetActiveEntities())
 	{
-		if (Entity* e = t->GetOccupant())
+		if (e == occupant)
 		{
-			if (NameComponent* name = e->GetComponent<NameComponent>())
-			{
-				const std::string& n = name->GetName();
-				strncpy_s(buffer, n.c_str(), 3);
-			}
+			drawOccupant = false;
 		}
+
+		if (NameComponent* name = e->GetComponent<NameComponent>())
+		{
+			const std::string& n = name->GetName();
+			strncpy_s(buffer, n.c_str(), 3);
+		}
+	}
+
+	if (t->IsOccupied() && drawOccupant)
+	{
+		strcpy_s(buffer, "o");
 	}
 
 	return buffer;

@@ -3,6 +3,7 @@
 
 #include "engine/game/game_logic.h"
 #include "engine/map/tile.h"
+#include "engine/map/map.h"
 #include "engine/system/math/vector_math.h"
 
 namespace raid
@@ -28,7 +29,7 @@ void MovementComponent::Init()
 void MovementComponent::Update(const GameFrame& frame)
 {
 	double speed = GetSpeed();
-	if (speed == 0)
+	if (speed == 0 || m_Path.length() == 0)
 	{
 		return;
 	}
@@ -60,6 +61,12 @@ void MovementComponent::CalculatePosition()
 	Position newPos((int)std::round(location.GetX()), (int)std::round(location.GetY()));
 	if (newPos != m_Transform.GetPosition())
 	{
+		// Update tiles of our new location.
+		if (Map* map = Game::GetMap())
+		{
+			map->OnEntityPositionChanged(GetParent(), m_Transform.GetPosition(), newPos);
+		}
+
 		m_Transform.SetPosition(newPos);
 	}
 }
@@ -69,12 +76,6 @@ void MovementComponent::IncrementTilePathIndex()
 	Tile* previous = GetNextTile();
 	m_TilePathIndex++;
 	Tile* current = GetNextTile();
-
-	if (previous != current)
-	{
-		previous->OnEntityExit(GetParent());
-		current->OnEntityEnter(GetParent());
-	}
 
 	if (!current)
 	{

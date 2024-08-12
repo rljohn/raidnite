@@ -251,5 +251,21 @@ bool Map::GetNearestUnoccupiedTile(const Position& target, const Position& from,
 	}
 }
 
+void Map::OnEntityPositionChanged(Entity* entity, const Position& from, const Position& to)
+{
+	if (!entity)
+		return;
+
+	if (Tile* prev = GetTile(from))
+	{
+		prev->OnEntityExit(entity);
+	}
+
+	if (Tile* next = GetTile(to))
+	{
+		next->OnEntityEnter(entity);
+	}
+}
+
 } // namespace raid
 

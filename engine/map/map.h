@@ -7,6 +7,7 @@
 namespace raid
 {
 
+class Entity;
 class Map
 {
 public:
@@ -48,6 +49,9 @@ public:
 	// Finding available spot
 	bool GetNearestUnoccupiedTile(const Position& target, Position& out_result);
 	bool GetNearestUnoccupiedTile(const Position& target, const Position& from, Position& out_result);
+
+	// Events
+	void OnEntityPositionChanged(Entity* entity, const Position& from, const Position& to);
 
 private:
 

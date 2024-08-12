@@ -11,6 +11,7 @@ public:
     
     TransformComponent(Entity& parent)
         : Component(parent)
+        , m_OccupyingTilePos(InvalidPosition)
     {
     }
 

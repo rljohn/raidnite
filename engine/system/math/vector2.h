@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <ostream>
+#include <algorithm>
 
 namespace raid
 {
@@ -148,6 +149,23 @@ public:
         return (m_X * other.m_X) - (m_Y * other.m_X);
     }
 
+    // Clamp
+    void Clamp(const Vector2& min, const Vector2& max)
+    {
+        // in case min > max
+        T clampedMinX = std::min<T>(min.m_X, max.m_X);
+        T clampedMaxX = std::max<T>(min.m_X, max.m_X);
+        T clampedMinY = std::min<T>(min.m_Y, max.m_Y);
+        T clampedMaxY = std::max<T>(min.m_Y, max.m_Y);
+
+        m_X = std::max<T>(clampedMinX, std::min<T>(m_X, clampedMaxX));
+        m_Y = std::max<T>(clampedMinY, std::min<T>(m_Y, clampedMaxY));
+    }
+
+    // Zero
+    static const Vector2 Zero() { return Vector2(0, 0); }
+
+    // GoogleTest output
     friend void PrintTo(const Vector2& point, std::ostream* os) {
         *os << "(" << point.m_X << "," << point.m_Y << ")";
     }
