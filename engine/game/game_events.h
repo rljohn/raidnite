@@ -46,11 +46,9 @@ struct EntityEvent
 	{
 	}
 
+	void SetEntity(Entity* e) { m_Entity = e; }
 	Entity* GetEntity() const { return m_Entity; }
-
-protected:
-
-	Entity* m_Entity;
+	Entity* m_Entity = nullptr;
 };
 
 struct UnitSpawnedEvent : public GameEvent, public EntityEvent
@@ -71,6 +69,37 @@ struct UnitDestroyedEvent : public GameEvent, public EntityEvent
 		: EntityEvent(e)
 	{
 	}
+};
+
+struct UnitOccupancyChangedEvent : public GameEvent, public EntityEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::UnitOccupancyChanged; }
+
+	UnitOccupancyChangedEvent(Entity* e, const Position& position)
+		: EntityEvent(e)
+		, m_Position(position)
+	{
+	}
+
+	Position m_Position;
+};
+
+struct UnitPositionChangedEvent : public GameEvent, public EntityEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::UnitPositionChanged; }
+
+	UnitPositionChangedEvent(Entity* e) : EntityEvent(e) {}
+	UnitPositionChangedEvent(Entity* e, const Position& previous, const Position& position)
+		: EntityEvent(e)
+		, m_Previous(previous)
+		, m_Position(position)
+	{
+	}
+
+	Entity* GetEntity() const { return m_Entity; }
+
+	Position m_Previous = InvalidPosition;
+	Position m_Position = InvalidPosition;
 };
 
 struct DeathEvent : public GameEvent, EntityEvent
@@ -96,5 +125,6 @@ struct DamageEvent : public GameEvent, EntityEvent
 	double ActualDamage = 0;
 	DamageType DamageType = DamageType::Invalid;
 };
+
 
 } // namespace raid

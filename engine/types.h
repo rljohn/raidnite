@@ -69,7 +69,8 @@ namespace raid
 	using StringHash = std::hash<std::string>;
 
 	// Map
-	using Position = IntVector2D;
+
+	using Position = PositionVector2D;
 	static const Position InvalidPosition = Position(-1, -1);
 	using Location = Vector3D;;
 	using Rotation = Vector3D;

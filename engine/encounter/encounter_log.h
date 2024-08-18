@@ -77,6 +77,8 @@ private:
 	void OnEntityDestroyed(const UnitDestroyedEvent* destroyEvent);
 	void OnEntityDied(const DeathEvent* deathDevent);
 	void OnDamageEvent(const DamageEvent* damageEvent);
+	void OnUnitOccupancyChanged(const UnitOccupancyChangedEvent* occupancyEvent);
+	void OnUnitPositionChanged(const UnitPositionChangedEvent* positionEvent);
 
 	template <EncounterEventType T>
 	EncounterEvent* CreateEncounterEvent()

@@ -55,13 +55,13 @@ namespace LogChannels
 	}
 
 // Main Channel
-#define mainFatal(fmt, ...) logMessage(fmt, LogChannels::Main, raid::LogSeverity::Fatal, __VA_ARGS__)
-#define mainDisplay(fmt, ...) logMessage(fmt, LogChannels::Main, raid::LogSeverity::Display, __VA_ARGS__)
-#define mainError(fmt, ...) logMessage(fmt, LogChannels::Main, raid::LogSeverity::Error, __VA_ARGS__)
-#define mainWarning(fmt, ...) logMessage(fmt, LogChannels::Main, raid::LogSeverity::Warning, __VA_ARGS__)
-#define mainAssert(cond) logAssert(cond, "{}", LogChannels::Main, raid::LogSeverity::Error, #cond)
-#define mainAssertf(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Main, raid::LogSeverity::Error, #cond)
-#define mainVerbose(fmt, ...) logMessage(fmt, LogChannels::Main, raid::LogSeverity::Verbose, __VA_ARGS__)
+#define mainFatal(fmt, ...) logMessage(fmt, raid::LogChannels::Main, raid::LogSeverity::Fatal, __VA_ARGS__)
+#define mainDisplay(fmt, ...) logMessage(fmt, raid::LogChannels::Main, raid::LogSeverity::Display, __VA_ARGS__)
+#define mainError(fmt, ...) logMessage(fmt, raid::LogChannels::Main, raid::LogSeverity::Error, __VA_ARGS__)
+#define mainWarning(fmt, ...) logMessage(fmt, raid::LogChannels::Main, raid::LogSeverity::Warning, __VA_ARGS__)
+#define mainAssert(cond) logAssert(cond, "{}", raid::LogChannels::Main, raid::LogSeverity::Error, #cond)
+#define mainAssertf(cond, fmt, ...) logAssert(cond, fmt, raid::LogChannels::Main, raid::LogSeverity::Error, #cond)
+#define mainVerbose(fmt, ...) logMessage(fmt, raid::LogChannels::Main, raid::LogSeverity::Verbose, __VA_ARGS__)
 
 // Unit Channel
 #define unitFatal(fmt, ...) logMessage(fmt, LogChannels::Unit, raid::LogSeverity::Fatal, __VA_ARGS__)

@@ -2,6 +2,7 @@
 #include "encounter_log.h"
 
 #include "engine/encounter/encounter.h"
+#include "engine/encounter/encounter_data.h"
 #include "engine/game/combat.h"
 #include "engine/system/log/logging.h"
 #include "engine/system/check.h"
@@ -127,6 +128,18 @@ void EncounterLog::OnGameEvent(const GameEvent* evt)
 			OnEntityDestroyed(destroyEvent);
 		}
 		break;
+	case GameEventType::UnitOccupancyChanged:
+		{
+			const UnitOccupancyChangedEvent* occupancyEvent = static_cast<const UnitOccupancyChangedEvent*>(evt);
+			OnUnitOccupancyChanged(occupancyEvent);
+		}
+		break;
+	case GameEventType::UnitPositionChanged:
+		{
+			const UnitPositionChangedEvent* positionEvent = static_cast<const UnitPositionChangedEvent*>(evt);
+			OnUnitPositionChanged(positionEvent);
+		}
+		break;
 	}
 }
 
@@ -200,6 +213,19 @@ void EncounterLog::OnEntityCreated(const UnitSpawnedEvent* spawnEvent)
 void EncounterLog::OnEntityDestroyed(const UnitDestroyedEvent* destroyEvent)
 {
 	AddEvent<EncounterEventType::EntityDestroyed>();
+}
+
+void EncounterLog::OnUnitOccupancyChanged(const UnitOccupancyChangedEvent* occupancyEvent)
+{
+	AddEvent<EncounterEventType::OccupancyChanged>();
+}
+
+void EncounterLog::OnUnitPositionChanged(const UnitPositionChangedEvent* positionEvent)
+{
+	if (EncounterEvent* e = AddEvent<EncounterEventType::PositionChanged>())
+	{
+		EncounterData::PackageData<UnitPositionChangedEvent>(*positionEvent, *e);
+	}
 }
 
 void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)

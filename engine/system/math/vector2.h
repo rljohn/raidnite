@@ -47,6 +47,7 @@ public:
     // Setter methods
     void SetX(T x) { m_X = x; }
     void SetY(T y) { m_Y = y; }
+    void SetXY(T x, T y) { m_X = x; m_Y = y; }
 
     // Magnitude of the vector
     double Magnitude() const 
@@ -170,13 +171,17 @@ public:
         *os << "(" << point.m_X << "," << point.m_Y << ")";
     }
 
+    using ValueType = T;
+    static constexpr std::size_t SizeOfT = sizeof(T);
+
 private:
 
     T m_X;
     T m_Y;
 };
 
-using IntVector2D = Vector2<int>;
 using Vector2D = Vector2<double>;
+using PositionScalar = int16_t;
+using PositionVector2D = Vector2<PositionScalar>;
 
 } // namespace raid

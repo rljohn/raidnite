@@ -123,6 +123,7 @@
     <ClInclude Include="unit\unit_component.h" />
     <ClInclude Include="game\game_logic.h" />
     <ClInclude Include="system\math\vector_math.h" />
+    <ClInclude Include="encounter\encounter_data.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -199,5 +200,6 @@
     <ClCompile Include="system\math\vector2.cpp" />
     <ClCompile Include="system\math\vector3.cpp" />
     <ClCompile Include="system\math\vector_math.cpp" />
+    <ClCompile Include="encounter\encounter_data.cpp" />
   </ItemGroup>
 </Project>

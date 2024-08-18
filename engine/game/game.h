@@ -35,7 +35,9 @@ enum class GameEventType
 	Damage,
 	Death,
 	UnitSpawned,
-	UnitDestroyed
+	UnitDestroyed,
+	UnitOccupancyChanged,
+	UnitPositionChanged
 };
 
 class IGameSystem

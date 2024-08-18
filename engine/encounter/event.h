@@ -31,36 +31,34 @@ enum EncounterEventType
 	AuraGained,
 	AuraRefreshed,
 	AuraRemoved,
+	OccupancyChanged,
+	PositionChanged
 };
 
 class Entity;
+
+union EncounterField
+{
+	int Int;
+	double Double;
+	float Float;
+	int64_t Int64;
+	uint8_t Buffer[8];
+};
 
 struct EncounterEvent
 {
 	EncounterEventType m_Type = EncounterEventType::Invalid;
 	Frame m_Frame;
-	PlayerId m_Source = InvalidPlayerId;
-	PlayerId m_Target = InvalidPlayerId;
+	EntityId m_Source = InvalidEntityId;
+	EntityId m_Target = InvalidEntityId;
 
-	union
-	{
-		int Int;
-		double Double;
-		float Float;
-		int64_t Int64;
-	} m_ExtraData1;
-
-	union
-	{
-		int Int;
-		double Double;
-		float Float;
-		int64_t Int64;
-	} m_ExtraData2;
-
-	inlist_node<EncounterEvent> m_Node;
+	EncounterField m_ExtraData1;
+	EncounterField m_ExtraData2;
 
 	EncounterEvent();
+
+	inlist_node<EncounterEvent> m_Node;
 };
 
 

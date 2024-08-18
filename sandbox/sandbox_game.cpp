@@ -149,6 +149,7 @@ void GameSandbox::BuildMap(const int width, const int height)
 	mainAssert(m_Map == nullptr);
 	m_Map = new Map();
 	m_Map->BuildMap(width, height);
+	m_Map->RegisterForEvents();
 	Game::SetMap(m_Map);
 }
 

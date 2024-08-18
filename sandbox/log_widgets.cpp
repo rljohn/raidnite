@@ -4,6 +4,8 @@
 // raid
 #include "engine/encounter/encounter_log.h"
 #include "engine/encounter/encounter.h"
+#include "engine/encounter/encounter_data.h"
+#include "engine/system/log/logging.h"
 
 // sandbox
 #include "log_widgets.h"
@@ -70,7 +72,11 @@ const char* EncounterEventTypeToString(EncounterEventType eventType)
     case EncounterEventType::AuraGained: return "AuraGained";
     case EncounterEventType::AuraRefreshed: return "AuraRefreshed";
     case EncounterEventType::AuraRemoved: return "AuraRemoved";
-    default: return "Unknown";
+    case EncounterEventType::OccupancyChanged: return "OccupancyChanged";
+    case EncounterEventType::PositionChanged: return "PositionChanged";
+    default: 
+        mainAssertf(false, "Unknown event type: %d", eventType);
+        return "Unknown";
     }
 }
 
@@ -117,6 +123,17 @@ const char* EncounterEventTypeToString(EncounterEventType eventType)
          break;
      case EncounterEventType::AuraRemoved:
          break;
+     case EncounterEventType::OccupancyChanged:
+         break;
+     case EncounterEventType::PositionChanged:
+     {
+         UnitPositionChangedEvent e(nullptr);
+         EncounterData::UnpackageData(evt, e);
+         ImGui::Text("\t%lld: %d,%d -> %d,%d", evt.m_Source, 
+             e.m_Previous.GetX(), e.m_Previous.GetY(), 
+             e.m_Position.GetX(), e.m_Position.GetX());
+     }
+     break;
      default:
          break;
      }

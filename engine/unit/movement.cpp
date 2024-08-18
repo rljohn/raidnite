@@ -1,6 +1,7 @@
 #include "engine/pch.h"
 #include "movement.h"
 
+#include "engine/game/game_events.h"
 #include "engine/game/game_logic.h"
 #include "engine/map/tile.h"
 #include "engine/map/map.h"
@@ -61,11 +62,8 @@ void MovementComponent::CalculatePosition()
 	Position newPos((int)std::round(location.GetX()), (int)std::round(location.GetY()));
 	if (newPos != m_Transform.GetPosition())
 	{
-		// Update tiles of our new location.
-		if (Map* map = Game::GetMap())
-		{
-			map->OnEntityPositionChanged(GetParent(), m_Transform.GetPosition(), newPos);
-		}
+		UnitPositionChangedEvent e(GetParent(), m_Transform.GetPosition(), newPos);
+		Game::DispatchGameEvent(&e);
 
 		m_Transform.SetPosition(newPos);
 	}

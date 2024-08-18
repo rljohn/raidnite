@@ -1,5 +1,6 @@
 #include "pch.h"
 
+#include "engine/encounter/encounter_data.h"
 #include "engine/encounter/encounter_log.h"
 #include "engine/encounter/encounter_serialization.h"
 #include "engine/encounter/event.h"
@@ -133,4 +134,23 @@ TEST_F(EncounterLogTest, SaveLoad)
 	EXPECT_EQ(log.GetEncounterList().size(), second.GetEncounterList().size());
 
 	log.Shutdown();
+}
+
+template<typename T, typename... Args>
+void TestPacking(Args... args)
+{
+	EncounterField field = {0};
+	T source(std::forward<Args>(args)...);
+	EncounterData::PackageField(source, field);
+
+	T result = T();
+	EncounterData::UnpackageField(field, result);
+	EXPECT_EQ(source, result);
+}
+
+TEST_F(EncounterLogTest, DataPacking)
+{
+	TestPacking<PositionVector2D>(45, 64);
+	TestPacking<PositionVector2D>(1337, 92346);
+	
 }

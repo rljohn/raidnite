@@ -1,5 +1,6 @@
 #pragma once
 
+#include "engine/game/game.h"
 #include "engine/types.h"
 #include "engine/map/tile.h"
 #include "engine/map/pathfinding.h"
@@ -12,18 +13,22 @@ class Map
 {
 public:
 
-	void BuildMap(const int width, const int height);
+	void BuildMap(const PositionScalar width, const PositionScalar height);
 	void Shutdown();
 
+	// Events
+	void RegisterForEvents();
+	void OnGameEvent(const GameEvent* evt);
+
 	// Dimensions
-	int GetWidth() const;
-	int GetHeight() const;
+	PositionScalar GetWidth() const;
+	PositionScalar GetHeight() const;
 
 	// Tiles
-	bool IsPositionValid(const int x, const int y) const;
-	Tile* GetTile(const int x, const int y);
+	bool IsPositionValid(const PositionScalar x, const PositionScalar y) const;
+	Tile* GetTile(const PositionScalar x, const PositionScalar y);
 	Tile* GetTile(const Position& position);
-	const Tile* GetTile(const int x, const int y) const;
+	const Tile* GetTile(const PositionScalar x, const PositionScalar y) const;
 	const Tile* GetTile(const Position& position) const;
 	bool HasTile(const Position& position) const;
 
@@ -50,14 +55,14 @@ public:
 	bool GetNearestUnoccupiedTile(const Position& target, Position& out_result);
 	bool GetNearestUnoccupiedTile(const Position& target, const Position& from, Position& out_result);
 
-	// Events
-	void OnEntityPositionChanged(Entity* entity, const Position& from, const Position& to);
-
 private:
 
+	void OnEntityPositionChanged(Entity* entity, const Position& from, const Position& to);
+
+	GameEventDelegate::Function m_OnGameEvent;
 	std::vector<std::vector<Tile>> m_Tiles;
-	int m_Width = 0;
-	int m_Height = 0;
+	PositionScalar m_Width = 0;
+	PositionScalar m_Height = 0;
 	Vector2D m_MapScale;
 	Position m_PlayerSpawnPosition;
 };

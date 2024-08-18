@@ -2,17 +2,18 @@
 #include "map.h"
 
 #include "engine/system/log/logging.h"
+#include "engine/game/game_events.h"
 
 namespace raid
 {
 
-void Map::BuildMap(const int width, const int height)
+void Map::BuildMap(const PositionScalar width, const PositionScalar height)
 {
 	m_Tiles.resize(width, std::vector<Tile>(height));
 
-	for (int i = 0; i < width; i++)
+	for (PositionScalar i = 0; i < width; i++)
 	{
-		for (int j = 0; j < height; j++)
+		for (PositionScalar j = 0; j < height; j++)
 		{
 			m_Tiles[i][j].SetPosition(Position(i, j));
 		}
@@ -22,24 +23,45 @@ void Map::BuildMap(const int width, const int height)
 	m_Height = height;
 }
 
+void Map::RegisterForEvents()
+{
+	m_OnGameEvent = [this](const GameEvent* evt)
+	{
+		this->OnGameEvent(evt);
+	};
+
+	Game::GameEventDlgt().Register(m_OnGameEvent);
+}
+
 void Map::Shutdown()
 {
+	Game::GameEventDlgt().Unregister(m_OnGameEvent);
+
 	m_Width = 0;
 	m_Height = 0;
 	m_Tiles.clear();
 }
 
-int Map::GetWidth() const
+void Map::OnGameEvent(const GameEvent* evt)
+{
+	if (evt->GetType() == GameEventType::UnitPositionChanged)
+	{
+		const UnitPositionChangedEvent* upcEvent = static_cast<const UnitPositionChangedEvent*>(evt);
+		OnEntityPositionChanged(upcEvent->GetEntity(), upcEvent->m_Previous, upcEvent->m_Position);
+	}
+}
+
+PositionScalar Map::GetWidth() const
 {
 	return m_Width;
 }
 
-int Map::GetHeight() const
+PositionScalar Map::GetHeight() const
 {
 	return m_Height;
 }
 
-bool Map::IsPositionValid(const int x, const int y) const
+bool Map::IsPositionValid(const PositionScalar x, const PositionScalar y) const
 {
 	if (x < 0 || x >= GetWidth())
 	{
@@ -54,7 +76,7 @@ bool Map::IsPositionValid(const int x, const int y) const
 	return true;
 }
 
-Tile* Map::GetTile(const int x, const int y)
+Tile* Map::GetTile(const PositionScalar x, const PositionScalar y)
 {
 	if (!IsPositionValid(x, y))
 	{
@@ -70,7 +92,7 @@ Tile* Map::GetTile(const Position& position)
 	return GetTile(position.GetX(), position.GetY());
 }
 
-const Tile* Map::GetTile(const int x, const int y) const
+const Tile* Map::GetTile(const PositionScalar x, const PositionScalar y) const
 {
 	if (!IsPositionValid(x, y))
 	{
@@ -170,7 +192,7 @@ std::vector<Position> Map::GetNeighbors(const Position& pos) const
 
 	for (const Position& dir : DIRS)
 	{
-		Position next{ pos.GetX() + dir.GetX(), pos.GetY() + dir.GetY()};
+		Position next(pos.GetX() + dir.GetX(), pos.GetY() + dir.GetY());
 		if (IsPositionValid(next.GetX(), next.GetY()) && IsPassable(next))
 		{
 			results.push_back(next);
@@ -201,9 +223,9 @@ std::vector<Position> Map::GetNeighbors(const Position& pos) const
 
 		for (const DiagonalDirection& dir : DIAGS)
 		{
-			Position next{ pos.GetX() + dir.pos.GetX(), pos.GetY() + dir.pos.GetY() };
-			Position req1{ pos.GetX() + dir.req1.GetX(), pos.GetY() + dir.req1.GetY() };
-			Position req2{ pos.GetX() + dir.req2.GetX(), pos.GetY() + dir.req2.GetY() };
+			Position next( pos.GetX() + dir.pos.GetX(), pos.GetY() + dir.pos.GetY() );
+			Position req1( pos.GetX() + dir.req1.GetX(), pos.GetY() + dir.req1.GetY() );
+			Position req2( pos.GetX() + dir.req2.GetX(), pos.GetY() + dir.req2.GetY() );
 
 			if (IsPositionValid(next.GetX(), next.GetY()) && IsPassable(next) && IsPassable(req1) && IsPassable(req2))
 			{
