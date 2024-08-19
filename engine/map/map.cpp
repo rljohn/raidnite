@@ -260,6 +260,31 @@ double Map::GetCost(const Position& from, const Position& to)
 	}
 }
 
+void Map::SetMovementAllowed(const Position& position, bool allow)
+{
+	if (Tile* tile = GetTile(position))
+	{
+		tile->SetMovementEnabled(allow);
+
+		// TODO
+		//	Notify unit manager of tile status changing.
+		//  AI must recalculate paths to avoid moving in this manner.
+		//  TODO: Snap? Force-Move? units to the next step in their path.
+	}
+}
+
+void Map::SetOccupancyAllowed(const Position& position, bool allow)
+{
+	if (Tile* tile = GetTile(position))
+	{
+		tile->SetOccupancyAllowed(allow);
+
+		// TODO
+		//	Notify unit manager of tile status changing.
+		//	Game logic (AI) must find itself a nearby empty tile.
+	}
+}
+
 bool Map::GetNearestUnoccupiedTile(const Position& target, Position& out_result)
 {
 	return GetNearestUnoccupiedTile(target, target, out_result);

@@ -34,12 +34,14 @@ public:
 	const Tile* GetTile(const PositionScalar x, const PositionScalar y) const;
 	const Tile* GetTile(const Position& position) const;
 	bool HasTile(const Position& position) const;
-	void SetTileOccupation(const Position& pos, Entity* entity, TransformComponent& transform);
 
 	// Tile Availability
 	bool CanOccupy(const Position& position) const;
 	bool IsOccupied(const Position& position) const;
 	bool IsMovementAllowed(const Position& position) const;
+	void SetTileOccupation(const Position& pos, Entity* entity, TransformComponent& transform);
+	void SetMovementAllowed(const Position& position, bool allow);
+	void SetOccupancyAllowed(const Position& position, bool allow);
 
 	// Scale
 	void SetMapScale(const Vector2D& scale) { m_MapScale = scale; }
