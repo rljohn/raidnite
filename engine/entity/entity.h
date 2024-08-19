@@ -83,6 +83,10 @@ public:
     virtual void RemoveEntityListener(IEntityListener* listener) = 0;
 };
 
+inline EntityId GetEntityId(Entity* e)
+{
+    return e ? e->GetId() : InvalidEntityId;
+}
 
 
 } // namespace raid

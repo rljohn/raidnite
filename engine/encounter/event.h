@@ -32,7 +32,9 @@ enum EncounterEventType
 	AuraRefreshed,
 	AuraRemoved,
 	OccupancyChanged,
-	PositionChanged
+	PositionChanged,
+
+	MAX
 };
 
 class Entity;
@@ -68,15 +70,6 @@ class EncounterEvents
 {
 public:
 
-	static EncounterEvent Create(const Frame frame, EventPool* pool, PlayerId source, PlayerId target = InvalidPlayerId)
-	{
-		EncounterEvent rvo;
-		rvo.m_Source = source;
-		rvo.m_Target = target;
-		rvo.m_Frame = frame;
-		return rvo;
-	}
-
 	template<EncounterEventType T>
 	static EncounterEvent* Create(const Frame frame, EventPool* pool)
 	{
@@ -88,6 +81,10 @@ public:
 		{
 			evt->m_Type = T;
 			evt->m_Frame = frame;
+			evt->m_Source = InvalidEntityId;
+			evt->m_Target = InvalidEntityId;
+			memset(&evt->m_ExtraData1, 0, sizeof(evt->m_ExtraData1));
+			memset(&evt->m_ExtraData2, 0, sizeof(evt->m_ExtraData2));
 		}
 		
 		return evt;

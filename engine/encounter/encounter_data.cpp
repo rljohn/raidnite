@@ -55,4 +55,23 @@ void EncounterData::UnpackageData<UnitPositionChangedEvent>(const EncounterEvent
 	gameEvent.SetEntity(Game::GetEntityManager()->FindEntity(encounterEvent.m_Source));
 }
 
+// UnitOccupancyChangedEvent
+template<>
+void EncounterData::PackageData<UnitOccupancyChangedEvent>(const UnitOccupancyChangedEvent& gameEvent, EncounterEvent& encounterEvent)
+{
+	encounterEvent.m_Source = gameEvent.GetEntity() ? gameEvent.GetEntity()->GetId() : InvalidEntityId;
+
+	uint8_t offset = 0;
+	offset = PackageField(gameEvent.m_Position, encounterEvent.m_ExtraData1, offset);
+}
+
+template<>
+void EncounterData::UnpackageData<UnitOccupancyChangedEvent>(const EncounterEvent& encounterEvent, UnitOccupancyChangedEvent& gameEvent)
+{
+	uint8_t offset = 0;
+	offset = UnpackageField(encounterEvent.m_ExtraData1, gameEvent.m_Position, offset);
+	gameEvent.SetEntity(Game::GetEntityManager()->FindEntity(encounterEvent.m_Source));
+}
+
+
 } // namespace raid

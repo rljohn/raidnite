@@ -46,9 +46,6 @@ public:
 	void CleanseBuff(Buff* buff);
 	void RemoveBuff(Buff* buff);
 
-	// Movement helpers
-	bool OccupyTile(Tile& tile);
-
 	// Combat Helpers
 	bool IsInCombat() const;
 

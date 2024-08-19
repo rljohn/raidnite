@@ -3,6 +3,7 @@
 
 #include "engine/system/log/logging.h"
 #include "engine/game/game_events.h"
+#include "engine/entity/transform.h"
 
 namespace raid
 {
@@ -74,6 +75,11 @@ bool Map::IsPositionValid(const PositionScalar x, const PositionScalar y) const
 	}
 
 	return true;
+}
+
+bool Map::IsPositionValid(const Position& pos) const
+{
+	return IsPositionValid(pos.GetX(), pos.GetY());
 }
 
 Tile* Map::GetTile(const PositionScalar x, const PositionScalar y)
@@ -286,6 +292,30 @@ void Map::OnEntityPositionChanged(Entity* entity, const Position& from, const Po
 	if (Tile* next = GetTile(to))
 	{
 		next->OnEntityEnter(entity);
+	}
+}
+
+void Map::SetTileOccupation(const Position& pos, Entity* entity, TransformComponent& transform)
+{
+	const Position& previous = transform.GetOccupyingTile();
+	if (IsPositionValid(previous))
+	{
+		if (Tile* prevTile = GetTile(previous))
+		{
+			prevTile->SetOccupant(nullptr);
+
+			UnitOccupancyChangedEvent e(nullptr, previous);
+			Game::DispatchGameEvent(&e);
+		}
+	}
+
+	if (Tile* t = GetTile(pos))
+	{
+		transform.SetOccupyingTile(pos);
+		t->SetOccupant(entity);
+
+		UnitOccupancyChangedEvent e(entity, pos);
+		Game::DispatchGameEvent(&e);
 	}
 }
 

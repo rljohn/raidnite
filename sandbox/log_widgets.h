@@ -22,7 +22,10 @@ public:
 
 private:
 
-	int m_EncounterIndex;
+	void DrawFilters();
+
+	int m_EncounterIndex = 0;
+	bool m_Filter[EncounterEventType::MAX];
 };
 
 } // namespace sandbox

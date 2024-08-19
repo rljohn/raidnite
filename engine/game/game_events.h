@@ -75,6 +75,7 @@ struct UnitOccupancyChangedEvent : public GameEvent, public EntityEvent
 {
 	virtual GameEventType GetType() const { return GameEventType::UnitOccupancyChanged; }
 
+	UnitOccupancyChangedEvent(Entity* e) : EntityEvent(e) {}
 	UnitOccupancyChangedEvent(Entity* e, const Position& position)
 		: EntityEvent(e)
 		, m_Position(position)

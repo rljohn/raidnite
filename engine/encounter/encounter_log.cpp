@@ -217,7 +217,10 @@ void EncounterLog::OnEntityDestroyed(const UnitDestroyedEvent* destroyEvent)
 
 void EncounterLog::OnUnitOccupancyChanged(const UnitOccupancyChangedEvent* occupancyEvent)
 {
-	AddEvent<EncounterEventType::OccupancyChanged>();
+	if (EncounterEvent* e = AddEvent<EncounterEventType::OccupancyChanged>())
+	{
+		EncounterData::PackageData<UnitOccupancyChangedEvent>(*occupancyEvent, *e);
+	}
 }
 
 void EncounterLog::OnUnitPositionChanged(const UnitPositionChangedEvent* positionEvent)

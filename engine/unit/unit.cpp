@@ -4,6 +4,7 @@
 #include "engine/unit/attribute.h"
 #include "engine/game/world.h"
 #include "engine/map/tile.h"
+#include "engine/game/game_events.h"
 
 namespace raid
 {
@@ -56,17 +57,6 @@ void Unit::CleanseBuff(Buff* buff)
 void Unit::RemoveBuff(Buff* buff)
 {
 	m_Buffs.RemoveBuff(buff);
-}
-
-bool Unit::OccupyTile(Tile& t)
-{
-	mapAssert(!t.IsOccupied());
-	if (t.IsOccupied())
-		return false;
-
-	t.SetOccupant(this);
-	m_Transform.SetOccupyingTile(t.GetPosition());
-	return true;
 }
 
 bool Unit::IsInCombat() const

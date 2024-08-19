@@ -5,6 +5,7 @@
 #include "engine/map/map.h"
 #include "engine/map/pathfinding.h"
 #include "engine/system/math/vector_math.h"
+#include "engine/game/game_events.h"
 
 namespace raid
 {
@@ -39,21 +40,7 @@ void AIComponent::BuildPath()
 		m_Movement.SetPath(path);
 	}
 
-	Tile* tile = path.GetDestination();
-	if (tile)
-	{
-		const Position& previous = m_Unit.GetTransform().GetOccupyingTile();
-		if (map->IsPositionValid(previous.GetX(), previous.GetY()))
-		{
-			if (Tile* prevTile = map->GetTile(previous))
-			{
-				prevTile->SetOccupant(nullptr);
-			}
-		}
-
-		tile->SetOccupant(GetParent());
-		m_Unit.GetTransform().SetOccupyingTile(tile->GetPosition());
-	}
+	map->SetTileOccupation(path.GetDestination()->GetPosition(), GetParent(), m_Unit.GetTransform());
 }
 
 } // namespace raid

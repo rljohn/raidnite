@@ -9,6 +9,8 @@ namespace raid
 {
 
 class Entity;
+class TransformComponent;
+
 class Map
 {
 public:
@@ -26,11 +28,13 @@ public:
 
 	// Tiles
 	bool IsPositionValid(const PositionScalar x, const PositionScalar y) const;
+	bool IsPositionValid(const Position& pos) const;
 	Tile* GetTile(const PositionScalar x, const PositionScalar y);
 	Tile* GetTile(const Position& position);
 	const Tile* GetTile(const PositionScalar x, const PositionScalar y) const;
 	const Tile* GetTile(const Position& position) const;
 	bool HasTile(const Position& position) const;
+	void SetTileOccupation(const Position& pos, Entity* entity, TransformComponent& transform);
 
 	// Tile Availability
 	bool CanOccupy(const Position& position) const;
@@ -53,7 +57,7 @@ public:
 
 	// Finding available spot
 	bool GetNearestUnoccupiedTile(const Position& target, Position& out_result);
-	bool GetNearestUnoccupiedTile(const Position& target, const Position& from, Position& out_result);
+	bool GetNearestUnoccupiedTile(const Position& target, const Position& from, Position& out_result);	
 
 private:
 

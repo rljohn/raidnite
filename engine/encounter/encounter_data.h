@@ -23,12 +23,20 @@ public:
 	static uint8_t UnpackageField(const EncounterField& source, T& target, uint8_t offset = 0);
 };
 
-// PositionVector2D
-template<> uint8_t EncounterData::PackageField(const PositionVector2D& source, EncounterField& target, uint8_t offset);
-template<> uint8_t EncounterData::UnpackageField(const EncounterField& source, PositionVector2D& target, uint8_t offset);
+// Utility Macros
+#define DECLARE_ENCOUNTER_FIELD(Type) \
+template<> uint8_t EncounterData::PackageField(const Type& source, EncounterField& target, uint8_t offset); \
+template<> uint8_t EncounterData::UnpackageField(const EncounterField& source, Type& target, uint8_t offset);
 
-// Unit Position Changed
-template<> void EncounterData::PackageData<UnitPositionChangedEvent>(const UnitPositionChangedEvent& gameEvent, EncounterEvent& encounterEvent);
-template<> void EncounterData::UnpackageData<UnitPositionChangedEvent>(const EncounterEvent& encounterEvent, UnitPositionChangedEvent& gameEvent);
+#define DECLARE_ENCOUNTER_DATA(Type) \
+template<> void EncounterData::PackageData<Type>(const Type& source, EncounterEvent& target); \
+template<> void EncounterData::UnpackageData<Type>(const EncounterEvent& source, Type& target);
+
+// Declare Fields
+DECLARE_ENCOUNTER_FIELD(PositionVector2D)
+
+// Declare Events
+DECLARE_ENCOUNTER_DATA(UnitOccupancyChangedEvent)
+DECLARE_ENCOUNTER_DATA(UnitPositionChangedEvent)
 
 } // namespace raid

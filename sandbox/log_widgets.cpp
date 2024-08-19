@@ -18,6 +18,11 @@ namespace sandbox {
 void LogWidget::Init()
 {
 	SetEnabled(true);
+
+    for (bool& v : m_Filter)
+    {
+        v = true;
+    }
 }
 
 void LogWidget::Draw(GameSandbox* sandbox)
@@ -25,6 +30,8 @@ void LogWidget::Draw(GameSandbox* sandbox)
     IEncounterLog* log = raid::Game::GetEncounterLog();
     if (!log)
         return;
+
+    DrawFilters();
 
     const std::vector<Encounter*>& encounters = log->GetEncounterList();
     if (encounters.size() == 0)
@@ -80,8 +87,24 @@ const char* EncounterEventTypeToString(EncounterEventType eventType)
     }
 }
 
+void LogWidget::DrawFilters()
+{
+    if (!ImGui::TreeNode("Filter"))
+        return;
+
+    for (int i = 0; i < EncounterEventType::MAX; i++)
+    {
+        ImGui::Checkbox(EncounterEventTypeToString((EncounterEventType)i), &m_Filter[i]);
+    }
+
+    ImGui::TreePop();
+}
+
  void LogWidget::DrawEvent(IEncounterLog* log, const EncounterEvent & evt)
 {
+     if (!m_Filter[evt.m_Type])
+         return;
+
      EncounterLog::DisplayString buffer;
      log->GetDisplayString(evt, buffer);
 
@@ -124,16 +147,23 @@ const char* EncounterEventTypeToString(EncounterEventType eventType)
      case EncounterEventType::AuraRemoved:
          break;
      case EncounterEventType::OccupancyChanged:
+     {
+         ImGui::SameLine();
+         UnitOccupancyChangedEvent e(nullptr);
+         EncounterData::UnpackageData(evt, e);
+         ImGui::Text("%lld: %d,%d", evt.m_Source, e.m_Position.GetX(), e.m_Position.GetY());
          break;
+     }
      case EncounterEventType::PositionChanged:
      {
+         ImGui::SameLine();
          UnitPositionChangedEvent e(nullptr);
          EncounterData::UnpackageData(evt, e);
-         ImGui::Text("\t%lld: %d,%d -> %d,%d", evt.m_Source, 
+         ImGui::Text("lld: %d,%d -> %d,%d", evt.m_Source, 
              e.m_Previous.GetX(), e.m_Previous.GetY(), 
-             e.m_Position.GetX(), e.m_Position.GetX());
+             e.m_Position.GetX(), e.m_Position.GetY());
+         break;
      }
-     break;
      default:
          break;
      }
