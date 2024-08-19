@@ -36,7 +36,7 @@ template<> void EncounterData::UnpackageData<Type>(const EncounterEvent& source,
 DECLARE_ENCOUNTER_FIELD(PositionVector2D)
 
 // Declare Events
-DECLARE_ENCOUNTER_DATA(UnitOccupancyChangedEvent)
-DECLARE_ENCOUNTER_DATA(UnitPositionChangedEvent)
+DECLARE_ENCOUNTER_DATA(EntityOccupancyChangedEvent)
+DECLARE_ENCOUNTER_DATA(EntityPositionChangedEvent)
 
 } // namespace raid

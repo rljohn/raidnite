@@ -62,7 +62,7 @@ void MovementComponent::CalculatePosition()
 	Position newPos((int)std::round(location.GetX()), (int)std::round(location.GetY()));
 	if (newPos != m_Transform.GetPosition())
 	{
-		UnitPositionChangedEvent e(GetParent(), m_Transform.GetPosition(), newPos);
+		EntityPositionChangedEvent e(GetParent(), m_Transform.GetPosition(), newPos);
 		Game::DispatchGameEvent(&e);
 
 		m_Transform.SetPosition(newPos);

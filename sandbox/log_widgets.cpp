@@ -149,7 +149,7 @@ void LogWidget::DrawFilters()
      case EncounterEventType::OccupancyChanged:
      {
          ImGui::SameLine();
-         UnitOccupancyChangedEvent e(nullptr);
+         EntityOccupancyChangedEvent e(nullptr);
          EncounterData::UnpackageData(evt, e);
          ImGui::Text("%lld: %d,%d", evt.m_Source, e.m_Position.GetX(), e.m_Position.GetY());
          break;
@@ -157,7 +157,7 @@ void LogWidget::DrawFilters()
      case EncounterEventType::PositionChanged:
      {
          ImGui::SameLine();
-         UnitPositionChangedEvent e(nullptr);
+         EntityPositionChangedEvent e(nullptr);
          EncounterData::UnpackageData(evt, e);
          ImGui::Text("lld: %d,%d -> %d,%d", evt.m_Source, 
              e.m_Previous.GetX(), e.m_Previous.GetY(), 

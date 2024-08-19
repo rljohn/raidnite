@@ -73,12 +73,12 @@ private:
 	void OnZoneExit();
 	void OnCombatStart();
 	void OnCombatEnd();
-	void OnEntityCreated(const UnitSpawnedEvent* spawnEvent);
-	void OnEntityDestroyed(const UnitDestroyedEvent* destroyEvent);
+	void OnEntityCreated(const EntitySpawnedEvent* spawnEvent);
+	void OnEntityDestroyed(const EntityDestroyedEvent* destroyEvent);
 	void OnEntityDied(const DeathEvent* deathDevent);
 	void OnDamageEvent(const DamageEvent* damageEvent);
-	void OnUnitOccupancyChanged(const UnitOccupancyChangedEvent* occupancyEvent);
-	void OnUnitPositionChanged(const UnitPositionChangedEvent* positionEvent);
+	void OnUnitOccupancyChanged(const EntityOccupancyChangedEvent* occupancyEvent);
+	void OnUnitPositionChanged(const EntityPositionChangedEvent* positionEvent);
 
 	template <EncounterEventType T>
 	EncounterEvent* CreateEncounterEvent()

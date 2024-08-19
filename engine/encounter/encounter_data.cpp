@@ -37,7 +37,7 @@ uint8_t EncounterData::UnpackageField(const EncounterField& source, PositionVect
 
 // UnitPositionChangedEvent
 template<>
-void EncounterData::PackageData<UnitPositionChangedEvent>(const UnitPositionChangedEvent& gameEvent, EncounterEvent& encounterEvent)
+void EncounterData::PackageData<EntityPositionChangedEvent>(const EntityPositionChangedEvent& gameEvent, EncounterEvent& encounterEvent)
 {
 	encounterEvent.m_Source = gameEvent.GetEntity()->GetId();
 
@@ -47,7 +47,7 @@ void EncounterData::PackageData<UnitPositionChangedEvent>(const UnitPositionChan
 }
 
 template<>
-void EncounterData::UnpackageData<UnitPositionChangedEvent>(const EncounterEvent& encounterEvent, UnitPositionChangedEvent& gameEvent)
+void EncounterData::UnpackageData<EntityPositionChangedEvent>(const EncounterEvent& encounterEvent, EntityPositionChangedEvent& gameEvent)
 {
 	uint8_t offset = 0;
 	offset = UnpackageField(encounterEvent.m_ExtraData1, gameEvent.m_Previous, offset);
@@ -57,7 +57,7 @@ void EncounterData::UnpackageData<UnitPositionChangedEvent>(const EncounterEvent
 
 // UnitOccupancyChangedEvent
 template<>
-void EncounterData::PackageData<UnitOccupancyChangedEvent>(const UnitOccupancyChangedEvent& gameEvent, EncounterEvent& encounterEvent)
+void EncounterData::PackageData<EntityOccupancyChangedEvent>(const EntityOccupancyChangedEvent& gameEvent, EncounterEvent& encounterEvent)
 {
 	encounterEvent.m_Source = gameEvent.GetEntity() ? gameEvent.GetEntity()->GetId() : InvalidEntityId;
 
@@ -66,7 +66,7 @@ void EncounterData::PackageData<UnitOccupancyChangedEvent>(const UnitOccupancyCh
 }
 
 template<>
-void EncounterData::UnpackageData<UnitOccupancyChangedEvent>(const EncounterEvent& encounterEvent, UnitOccupancyChangedEvent& gameEvent)
+void EncounterData::UnpackageData<EntityOccupancyChangedEvent>(const EncounterEvent& encounterEvent, EntityOccupancyChangedEvent& gameEvent)
 {
 	uint8_t offset = 0;
 	offset = UnpackageField(encounterEvent.m_ExtraData1, gameEvent.m_Position, offset);

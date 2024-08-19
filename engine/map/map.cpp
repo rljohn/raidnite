@@ -45,9 +45,9 @@ void Map::Shutdown()
 
 void Map::OnGameEvent(const GameEvent* evt)
 {
-	if (evt->GetType() == GameEventType::UnitPositionChanged)
+	if (evt->GetType() == GameEventType::EntityPositionChanged)
 	{
-		const UnitPositionChangedEvent* upcEvent = static_cast<const UnitPositionChangedEvent*>(evt);
+		const EntityPositionChangedEvent* upcEvent = static_cast<const EntityPositionChangedEvent*>(evt);
 		OnEntityPositionChanged(upcEvent->GetEntity(), upcEvent->m_Previous, upcEvent->m_Position);
 	}
 }
@@ -304,7 +304,7 @@ void Map::SetTileOccupation(const Position& pos, Entity* entity, TransformCompon
 		{
 			prevTile->SetOccupant(nullptr);
 
-			UnitOccupancyChangedEvent e(nullptr, previous);
+			EntityOccupancyChangedEvent e(nullptr, previous);
 			Game::DispatchGameEvent(&e);
 		}
 	}
@@ -314,7 +314,7 @@ void Map::SetTileOccupation(const Position& pos, Entity* entity, TransformCompon
 		transform.SetOccupyingTile(pos);
 		t->SetOccupant(entity);
 
-		UnitOccupancyChangedEvent e(entity, pos);
+		EntityOccupancyChangedEvent e(entity, pos);
 		Game::DispatchGameEvent(&e);
 	}
 }

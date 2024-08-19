@@ -51,32 +51,32 @@ struct EntityEvent
 	Entity* m_Entity = nullptr;
 };
 
-struct UnitSpawnedEvent : public GameEvent, public EntityEvent
+struct EntitySpawnedEvent : public GameEvent, public EntityEvent
 {
-	virtual GameEventType GetType() const { return GameEventType::UnitSpawned; }
+	virtual GameEventType GetType() const { return GameEventType::EntitySpawned; }
 
-	UnitSpawnedEvent(Entity* e)
+	EntitySpawnedEvent(Entity* e)
 		: EntityEvent(e)
 	{
 	}
 };
 
-struct UnitDestroyedEvent : public GameEvent, public EntityEvent
+struct EntityDestroyedEvent : public GameEvent, public EntityEvent
 {
-	virtual GameEventType GetType() const { return GameEventType::UnitDestroyed; }
+	virtual GameEventType GetType() const { return GameEventType::EntityDestroyed; }
 
-	UnitDestroyedEvent(Entity* e)
+	EntityDestroyedEvent(Entity* e)
 		: EntityEvent(e)
 	{
 	}
 };
 
-struct UnitOccupancyChangedEvent : public GameEvent, public EntityEvent
+struct EntityOccupancyChangedEvent : public GameEvent, public EntityEvent
 {
-	virtual GameEventType GetType() const { return GameEventType::UnitOccupancyChanged; }
+	virtual GameEventType GetType() const { return GameEventType::EntityOccupancyChanged; }
 
-	UnitOccupancyChangedEvent(Entity* e) : EntityEvent(e) {}
-	UnitOccupancyChangedEvent(Entity* e, const Position& position)
+	EntityOccupancyChangedEvent(Entity* e) : EntityEvent(e) {}
+	EntityOccupancyChangedEvent(Entity* e, const Position& position)
 		: EntityEvent(e)
 		, m_Position(position)
 	{
@@ -85,12 +85,12 @@ struct UnitOccupancyChangedEvent : public GameEvent, public EntityEvent
 	Position m_Position;
 };
 
-struct UnitPositionChangedEvent : public GameEvent, public EntityEvent
+struct EntityPositionChangedEvent : public GameEvent, public EntityEvent
 {
-	virtual GameEventType GetType() const { return GameEventType::UnitPositionChanged; }
+	virtual GameEventType GetType() const { return GameEventType::EntityPositionChanged; }
 
-	UnitPositionChangedEvent(Entity* e) : EntityEvent(e) {}
-	UnitPositionChangedEvent(Entity* e, const Position& previous, const Position& position)
+	EntityPositionChangedEvent(Entity* e) : EntityEvent(e) {}
+	EntityPositionChangedEvent(Entity* e, const Position& previous, const Position& position)
 		: EntityEvent(e)
 		, m_Previous(previous)
 		, m_Position(position)
