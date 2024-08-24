@@ -32,6 +32,7 @@ enum class GameEventType
 	ZoneExit,
 	CombatStart,
 	CombatEnd,
+	TilePropertiesChanged,
 	Damage,
 	Death,
 	EntitySpawned,

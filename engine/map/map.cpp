@@ -266,10 +266,8 @@ void Map::SetMovementAllowed(const Position& position, bool allow)
 	{
 		tile->SetMovementEnabled(allow);
 
-		// TODO
-		//	Notify unit manager of tile status changing.
-		//  AI must recalculate paths to avoid moving in this manner.
-		//  TODO: Snap? Force-Move? units to the next step in their path.
+		TilePropertiesChangedEvent evt(tile->GetPosition(), tile->AllowsMovement(), tile->AllowsOccupancy());
+		Game::DispatchGameEvent(&evt);
 	}
 }
 
@@ -279,9 +277,8 @@ void Map::SetOccupancyAllowed(const Position& position, bool allow)
 	{
 		tile->SetOccupancyAllowed(allow);
 
-		// TODO
-		//	Notify unit manager of tile status changing.
-		//	Game logic (AI) must find itself a nearby empty tile.
+		TilePropertiesChangedEvent evt(tile->GetPosition(), tile->AllowsMovement(), tile->AllowsOccupancy());
+		Game::DispatchGameEvent(&evt);
 	}
 }
 

@@ -137,7 +137,7 @@ TEST_F(EncounterLogTest, SaveLoad)
 }
 
 template<typename T, typename... Args>
-void TestPacking(Args... args)
+void TestPackingField(Args... args)
 {
 	EncounterField field = {0};
 	T source(std::forward<Args>(args)...);
@@ -148,9 +148,28 @@ void TestPacking(Args... args)
 	EXPECT_EQ(source, result);
 }
 
+template<typename T, typename... Args>
+void TestPackingData(Args... args)
+{
+	EncounterEvent data;
+	T source(std::forward<Args>(args)...);
+	EncounterData::PackageData(source, data);
+
+	T result = T();
+	EncounterData::UnpackageData(data, result);
+	EXPECT_EQ(source, result);
+}
+
 TEST_F(EncounterLogTest, DataPacking)
 {
-	TestPacking<PositionVector2D>(45, 64);
-	TestPacking<PositionVector2D>(1337, 92346);
+	TestPackingField<PositionVector2D>(45, 64);
+	TestPackingField<PositionVector2D>(1337, 92346);
+
+	TestPackingField<bool>(false);
+	TestPackingField<bool>(true);
 	
+	TestPackingData<TilePropertiesChangedEvent>(Position(5, 5), false, false);
+	TestPackingData<TilePropertiesChangedEvent>(Position(10, 10), false, true);
+	TestPackingData<TilePropertiesChangedEvent>(Position(10, 10), true, false);
+	TestPackingData<TilePropertiesChangedEvent>(Position(15, 15), true, true);
 }

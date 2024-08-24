@@ -21,6 +21,7 @@ enum EncounterEventType
 	ZoneExit,
 	EncounterStart,
 	EncounterEnd,
+	TilePropertiesChanged,
 	EntityCreated,
 	EntityDied,
 	EntityDestroyed,

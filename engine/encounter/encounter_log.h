@@ -6,6 +6,7 @@
 #include "engine/system/inlist.h"
 #include "engine/system/pool.h"
 #include "engine/encounter/event.h"
+#include "engine/encounter/encounter_data.h"
 #include "engine/system/log/log_channels.h"
 
 namespace raid
@@ -102,6 +103,16 @@ private:
 		}
 
 		return evt;
+	}
+
+	template<EncounterEventType T, typename U>
+	void HandleBasicEvent(const raid::GameEvent* src)
+	{
+		const U* evt = static_cast<const U*>(src);
+		if (EncounterEvent* e = AddEvent<T>())
+		{
+			EncounterData::PackageData<U>(*evt, *e);
+		}
 	}
 
 	EncounterEvent* LoadEvent()

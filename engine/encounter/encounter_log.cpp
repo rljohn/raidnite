@@ -108,6 +108,11 @@ void EncounterLog::OnGameEvent(const GameEvent* evt)
 	case GameEventType::CombatEnd:
 		OnCombatEnd();
 		break;
+	case GameEventType::TilePropertiesChanged:
+		{
+			HandleBasicEvent<EncounterEventType::TilePropertiesChanged, TilePropertiesChangedEvent>(evt);
+		}
+		break;
 	case GameEventType::Damage:
 		break;
 	case GameEventType::Death:

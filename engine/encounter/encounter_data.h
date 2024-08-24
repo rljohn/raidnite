@@ -34,9 +34,11 @@ template<> void EncounterData::UnpackageData<Type>(const EncounterEvent& source,
 
 // Declare Fields
 DECLARE_ENCOUNTER_FIELD(PositionVector2D)
+DECLARE_ENCOUNTER_FIELD(bool)
 
 // Declare Events
 DECLARE_ENCOUNTER_DATA(EntityOccupancyChangedEvent)
 DECLARE_ENCOUNTER_DATA(EntityPositionChangedEvent)
+DECLARE_ENCOUNTER_DATA(TilePropertiesChangedEvent);
 
 } // namespace raid

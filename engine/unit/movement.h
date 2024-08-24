@@ -25,6 +25,8 @@ public:
 
 	int GetTilePathIndex() const { return m_TilePathIndex; }
 
+	void Warp(const Position& pos);
+
 private:
 
 	void CalculatePosition();

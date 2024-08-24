@@ -38,6 +38,39 @@ struct CombatEndEvent : public GameEvent
 	virtual GameEventType GetType() const { return GameEventType::CombatEnd; }
 };
 
+struct TilePropertiesChangedEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::TilePropertiesChanged; }
+	
+	TilePropertiesChangedEvent()
+		: m_Position()
+		, m_AllowsMovement(false)
+		, m_AllowsOccupancy(false)
+	{
+	}
+
+	TilePropertiesChangedEvent(const Position& pos, bool allowsMovement, bool allowsOccupancy)
+		: m_Position(pos)
+		, m_AllowsMovement(allowsMovement)
+		, m_AllowsOccupancy(allowsOccupancy)
+	{
+	}
+
+	bool operator==(const TilePropertiesChangedEvent& other) const
+	{
+		return m_Position == other.m_Position && 
+			m_AllowsMovement == other.m_AllowsMovement &&
+			m_AllowsOccupancy == other.m_AllowsOccupancy;
+	}
+
+	const Position& GetPosition() const { return m_Position; }
+	void SetPosition(const Position& pos) { m_Position = pos; }
+
+	Position m_Position;
+	bool m_AllowsMovement;
+	bool m_AllowsOccupancy;
+};
+
 struct EntityEvent
 {
 	EntityEvent() = delete;

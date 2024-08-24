@@ -124,4 +124,14 @@ double MovementComponent::GetSpeed() const
 	return m_ConstantSpeed;
 }
 
+void MovementComponent::Warp(const Position& pos)
+{
+	m_Transform.SetPosition(pos);
+	m_Transform.SetLocation(VectorMath::FromPosition(pos));
+	ResetPath();
+
+	EntityPositionChangedEvent evt(GetParent());
+	Game::DispatchGameEvent(&evt);
+}
+
 } // namespace raid
