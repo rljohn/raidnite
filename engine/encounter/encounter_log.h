@@ -33,7 +33,7 @@ protected:
 	Frame m_StartFrame;
 };
 
-class EncounterLog : public IEncounterLog
+class EncounterLog : public IEncounterLog, public IGameEventListener
 {
 	friend class EncounterSerialization;
 
@@ -48,7 +48,7 @@ public:
 	void Shutdown();
 	void Clear() override;
 
-	void OnGameEvent(const GameEvent* evt);
+	void OnGameEvent(const GameEvent& evt);
 
 	const std::vector<Encounter*>& GetEncounterList() const override
 	{ 
@@ -74,12 +74,12 @@ private:
 	void OnZoneExit();
 	void OnCombatStart();
 	void OnCombatEnd();
-	void OnEntityCreated(const EntitySpawnedEvent* spawnEvent);
-	void OnEntityDestroyed(const EntityDestroyedEvent* destroyEvent);
-	void OnEntityDied(const DeathEvent* deathDevent);
-	void OnDamageEvent(const DamageEvent* damageEvent);
-	void OnUnitOccupancyChanged(const EntityOccupancyChangedEvent* occupancyEvent);
-	void OnUnitPositionChanged(const EntityPositionChangedEvent* positionEvent);
+	void OnEntityCreated(const EntitySpawnedEvent& spawnEvent);
+	void OnEntityDestroyed(const EntityDestroyedEvent& destroyEvent);
+	void OnEntityDied(const DeathEvent& deathDevent);
+	void OnDamageEvent(const DamageEvent& damageEvent);
+	void OnUnitOccupancyChanged(const EntityOccupancyChangedEvent& occupancyEvent);
+	void OnUnitPositionChanged(const EntityPositionChangedEvent& positionEvent);
 
 	template <EncounterEventType T>
 	EncounterEvent* CreateEncounterEvent()
@@ -106,12 +106,12 @@ private:
 	}
 
 	template<EncounterEventType T, typename U>
-	void HandleBasicEvent(const raid::GameEvent* src)
+	void HandleBasicEvent(const raid::GameEvent& src)
 	{
-		const U* evt = static_cast<const U*>(src);
+		const U& evt = static_cast<const U&>(src);
 		if (EncounterEvent* e = AddEvent<T>())
 		{
-			EncounterData::PackageData<U>(*evt, *e);
+			EncounterData::PackageData<U>(evt, *e);
 		}
 	}
 
@@ -130,9 +130,9 @@ private:
 	Encounter* m_ActiveEncounter = nullptr;
 	std::unique_ptr<EventPool> m_EventPool = nullptr;
 
-	GameEventDelegate::Function m_OnGameEvent;
 	std::vector<Encounter*> m_Encounters;
 	Frame m_StartFrame;
 };
+
 
 }

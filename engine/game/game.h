@@ -53,7 +53,12 @@ struct GameEvent
 	virtual GameEventType GetType() const = 0;
 };
 
-using GameEventDelegate = Delegate<const GameEvent*>;
+class IGameEventListener
+{
+public:
+
+	virtual void OnGameEvent(const GameEvent& evt) = 0;
+};
 
 // Game Service Locators
 class Game
@@ -76,7 +81,7 @@ public:
 	static void SetEntityManager(IEntityManager* locator);
 	static IEntityManager* GetEntityManager();
 
-	// System to calculate damage
+	// System to calculate damages
 	static void SetDamageCalculator(IDamageCalculator* calculator);
 	static IDamageCalculator* GetDamageCalculator();
 
@@ -93,8 +98,9 @@ public:
 	static Map* GetMap();
 
 	// Game Events
-	static GameEventDelegate& GameEventDlgt() { return sm_GameEventDlgt; }
-	static void DispatchGameEvent(const GameEvent* evt);
+	static void RegisterGameEventListener(IGameEventListener* listener);
+	static void UnregisterGameEventListener(IGameEventListener* listener);
+	static void DispatchGameEvent(const GameEvent& evt);
 
 private:
 
@@ -105,7 +111,7 @@ private:
 	static IEncounterLog* sm_EncounterLog;
 	static Map* sm_Map;
 
-	static GameEventDelegate sm_GameEventDlgt;
+	static std::vector<IGameEventListener*> sm_GameEventListeners;
 	static std::vector<IGameSystem*> sm_GameSystems;
 };
 

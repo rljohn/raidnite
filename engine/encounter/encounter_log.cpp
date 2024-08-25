@@ -31,12 +31,7 @@ EncounterLog::~EncounterLog()
 
 bool EncounterLog::Init(std::unique_ptr<EventPool> pool)
 {
-	m_OnGameEvent = [this](const GameEvent* evt)
-	{
-		this->OnGameEvent(evt);
-	};
-
-	Game::GameEventDlgt().Register(m_OnGameEvent);
+	Game::RegisterGameEventListener(this);
 	
 	m_EventPool = std::move(pool);
 	return true;
@@ -44,8 +39,7 @@ bool EncounterLog::Init(std::unique_ptr<EventPool> pool)
 
 void EncounterLog::Shutdown()
 {
-	Game::GameEventDlgt().Unregister(m_OnGameEvent);
-	m_OnGameEvent = nullptr;
+	Game::UnregisterGameEventListener(this);
 	m_EventPool = nullptr;
 }
 
@@ -86,9 +80,9 @@ void EncounterLog::Clear()
 	}
 }
 
-void EncounterLog::OnGameEvent(const GameEvent* evt)
+void EncounterLog::OnGameEvent(const GameEvent& evt)
 {
-	switch (evt->GetType())
+	switch (evt.GetType())
 	{
 	case GameEventType::GameStart:
 		OnGameStart();
@@ -117,31 +111,31 @@ void EncounterLog::OnGameEvent(const GameEvent* evt)
 		break;
 	case GameEventType::Death:
 		{
-			const DeathEvent* deathDevent = static_cast<const DeathEvent*>(evt);
+			const DeathEvent& deathDevent = static_cast<const DeathEvent&>(evt);
 			OnEntityDied(deathDevent);
 		}
 		break;
 	case GameEventType::EntitySpawned:
 		{
-			const EntitySpawnedEvent* spawnEvent = static_cast<const EntitySpawnedEvent*>(evt);
+			const EntitySpawnedEvent& spawnEvent = static_cast<const EntitySpawnedEvent&>(evt);
 			OnEntityCreated(spawnEvent);
 		}
 		break;
 	case GameEventType::EntityDestroyed:
 		{
-			const EntityDestroyedEvent* destroyEvent = static_cast<const EntityDestroyedEvent*>(evt);
+			const EntityDestroyedEvent& destroyEvent = static_cast<const EntityDestroyedEvent&>(evt);
 			OnEntityDestroyed(destroyEvent);
 		}
 		break;
 	case GameEventType::EntityOccupancyChanged:
 		{
-			const EntityOccupancyChangedEvent* occupancyEvent = static_cast<const EntityOccupancyChangedEvent*>(evt);
+			const EntityOccupancyChangedEvent& occupancyEvent = static_cast<const EntityOccupancyChangedEvent&>(evt);
 			OnUnitOccupancyChanged(occupancyEvent);
 		}
 		break;
 	case GameEventType::EntityPositionChanged:
 		{
-			const EntityPositionChangedEvent* positionEvent = static_cast<const EntityPositionChangedEvent*>(evt);
+			const EntityPositionChangedEvent& positionEvent = static_cast<const EntityPositionChangedEvent&>(evt);
 			OnUnitPositionChanged(positionEvent);
 		}
 		break;
@@ -210,38 +204,38 @@ void EncounterLog::OnCombatEnd()
 	m_ActiveEncounter = nullptr;
 }
 
-void EncounterLog::OnEntityCreated(const EntitySpawnedEvent* spawnEvent)
+void EncounterLog::OnEntityCreated(const EntitySpawnedEvent& spawnEvent)
 {
 	AddEvent<EncounterEventType::EntityCreated>();
 }
 
-void EncounterLog::OnEntityDestroyed(const EntityDestroyedEvent* destroyEvent)
+void EncounterLog::OnEntityDestroyed(const EntityDestroyedEvent& destroyEvent)
 {
 	AddEvent<EncounterEventType::EntityDestroyed>();
 }
 
-void EncounterLog::OnUnitOccupancyChanged(const EntityOccupancyChangedEvent* occupancyEvent)
+void EncounterLog::OnUnitOccupancyChanged(const EntityOccupancyChangedEvent& occupancyEvent)
 {
 	if (EncounterEvent* e = AddEvent<EncounterEventType::OccupancyChanged>())
 	{
-		EncounterData::PackageData<EntityOccupancyChangedEvent>(*occupancyEvent, *e);
+		EncounterData::PackageData<EntityOccupancyChangedEvent>(occupancyEvent, *e);
 	}
 }
 
-void EncounterLog::OnUnitPositionChanged(const EntityPositionChangedEvent* positionEvent)
+void EncounterLog::OnUnitPositionChanged(const EntityPositionChangedEvent& positionEvent)
 {
 	if (EncounterEvent* e = AddEvent<EncounterEventType::PositionChanged>())
 	{
-		EncounterData::PackageData<EntityPositionChangedEvent>(*positionEvent, *e);
+		EncounterData::PackageData<EntityPositionChangedEvent>(positionEvent, *e);
 	}
 }
 
-void EncounterLog::OnEntityDied(const DeathEvent* deathDevent)
+void EncounterLog::OnEntityDied(const DeathEvent& deathDevent)
 {
 
 }
 
-void EncounterLog::OnDamageEvent(const DamageEvent* damageEvent)
+void EncounterLog::OnDamageEvent(const DamageEvent& damageEvent)
 {
 
 }

@@ -11,7 +11,7 @@ namespace raid
 class Entity;
 class TransformComponent;
 
-class Map
+class Map : public IGameEventListener
 {
 public:
 
@@ -20,7 +20,7 @@ public:
 
 	// Events
 	void RegisterForEvents();
-	void OnGameEvent(const GameEvent* evt);
+	void OnGameEvent(const GameEvent& evt);
 
 	// Dimensions
 	PositionScalar GetWidth() const;
@@ -33,15 +33,21 @@ public:
 	Tile* GetTile(const Position& position);
 	const Tile* GetTile(const PositionScalar x, const PositionScalar y) const;
 	const Tile* GetTile(const Position& position) const;
-	bool HasTile(const Position& position) const;
 
-	// Tile Availability
+	// Tile Validity
+	bool HasTile(const Position& position) const;
+	bool IsTileEnabled(const Position& position) const;
+	void SetTileEnabled(const Position& position, bool enabled);
+
+	// Tile Occupancy
 	bool CanOccupy(const Position& position) const;
 	bool IsOccupied(const Position& position) const;
-	bool IsMovementAllowed(const Position& position) const;
 	void SetTileOccupation(const Position& pos, Entity* entity, TransformComponent& transform);
-	void SetMovementAllowed(const Position& position, bool allow);
 	void SetOccupancyAllowed(const Position& position, bool allow);
+
+	// Tile Movement
+	bool IsMovementAllowed(const Position& position) const;
+	void SetMovementAllowed(const Position& position, bool allow);
 
 	// Scale
 	void SetMapScale(const Vector2D& scale) { m_MapScale = scale; }
@@ -65,7 +71,6 @@ private:
 
 	void OnEntityPositionChanged(Entity* entity, const Position& from, const Position& to);
 
-	GameEventDelegate::Function m_OnGameEvent;
 	std::vector<std::vector<Tile>> m_Tiles;
 	PositionScalar m_Width = 0;
 	PositionScalar m_Height = 0;

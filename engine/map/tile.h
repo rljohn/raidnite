@@ -23,6 +23,10 @@ public:
 	void SetOccupant(Entity* e);
 	Entity* GetOccupant() const { return m_Occupant; }
 
+	// Tiles not in use
+	bool IsValid() const { return m_Valid; }
+	void SetValid(bool valid) { m_Valid = valid; }
+
 	// Tiles can be enabled/disabled for movement.
 	bool AllowsMovement() const { return m_AllowsMovement; }
 	void SetMovementEnabled(bool enabled) { m_AllowsMovement = enabled; }
@@ -45,6 +49,7 @@ private:
 
 	Position m_Position;
 	Entity* m_Occupant;
+	bool m_Valid;
 	bool m_AllowsMovement;
 	bool m_AllowsOccupancy;
 	std::vector<Entity*> m_ActiveEntities;

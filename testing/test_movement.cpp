@@ -193,13 +193,55 @@ TEST(MovementTest, AllowMovement)
 
 	const TilePath& path = mover->GetPath();
 	ASSERT_EQ(path.length(), 5);
-	ASSERT_EQ(path[0]->GetPosition(), Position(0, 0));
-	ASSERT_EQ(path[1]->GetPosition(), Position(0, 1));
-	ASSERT_EQ(path[2]->GetPosition(), Position(1, 1));
-	ASSERT_EQ(path[3]->GetPosition(), Position(2, 1));
-	ASSERT_EQ(path[4]->GetPosition(), Position(2, 0));
+	EXPECT_EQ(path[0]->GetPosition(), Position(0, 0));
+	EXPECT_EQ(path[1]->GetPosition(), Position(0, 1));
+	EXPECT_EQ(path[2]->GetPosition(), Position(1, 1));
+	EXPECT_EQ(path[3]->GetPosition(), Position(2, 1));
+	EXPECT_EQ(path[4]->GetPosition(), Position(2, 0));
 
 	spawner.DestroyEntity(&map, unit);
+
+	Game::SetMap(nullptr);
+	Game::SetEntityManager(nullptr);
+	Game::UnregisterGameSystem(&world);
+}
+
+TEST(MovementTest, AllowOccupancy)
+{
+	const std::chrono::nanoseconds frameTime(16666666);
+
+	Engine engine;
+	engine.Init(frameTime);
+
+	World world;
+	
+	Map map;
+
+	Game::SetMap(&map);
+	Game::SetEntityManager(&world);
+	Game::RegisterGameSystem(&world);
+	Game::RegisterGameEventListener(&world);
+
+	map.BuildMap(10, 10);
+
+	Position start(2, 2);
+
+	UnitSpawner spawner;
+	Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(&map, start));
+	ASSERT_NE(unit, nullptr);
+
+	// add AI to the component so it can process paths and movement
+	AIComponent* ai = unit->CreateAi<AIComponent>();
+
+	// Disable occupancy on this tile
+	map.SetOccupancyAllowed(start, false);
+
+	// We're moving to 1,1
+	EXPECT_EQ(ai->GetDesiredPosition(), Position(1, 1));
+	spawner.DestroyEntity(&map, unit);
+
+	map.SetMovementAllowed(Position(1, 1), false);
+	EXPECT_EQ(unit->GetTransform().GetPosition(), Position(0, 0));
 
 	Game::SetMap(nullptr);
 	Game::SetEntityManager(nullptr);

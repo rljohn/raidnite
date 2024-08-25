@@ -201,5 +201,6 @@
     <ClCompile Include="system\math\vector3.cpp" />
     <ClCompile Include="system\math\vector_math.cpp" />
     <ClCompile Include="encounter\encounter_data.cpp" />
+    <ClCompile Include="game\game_events.cpp" />
   </ItemGroup>
 </Project>

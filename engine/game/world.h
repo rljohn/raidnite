@@ -9,7 +9,7 @@
 namespace raid
 {
 
-class World : public IEntityManager, public IGameSystem
+class World : public IEntityManager, public IGameSystem, public IGameEventListener
 {
 
 public:
@@ -18,7 +18,6 @@ public:
 
 	// IEntityManager
 	Entity* FindEntity(const EntityId entityId) override;
-	void OnGameEvent(const GameEvent& e) override;
 	void Reset() override;
 	size_t GetEntityCount() const override;
 	Entity* GetEntity(size_t idx) override;
@@ -27,6 +26,9 @@ public:
 
 	// IGameSystem
 	void Update(const GameFrame& frame);
+
+	// IGameEventListener
+	void OnGameEvent(const GameEvent& e) override;
 
 	// Registration
 	void RegisterEntity(Entity* unit) override;

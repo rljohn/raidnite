@@ -26,29 +26,24 @@ void Map::BuildMap(const PositionScalar width, const PositionScalar height)
 
 void Map::RegisterForEvents()
 {
-	m_OnGameEvent = [this](const GameEvent* evt)
-	{
-		this->OnGameEvent(evt);
-	};
-
-	Game::GameEventDlgt().Register(m_OnGameEvent);
+	Game::RegisterGameEventListener(this);
 }
 
 void Map::Shutdown()
 {
-	Game::GameEventDlgt().Unregister(m_OnGameEvent);
+	Game::UnregisterGameEventListener(this);
 
 	m_Width = 0;
 	m_Height = 0;
 	m_Tiles.clear();
 }
 
-void Map::OnGameEvent(const GameEvent* evt)
+void Map::OnGameEvent(const GameEvent& evt)
 {
-	if (evt->GetType() == GameEventType::EntityPositionChanged)
+	if (evt.GetType() == GameEventType::EntityPositionChanged)
 	{
-		const EntityPositionChangedEvent* upcEvent = static_cast<const EntityPositionChangedEvent*>(evt);
-		OnEntityPositionChanged(upcEvent->GetEntity(), upcEvent->m_Previous, upcEvent->m_Position);
+		const EntityPositionChangedEvent& upcEvent = static_cast<const EntityPositionChangedEvent&>(evt);
+		OnEntityPositionChanged(upcEvent.GetEntity(), upcEvent.m_Previous, upcEvent.m_Position);
 	}
 }
 
@@ -121,9 +116,29 @@ bool Map::HasTile(const Position& position) const
 		return false;
 	}
 
-	// TODO
-	//	Check if this grid actually contains valid tile data
-	return true;
+	return GetTile(position)->IsValid();
+}
+
+bool Map::IsTileEnabled(const Position& position) const
+{
+	if (const Tile* tile = GetTile(position))
+	{
+		return tile->IsValid();
+	}
+}
+
+void Map::SetTileEnabled(const Position& position, bool enabled)
+{
+	if (Tile* tile = GetTile(position))
+	{
+		if (tile->IsValid() != enabled)
+		{
+			tile->SetValid(enabled);
+
+			TilePropertiesChangedEvent evt(tile);
+			Game::DispatchGameEvent(evt);
+		}
+	}
 }
 
 bool Map::CanOccupy(const Position& position) const
@@ -264,10 +279,13 @@ void Map::SetMovementAllowed(const Position& position, bool allow)
 {
 	if (Tile* tile = GetTile(position))
 	{
-		tile->SetMovementEnabled(allow);
+		if (tile->AllowsMovement() != allow)
+		{
+			tile->SetMovementEnabled(allow);
 
-		TilePropertiesChangedEvent evt(tile->GetPosition(), tile->AllowsMovement(), tile->AllowsOccupancy());
-		Game::DispatchGameEvent(&evt);
+			TilePropertiesChangedEvent evt(tile);
+			Game::DispatchGameEvent(evt);
+		}
 	}
 }
 
@@ -275,10 +293,13 @@ void Map::SetOccupancyAllowed(const Position& position, bool allow)
 {
 	if (Tile* tile = GetTile(position))
 	{
-		tile->SetOccupancyAllowed(allow);
+		if (tile->AllowsOccupancy() != allow)
+		{
+			tile->SetOccupancyAllowed(allow);
 
-		TilePropertiesChangedEvent evt(tile->GetPosition(), tile->AllowsMovement(), tile->AllowsOccupancy());
-		Game::DispatchGameEvent(&evt);
+			TilePropertiesChangedEvent evt(tile);
+			Game::DispatchGameEvent(evt);
+		}
 	}
 }
 
@@ -327,7 +348,7 @@ void Map::SetTileOccupation(const Position& pos, Entity* entity, TransformCompon
 			prevTile->SetOccupant(nullptr);
 
 			EntityOccupancyChangedEvent e(nullptr, previous);
-			Game::DispatchGameEvent(&e);
+			Game::DispatchGameEvent(e);
 		}
 	}
 
@@ -337,7 +358,7 @@ void Map::SetTileOccupation(const Position& pos, Entity* entity, TransformCompon
 		t->SetOccupant(entity);
 
 		EntityOccupancyChangedEvent e(entity, pos);
-		Game::DispatchGameEvent(&e);
+		Game::DispatchGameEvent(e);
 	}
 }
 

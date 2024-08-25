@@ -25,7 +25,7 @@ class Logger;
 
 namespace sandbox {
 
-class GameSandbox 
+class GameSandbox : public IGameEventListener
 {
 public:
 
@@ -45,7 +45,8 @@ public:
 
 private:
 
-	void OnGameEvent(const GameEvent* evt);
+	// IGameEventListener
+	void OnGameEvent(const GameEvent& evt);
 
 	raid::Engine m_Engine;
 
@@ -58,7 +59,6 @@ private:
 	raid::Logger* m_Logger;
 
 	// Game
-	GameEventDelegate::Function m_OnGameEvent;
 	raid::Group m_Party;
 	raid::UnitSpawner m_UnitSpawner;
 

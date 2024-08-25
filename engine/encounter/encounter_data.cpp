@@ -105,6 +105,7 @@ void EncounterData::PackageData<TilePropertiesChangedEvent>(const TileProperties
 {
 	uint8_t offset = 0;
 	offset = PackageField(gameEvent.m_Position, encounterEvent.m_ExtraData1, offset);
+	offset = PackageField(gameEvent.m_IsValid, encounterEvent.m_ExtraData1, offset);
 	offset = PackageField(gameEvent.m_AllowsMovement, encounterEvent.m_ExtraData1, offset);
 	offset = PackageField(gameEvent.m_AllowsOccupancy, encounterEvent.m_ExtraData1, offset);
 }
@@ -114,6 +115,7 @@ void EncounterData::UnpackageData<TilePropertiesChangedEvent>(const EncounterEve
 {
 	uint8_t offset = 0;
 	offset = UnpackageField(encounterEvent.m_ExtraData1, gameEvent.m_Position, offset);
+	offset = UnpackageField(encounterEvent.m_ExtraData1, gameEvent.m_IsValid, offset);
 	offset = UnpackageField(encounterEvent.m_ExtraData1, gameEvent.m_AllowsMovement, offset);
 	offset = UnpackageField(encounterEvent.m_ExtraData1, gameEvent.m_AllowsOccupancy, offset);
 }

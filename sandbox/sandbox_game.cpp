@@ -39,12 +39,8 @@ void GameSandbox::Init()
 	// Encounter pooling
 	m_EncounterLog.Init(std::make_unique<EventPool>());
 
-	// Game Evens
-	m_OnGameEvent = [this](const GameEvent* evt)
-	{
-		this->OnGameEvent(evt);
-	};
-	Game::GameEventDlgt().Register(m_OnGameEvent);
+	// Game Events
+	Game::RegisterGameEventListener(this);
 
 	// Game Systems
 	Game::RegisterGameSystem(&m_GameInstance);
@@ -122,7 +118,7 @@ void GameSandbox::Update()
 
 void GameSandbox::Shutdown()
 {
-	Game::GameEventDlgt().Unregister(m_OnGameEvent);
+	Game::UnregisterGameEventListener(this);
 
 	for (Widget* w : m_Widgets)
 	{
@@ -153,9 +149,9 @@ void GameSandbox::BuildMap(const int width, const int height)
 	Game::SetMap(m_Map);
 }
 
-void GameSandbox::OnGameEvent(const GameEvent* evt)
+void GameSandbox::OnGameEvent(const GameEvent& evt)
 {
-	if (evt->GetType() == GameEventType::GameEnd)
+	if (evt.GetType() == GameEventType::GameEnd)
 	{
 		if (m_Map)
 		{

@@ -8,6 +8,7 @@ namespace raid
 Tile::Tile()
 	: m_Occupant(nullptr)
 	, m_Position(-1, -1)
+	, m_Valid(true)
 	, m_AllowsMovement(true)
 	, m_AllowsOccupancy(true)
 {

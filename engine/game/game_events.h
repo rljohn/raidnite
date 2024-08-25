@@ -8,6 +8,9 @@
 namespace raid
 {
 
+// Fwd Declarations
+class Tile;
+
 struct GameStartEvent : public GameEvent
 {
 	virtual GameEventType GetType() const { return GameEventType::GameStart; }
@@ -44,10 +47,13 @@ struct TilePropertiesChangedEvent : public GameEvent
 	
 	TilePropertiesChangedEvent()
 		: m_Position()
+		, m_IsValid(false)
 		, m_AllowsMovement(false)
 		, m_AllowsOccupancy(false)
 	{
 	}
+
+	TilePropertiesChangedEvent(const Tile* tile);
 
 	TilePropertiesChangedEvent(const Position& pos, bool allowsMovement, bool allowsOccupancy)
 		: m_Position(pos)
@@ -59,6 +65,7 @@ struct TilePropertiesChangedEvent : public GameEvent
 	bool operator==(const TilePropertiesChangedEvent& other) const
 	{
 		return m_Position == other.m_Position && 
+			m_IsValid == other.m_IsValid &&
 			m_AllowsMovement == other.m_AllowsMovement &&
 			m_AllowsOccupancy == other.m_AllowsOccupancy;
 	}
@@ -67,6 +74,7 @@ struct TilePropertiesChangedEvent : public GameEvent
 	void SetPosition(const Position& pos) { m_Position = pos; }
 
 	Position m_Position;
+	bool m_IsValid;
 	bool m_AllowsMovement;
 	bool m_AllowsOccupancy;
 };

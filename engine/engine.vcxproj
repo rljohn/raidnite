@@ -115,6 +115,7 @@
     <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\fileutil.h" />
     <ClCompile Include="encounter\encounter_data.cpp" />
+    <ClCompile Include="game\game_events.cpp" />
     <ClCompile Include="game\game_logic.cpp" />
     <ClCompile Include="system\args.cpp">
       <FileType>CppHeader</FileType>

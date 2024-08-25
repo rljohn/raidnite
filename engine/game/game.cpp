@@ -10,14 +10,13 @@ namespace raid
 {
 
 std::vector<IGameSystem*> Game::sm_GameSystems;
+std::vector<IGameEventListener*> Game::sm_GameEventListeners;
 IEntityManager* Game::sm_EntityLocator = nullptr;
 IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
 IEncounterLog* Game::sm_EncounterLog = nullptr;
 Map* Game::sm_Map = nullptr;
 Engine* Game::sm_Engine = nullptr;
-
-GameEventDelegate Game::sm_GameEventDlgt;
 
 void Game::Init()
 {
@@ -106,9 +105,22 @@ Map* Game::GetMap()
 	return sm_Map;
 }
 
-void Game::DispatchGameEvent(const GameEvent* evt)
+void Game::RegisterGameEventListener(IGameEventListener* listener)
 {
-	sm_GameEventDlgt.Invoke(evt);
+	sm_GameEventListeners.push_back(listener);
+}
+
+void Game::UnregisterGameEventListener(IGameEventListener* listener)
+{
+	VectorRemove(sm_GameEventListeners, listener);
+}
+
+void Game::DispatchGameEvent(const GameEvent& evt)
+{
+	for (IGameEventListener* listener : sm_GameEventListeners)
+	{
+		listener->OnGameEvent(evt);
+	}
 }
 
 } // namespace raid

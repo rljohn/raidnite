@@ -63,7 +63,7 @@ void MovementComponent::CalculatePosition()
 	if (newPos != m_Transform.GetPosition())
 	{
 		EntityPositionChangedEvent e(GetParent(), m_Transform.GetPosition(), newPos);
-		Game::DispatchGameEvent(&e);
+		Game::DispatchGameEvent(e);
 
 		m_Transform.SetPosition(newPos);
 	}
@@ -131,7 +131,7 @@ void MovementComponent::Warp(const Position& pos)
 	ResetPath();
 
 	EntityPositionChangedEvent evt(GetParent());
-	Game::DispatchGameEvent(&evt);
+	Game::DispatchGameEvent(evt);
 }
 
 } // namespace raid

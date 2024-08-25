@@ -41,7 +41,7 @@ Entity* UnitSpawner::SpawnEntity(Map* map, const Position& pos)
 		}
 		
 		EntitySpawnedEvent e(unit);
-		Game::DispatchGameEvent(&e);
+		Game::DispatchGameEvent(e);
 
 		return unit;
 	}
@@ -73,7 +73,7 @@ void UnitSpawner::DestroyEntity(Map* map, Entity* entity)
 	}
 
 	EntityDestroyedEvent e(entity);
-	Game::DispatchGameEvent(&e);
+	Game::DispatchGameEvent(e);
 
 	delete entity;
 }

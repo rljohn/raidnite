@@ -38,13 +38,13 @@ void GameInstance::StartGame()
 	mainVerbose("GameInstance::StartGame");
 
 	GameStartEvent e;
-	Game::DispatchGameEvent(&e);
+	Game::DispatchGameEvent(e);
 }
 
 bool GameInstance::BeginEndGame(const LoadContext& context)
 {
 	GameEndEvent e;
-	Game::DispatchGameEvent(&e);
+	Game::DispatchGameEvent(e);
 
 	m_LoadType = LoadType::Ending;
 	return Load(context);

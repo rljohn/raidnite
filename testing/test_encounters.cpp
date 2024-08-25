@@ -71,16 +71,6 @@ void EncounterLogTest::TearDown()
 	FileUtil::RemoveFile(m_LogPath);
 }
 
-TEST_F(EncounterLogTest, InitShutdown)
-{
-	EncounterLog log;
-	log.Init(nullptr);
-	EXPECT_EQ(Game::GameEventDlgt().GetCount(), 1);
-
-	log.Shutdown();
-	EXPECT_EQ(Game::GameEventDlgt().GetCount(), 0);
-}
-
 TEST_F(EncounterLogTest, StartEnd)
 {
 	EncounterLog log;
@@ -88,11 +78,11 @@ TEST_F(EncounterLogTest, StartEnd)
 	CombatStartEvent start;
 	CombatEndEvent end;
 
-	log.OnGameEvent(&start);
-	log.OnGameEvent(&end);
+	log.OnGameEvent(start);
+	log.OnGameEvent(end);
 
-	log.OnGameEvent(&start);
-	log.OnGameEvent(&end);
+	log.OnGameEvent(start);
+	log.OnGameEvent(end);
 
 	EXPECT_EQ(log.GetEncounterList().size(), 2);
 }
@@ -118,9 +108,9 @@ TEST_F(EncounterLogTest, SaveLoad)
 	dmg.ActualDamage = 6;
 	dmg.DamageType = DamageType::Fire;
 
-	log.OnGameEvent(&start);
-	log.OnGameEvent(&dmg);
-	log.OnGameEvent(&end);
+	log.OnGameEvent(start);
+	log.OnGameEvent(dmg);
+	log.OnGameEvent(end);
 
 	// verify the save
 	EXPECT_TRUE(serializer.Save(m_LogPath, log));
