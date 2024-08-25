@@ -67,6 +67,10 @@ public:
 	bool GetNearestUnoccupiedTile(const Position& target, Position& out_result);
 	bool GetNearestUnoccupiedTile(const Position& target, const Position& from, Position& out_result);	
 
+	// Finding valid tiles
+	bool GetNearestMoveableTile(const Position& target, Position& out_result);
+	bool GetNearestMoveableTile(const Position& target, const Position& from, Position& out_result);
+
 private:
 
 	void OnEntityPositionChanged(Entity* entity, const Position& from, const Position& to);

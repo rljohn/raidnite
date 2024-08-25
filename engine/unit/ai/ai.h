@@ -22,6 +22,8 @@ public:
 
 	void OnGameEvent(const GameEvent& evt) override;
 
+	bool HasDesiredPosition() const { return m_DesiredPosition != InvalidPosition; }
+
 protected:
 
 	void BuildPath();

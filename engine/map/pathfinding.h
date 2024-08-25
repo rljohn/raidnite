@@ -72,7 +72,8 @@ namespace raid
 
 		// Finds the closest available tile to a specific target. The 'start' point is used as a hint for
 		// which nearby tiles to prefer.
-		static bool FindClosestTile(Map* graph, const Position& start, const Position& goal, Position& out_result);
+		using Evaluator = std::function<bool(Map* map, const Position& pos)>;
+		static bool FindClosestTile(Map* graph, Evaluator& evaluator, const Position& start, const Position& goal, Position& out_result);
 
 		// Checks if two tiles can be swapped (they are next door neighbours)
 		static bool CanSwapTiles(const Position& first, const Position& second);

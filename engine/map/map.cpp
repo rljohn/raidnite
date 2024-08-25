@@ -125,6 +125,8 @@ bool Map::IsTileEnabled(const Position& position) const
 	{
 		return tile->IsValid();
 	}
+
+	return false;
 }
 
 void Map::SetTileEnabled(const Position& position, bool enabled)
@@ -310,8 +312,44 @@ bool Map::GetNearestUnoccupiedTile(const Position& target, Position& out_result)
 
 bool Map::GetNearestUnoccupiedTile(const Position& target, const Position& from, Position& out_result)
 {
+	// Looking for passable, unoccupied tiles.
+	Pathfinding::Evaluator evaluator = [](const Map* map, const Position& p) -> bool
+	{
+		return map->CanOccupy(p) && map->IsMovementAllowed(p);
+	};
+
 	Position tmp;
-	if (Pathfinding::FindClosestTile(this, from, target, tmp))
+	if (Pathfinding::FindClosestTile(this, evaluator, from, target, tmp))
+	{
+		out_result = tmp;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Map::GetNearestMoveableTile(const Position& target, Position& out_result)
+{
+	return GetNearestMoveableTile(target, target, out_result);
+}
+
+bool Map::GetNearestMoveableTile(const Position& target, const Position& from, Position& out_result)
+{
+	// Looking for passable, unoccupied tiles.
+	Pathfinding::Evaluator evaluator = [](const Map* map, const Position& p)
+	{
+		if (const Tile* t = map->GetTile(p))
+		{
+			return t->IsValid() && t->AllowsMovement();
+		}
+
+		return false;
+	};
+
+	Position tmp;
+	if (Pathfinding::FindClosestTile(this, evaluator, from, target, tmp))
 	{
 		out_result = tmp;
 		return true;

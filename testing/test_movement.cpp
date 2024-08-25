@@ -209,7 +209,6 @@ TEST(MovementTest, AllowMovement)
 TEST(MovementTest, AllowOccupancy)
 {
 	const std::chrono::nanoseconds frameTime(16666666);
-
 	Engine engine;
 	engine.Init(frameTime);
 
@@ -236,12 +235,14 @@ TEST(MovementTest, AllowOccupancy)
 	// Disable occupancy on this tile
 	map.SetOccupancyAllowed(start, false);
 
-	// We're moving to 1,1
-	EXPECT_EQ(ai->GetDesiredPosition(), Position(1, 1));
-	spawner.DestroyEntity(&map, unit);
+	// We're moving to 3,2
+	EXPECT_EQ(ai->GetDesiredPosition(), Position(3, 2));
 
-	map.SetMovementAllowed(Position(1, 1), false);
-	EXPECT_EQ(unit->GetTransform().GetPosition(), Position(0, 0));
+	// Block movement on our current tile, we should teleport to the destination.
+	map.SetMovementAllowed(Position(2, 2), false);
+	EXPECT_EQ(unit->GetTransform().GetPosition(), Position(3, 2));
+
+	spawner.DestroyEntity(&map, unit);
 
 	Game::SetMap(nullptr);
 	Game::SetEntityManager(nullptr);

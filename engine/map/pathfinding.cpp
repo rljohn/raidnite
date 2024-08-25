@@ -159,7 +159,7 @@ void Pathfinding::ReconstructPath(Map* graph, const Position& start, const Posit
 	}
 }
 
-bool Pathfinding::FindClosestTile(Map* graph, const Position& start, const Position& goal, Position& out_result)
+bool Pathfinding::FindClosestTile(Map* graph, Evaluator& evaluator, const Position& start, const Position& goal, Position& out_result)
 {
 	std::set<Position> visitors;
 
@@ -173,7 +173,7 @@ bool Pathfinding::FindClosestTile(Map* graph, const Position& start, const Posit
 		candidates.pop_back();
 
 		// Check if this tile is available?
-		if (graph->CanOccupy(p))
+		if (evaluator(graph, p))
 		{
 			out_result = p;
 			return true;

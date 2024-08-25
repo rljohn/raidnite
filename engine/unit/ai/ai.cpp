@@ -13,6 +13,7 @@ namespace raid
 AIComponent::AIComponent(Unit& parent)
 	: UnitComponent(parent)
 	, m_Movement(*parent.GetComponent<MovementComponent>())
+	, m_DesiredPosition(InvalidPosition)
 {
 
 }
@@ -22,7 +23,11 @@ void AIComponent::SetDesiredPosition(const Position& p)
 	if (m_DesiredPosition != p)
 	{
 		m_DesiredPosition = p;
-		BuildPath();
+
+		if (m_DesiredPosition != m_Unit.GetTransform().GetOccupyingTile())
+		{
+			BuildPath();
+		}
 	}
 }
 
@@ -41,6 +46,12 @@ void AIComponent::OnGameEvent(const GameEvent& evt)
 
 void AIComponent::BuildPath()
 {
+	if (m_DesiredPosition == InvalidPosition)
+	{
+		unitError("Tried to build path to invalid position");
+		return;
+	}
+
 	Map* map = Game::GetMap();
 	if (!map)
 		return;
@@ -62,17 +73,21 @@ void AIComponent::OnMapChanged(const TilePropertiesChangedEvent& evt)
 	if (!map)
 		return;
 	
-	bool findNewPosition = false;
-	
 	const Position& pos = evt.GetPosition();
+	Tile* t = map->GetTile(pos);
+	if (!t)
+		return;
 
-	bool isDestination = (pos == m_Unit.GetTransform().GetOccupyingTile());
+	Position currentOccupyingPos = m_Unit.GetTransform().GetOccupyingTile();
+
+	bool findNewPosition = false;
+	bool isDestination = (pos == currentOccupyingPos);
 	bool isCurrent = (pos == m_Unit.GetTransform().GetPosition());
 	bool isMoving = (m_Movement.GetPath().length() > 0);
-
 	bool rebuildPath = isMoving;
 
-	if (Tile* t = map->GetTile(pos))
+	// Check if we must find a new destination
+	if (t->IsValid())
 	{
 		if (isDestination && !t->AllowsOccupancy())
 		{
@@ -80,11 +95,14 @@ void AIComponent::OnMapChanged(const TilePropertiesChangedEvent& evt)
 			rebuildPath = true;
 		}	
 	}
-	else if (isCurrent)
+	
+	// If the tile is the one we're currently standing on.
+	bool canBeOnTile = t->IsValid() && t->AllowsMovement();
+	if (isCurrent && !canBeOnTile)
 	{
 		// Our current tile no longer exists, snap us somewhere nearby.
 		raid::Position warp;
-		if (map->GetNearestUnoccupiedTile(m_Unit.GetTransform().GetPosition(), warp))
+		if (map->GetNearestMoveableTile(m_Unit.GetTransform().GetPosition(), warp))
 		{
 			m_Movement.Warp(warp);
 
@@ -101,15 +119,26 @@ void AIComponent::OnMapChanged(const TilePropertiesChangedEvent& evt)
 		}
 	}
 
+	// We need a new position near our previous destination.
 	if (findNewPosition)
 	{
+		raid::Position desire =
+			HasDesiredPosition() ? m_DesiredPosition : currentOccupyingPos;
+
 		raid::Position dest;
-		if (map->GetNearestUnoccupiedTile(m_DesiredPosition, dest))
+		if (map->GetNearestUnoccupiedTile(desire, dest))
 		{
-			SetDesiredPosition(dest);
+			m_DesiredPosition = dest;
+		}
+		else
+		{
+			m_DesiredPosition = InvalidPosition;
+			m_Movement.ResetPath();
+			rebuildPath = false;
 		}
 	}
 
+	// Build a new path to our destination
 	if (rebuildPath)
 	{
 		BuildPath();
