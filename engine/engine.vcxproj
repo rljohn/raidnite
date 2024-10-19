@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -96,6 +96,7 @@
     <ClInclude Include="entity\transform.h" />
     <ClInclude Include="game\combat.h" />
     <ClInclude Include="game\combat_common.h" />
+    <ClInclude Include="game\faction.h" />
     <ClInclude Include="game\game_events.h" />
     <ClInclude Include="game\damage.h" />
     <ClInclude Include="game\game.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\fileutil.h" />
     <ClCompile Include="encounter\encounter_data.cpp" />
+    <ClCompile Include="game\faction.cpp" />
     <ClCompile Include="game\game_events.cpp" />
     <ClCompile Include="game\game_logic.cpp" />
     <ClCompile Include="system\args.cpp">
