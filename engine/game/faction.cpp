@@ -3,24 +3,37 @@
 
 namespace raid
 {
-	Faction::Relationship Faction::GetRelationship(FactionId a, FactionId b) const
+	FactionRelationship FactionManager::GetRelationship(FactionId a, FactionId b) const
 	{
-		return Faction::Relationship::Neutral;
+		if (a == b)
+			return FactionRelationship::Friendly;
+
+		const FactionRelationship* result = m_Relationships.Get(a, b);
+		return result ? *result : FactionRelationship::Invalid;
 	}
 
-	bool Faction::IsFriendly(FactionId a, FactionId b)
+	void FactionManager::SetRelationship(FactionId a, FactionId b, FactionRelationship r)
 	{
-		return false;
+		if (a == b)
+			return;
+
+		m_Relationships.Set(a, b, r);
 	}
 
-	bool Faction::IsNeutral(FactionId a, FactionId b)
+	bool FactionManager::IsFriendly(FactionId a, FactionId b) const
 	{
-		return false;
+		return GetRelationship(a, b) == FactionRelationship::Friendly;
 	}
 
-	bool Faction::IsHostile(FactionId a, FactionId b)
+	bool FactionManager::IsNeutral(FactionId a, FactionId b) const
 	{
-		return false;
+		FactionRelationship r = GetRelationship(a, b);
+		return (r == FactionRelationship::Neutral) || (r == FactionRelationship::Invalid);
 	}
 
-}
+	bool FactionManager::IsHostile(FactionId a, FactionId b) const
+	{
+		return GetRelationship(a, b) == FactionRelationship::Hostile;
+	}
+
+} // namespace raid

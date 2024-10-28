@@ -13,8 +13,9 @@ enum class AttributeType
 {
 	Invalid = -1,
 
-	// Level
+	// Core
 	Level,
+	Faction,
 
 	// Movement
 	Speed,
@@ -53,6 +54,9 @@ struct IAttribute
 
 	double GetValue() const { return m_CurrentValue; }
 	operator double() const { return GetValue(); }
+
+	template<typename T>
+	T As() { return (T)GetValue(); }
 
 	// Dirty Flag - Recalculate
 	bool NeedsRecalculate() const { return m_NeedsCalculation; }
@@ -100,6 +104,7 @@ public:
 	{
 		AddAttribute<AttributeType::Level>();
 		AddAttribute<AttributeType::Speed>();
+		AddAttribute<AttributeType::Faction>();
 
 		AddAttribute<AttributeType::Stamina>();
 		AddAttribute<AttributeType::Intellect>();

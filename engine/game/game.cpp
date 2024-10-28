@@ -15,6 +15,7 @@ IEntityManager* Game::sm_EntityLocator = nullptr;
 IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
 IEncounterLog* Game::sm_EncounterLog = nullptr;
+IFactionManager* Game::sm_FactionManager = nullptr;
 Map* Game::sm_Map = nullptr;
 Engine* Game::sm_Engine = nullptr;
 
@@ -93,6 +94,16 @@ void Game::SetEncounterLog(IEncounterLog* logger)
 IEncounterLog* Game::GetEncounterLog()
 {
 	return sm_EncounterLog;
+}
+
+void Game::SetFactionManager(IFactionManager* mgr)
+{
+	sm_FactionManager = mgr;
+}
+
+IFactionManager* Game::GetFactionManager()
+{
+	return sm_FactionManager;
 }
 
 void Game::SetMap(Map* map)

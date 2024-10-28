@@ -1,28 +1,45 @@
 #pragma once
 
 #include <stdint.h>
+#include "engine/system/multikeymap.h"
 
 namespace raid
 {
 
 using FactionId = uint8_t;
 
-class Faction
+enum class FactionRelationship
+{
+	Invalid,
+	Friendly,
+	Hostile,
+	Neutral
+};
+
+class IFactionManager
 {
 public:
 
-	enum class Relationship
-	{
-		Friendly,
-		Hostile,
-		Neutral
-	};
+	virtual FactionRelationship GetRelationship(FactionId a, FactionId b) const = 0;
+	virtual void SetRelationship(FactionId a, FactionId b, FactionRelationship r) = 0;
 
-	Relationship GetRelationship(FactionId a, FactionId b) const;
+	virtual bool IsFriendly(FactionId a, FactionId b) const = 0;
+	virtual bool IsNeutral(FactionId a, FactionId b) const = 0;
+	virtual bool IsHostile(FactionId a, FactionId b) const = 0;
+};
 
-	bool IsFriendly(FactionId a, FactionId b);
-	bool IsNeutral(FactionId a, FactionId b);
-	bool IsHostile(FactionId a, FactionId b);
+class FactionManager : public IFactionManager
+{
+public:
+
+	FactionRelationship GetRelationship(FactionId a, FactionId b) const override;
+	void SetRelationship(FactionId a, FactionId b, FactionRelationship r) override;
+
+	bool IsFriendly(FactionId a, FactionId b) const override;
+	bool IsNeutral(FactionId a, FactionId b) const override;
+	bool IsHostile(FactionId a, FactionId b) const override;
+
+	CombinedKeyMap<FactionId, FactionRelationship> m_Relationships;
 };
 
 }

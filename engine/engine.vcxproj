@@ -132,6 +132,7 @@
     <ClInclude Include="system\math\vector3.h" />
     <ClInclude Include="system\math\vector_math.h" />
     <ClInclude Include="system\modifier.h" />
+    <ClInclude Include="system\multikeymap.h" />
     <ClInclude Include="system\pool.h" />
     <ClInclude Include="system\check.h" />
     <ClInclude Include="system\singleton.h" />

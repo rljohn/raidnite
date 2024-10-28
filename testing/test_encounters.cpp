@@ -158,8 +158,8 @@ TEST_F(EncounterLogTest, DataPacking)
 	TestPackingField<bool>(false);
 	TestPackingField<bool>(true);
 	
-	TestPackingData<TilePropertiesChangedEvent>(Position(5, 5), false, false);
-	TestPackingData<TilePropertiesChangedEvent>(Position(10, 10), false, true);
-	TestPackingData<TilePropertiesChangedEvent>(Position(10, 10), true, false);
-	TestPackingData<TilePropertiesChangedEvent>(Position(15, 15), true, true);
+	TestPackingData<TilePropertiesChangedEvent>(Position(5, 5), true, false, false);
+	TestPackingData<TilePropertiesChangedEvent>(Position(10, 10), true, false, true);
+	TestPackingData<TilePropertiesChangedEvent>(Position(10, 10), true, true, false);
+	TestPackingData<TilePropertiesChangedEvent>(Position(15, 15), true, true, true);
 }

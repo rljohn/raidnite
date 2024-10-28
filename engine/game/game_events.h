@@ -55,8 +55,9 @@ struct TilePropertiesChangedEvent : public GameEvent
 
 	TilePropertiesChangedEvent(const Tile* tile);
 
-	TilePropertiesChangedEvent(const Position& pos, bool allowsMovement, bool allowsOccupancy)
+	TilePropertiesChangedEvent(const Position& pos, bool valid, bool allowsMovement, bool allowsOccupancy)
 		: m_Position(pos)
+		, m_IsValid(valid)
 		, m_AllowsMovement(allowsMovement)
 		, m_AllowsOccupancy(allowsOccupancy)
 	{

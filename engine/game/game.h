@@ -15,6 +15,7 @@ class Map;
 class World;
 class Engine;
 class GameInstance;
+class IFactionManager;
 
 struct GameFrame
 {
@@ -93,6 +94,10 @@ public:
 	static void SetEncounterLog(IEncounterLog* logger);
 	static IEncounterLog* GetEncounterLog();
 
+	// Factions
+	static void SetFactionManager(IFactionManager* mgr);
+	static IFactionManager* GetFactionManager();
+
 	// Map
 	static void SetMap(Map* map);
 	static Map* GetMap();
@@ -109,6 +114,7 @@ private:
 	static IDamageCalculator* sm_DamageCalculator;
 	static ICombatSystem* sm_CombatSystem;
 	static IEncounterLog* sm_EncounterLog;
+	static IFactionManager* sm_FactionManager;
 	static Map* sm_Map;
 
 	static std::vector<IGameEventListener*> sm_GameEventListeners;

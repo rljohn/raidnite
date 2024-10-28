@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/entity/entity.h"
+#include "engine/game/faction.h"
 
 namespace raid
 {

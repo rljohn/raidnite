@@ -125,6 +125,7 @@
     <ClInclude Include="system\math\vector_math.h" />
     <ClInclude Include="encounter\encounter_data.h" />
     <ClInclude Include="game\faction.h" />
+    <ClInclude Include="system\multikeymap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -203,5 +204,6 @@
     <ClCompile Include="system\math\vector_math.cpp" />
     <ClCompile Include="encounter\encounter_data.cpp" />
     <ClCompile Include="game\game_events.cpp" />
+    <ClCompile Include="game\faction.cpp" />
   </ItemGroup>
 </Project>
