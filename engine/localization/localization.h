@@ -22,20 +22,31 @@ namespace raid
 	{
 	public:
 
-		void AddEntry(size_t hash, std::string text);
-		const char* GetEntry(size_t hash) const;
+		void AddEntry(const char* key , const std::string& text);
+		void AddEntry(LocalizationKey hash, const std::string& text);
+
+		const char* GetEntry(LocalizationKey hash) const;
 		void Reset();
 
 	private:
 
-		std::unordered_map<size_t, std::string> m_Strings;
+		std::unordered_map<LocalizationKey, std::string> m_Strings;
 	};
 
-	class LocalizationSystem
+	class ILocalizationSystem
+	{
+	public:
+		virtual const char* GetEntry(LocalizationKey hash) = 0;
+	};
+
+	class LocalizationSystem : public ILocalizationSystem
 	{
 	public:
 
 		LocalizationSystem();
+		~LocalizationSystem();
+
+		void Shutdown();
 
 		// Language Change
 		void SetLanguage(Language language);
@@ -49,7 +60,7 @@ namespace raid
 		void RemoveLocalizationSet(LocalizationSet* set);
 
 		// Finds a localization string from any of the registered localization sets
-		const char* GetEntry(size_t hash);
+		const char* GetEntry(LocalizationKey hash);
 
 	private:
 

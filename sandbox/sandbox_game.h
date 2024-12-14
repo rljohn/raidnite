@@ -25,6 +25,12 @@ class Logger;
 
 namespace sandbox {
 
+enum SandboxFactions
+{
+	Player,
+	Enemy
+};
+
 class GameSandbox : public IGameEventListener
 {
 public:
@@ -45,6 +51,8 @@ public:
 
 private:
 
+	void InitLocalization();
+
 	// IGameEventListener
 	void OnGameEvent(const GameEvent& evt);
 
@@ -56,6 +64,9 @@ private:
 	raid::DamageCalculator m_DamageCalculator;
 	raid::CombatSystem m_CombatSystem;
 	raid::GameInstance m_GameInstance;
+	raid::FactionManager m_FactionManager;
+	raid::LocalizationSystem m_Localization;
+	raid::LocalizationSet m_Text;
 	raid::Logger* m_Logger;
 
 	// Game

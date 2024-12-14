@@ -3,6 +3,7 @@
 
 #include "sandbox_game.h"
 
+#include "engine/localization/localization.h"
 #include "engine/system/log/logging.h"
 #include "engine/unit/states/state.h"
 
@@ -71,7 +72,10 @@ void UnitWidget::DrawSpawnWidgets(GameSandbox* sandbox, Map* map)
 			NameComponent& names = unit->GetName();
 			names.SetName(m_UnitList[m_UnitListIdx]);
 
-
+			if (IAttribute* attr = unit->GetAttribute<AttributeType::Faction>())
+			{
+				attr->SetValue(SandboxFactions::Enemy);
+			}
 		}
 	}
 }
@@ -128,6 +132,11 @@ void UnitWidget::DrawEntityWidgets(GameSandbox* sandbox, Map* map)
 				{
 					DrawEntityState(state);
 				}
+
+				if (AttributesComponent* attrs = e->GetComponent<AttributesComponent>())
+				{
+					DrawEntityAttributes(attrs);
+				}
 			}
 			ImGui::PopID();
 
@@ -141,6 +150,29 @@ void UnitWidget::DrawEntityState(StateMachineComponent* state)
 {
 	StateType t = state->GetCurrentStateType();
 	ImGui::Text("State: %s", StateTypeToString(t));
+}
+
+void UnitWidget::DrawEntityAttributes(AttributesComponent* attrs)
+{
+	if (!attrs) return;
+	
+	auto* f = attrs->GetAttribute<AttributeType::Faction>();
+	if (!f) return;
+
+	FactionId faction = f->As<FactionId>();
+	
+	if (IFactionManager* factionMgr = Game::GetFactionManager())
+	{
+		LocalizationKey key = factionMgr->GetFactionName(faction);
+		if (key != InvalidLocalizationKey)
+		{
+			if (ILocalizationSystem* localization = Game::GetLocalizationSystem())
+			{
+				const char* text = localization->GetEntry(key);
+				ImGui::Text("Faction: %s (%d)", text, faction);
+			}
+		}
+	}
 }
 
 void UnitWidget::Shutdown()

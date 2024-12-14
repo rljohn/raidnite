@@ -3,6 +3,30 @@
 
 namespace raid
 {
+
+	void FactionManager::RegisterFaction(FactionId id, const FactionInfo& info)
+	{
+		m_FactionInfo[id] = info;
+	}
+
+	void FactionManager::UnregisterFaction(FactionId id)
+	{
+		m_FactionInfo.erase(id);
+	}
+
+	LocalizationKey FactionManager::GetFactionName(FactionId id) const
+	{
+		auto iter = m_FactionInfo.find(id);
+		if (iter != m_FactionInfo.end())
+		{
+			return iter->second.DisplayName;
+		}
+		else
+		{
+			return InvalidLocalizationKey;
+		}
+	}
+
 	FactionRelationship FactionManager::GetRelationship(FactionId a, FactionId b) const
 	{
 		if (a == b)

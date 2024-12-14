@@ -11,12 +11,17 @@ namespace raid
 // LocalizationSet
 ///////////////////////////////
 
-void LocalizationSet::AddEntry(size_t hash, std::string text)
+void LocalizationSet::AddEntry(const char* key, const std::string& text)
+{
+    AddEntry(StringHash{}(key), text);
+}
+
+void LocalizationSet::AddEntry(LocalizationKey hash, const std::string& text)
 {
     m_Strings.insert_or_assign(hash, text);
 }
 
-const char* LocalizationSet::GetEntry(size_t hash) const
+const char* LocalizationSet::GetEntry(LocalizationKey hash) const
 {
     auto it = m_Strings.find(hash);
     if (it != m_Strings.end())
@@ -43,6 +48,16 @@ LocalizationSystem::LocalizationSystem()
 {
 }
 
+LocalizationSystem::~LocalizationSystem()
+{
+    Shutdown();
+}
+
+void LocalizationSystem::Shutdown()
+{
+
+}
+
 void LocalizationSystem::SetLanguage(Language language)
 {
     if (m_Language != language)
@@ -62,14 +77,17 @@ void LocalizationSystem::RemoveLocalizationSet(LocalizationSet* set)
     m_LocaliationSets.remove(set);
 }
 
-const char* LocalizationSystem::GetEntry(size_t hash)
+const char* LocalizationSystem::GetEntry(LocalizationKey hash)
 {
-    for (const LocalizationSet* locSet : m_LocaliationSets)
+    if (hash != InvalidLocalizationKey)
     {
-        const char* result = locSet->GetEntry(hash);
-        if (result)
+        for (const LocalizationSet* locSet : m_LocaliationSets)
         {
-            return result;
+            const char* result = locSet->GetEntry(hash);
+            if (result)
+            {
+                return result;
+            }
         }
     }
 
@@ -153,7 +171,7 @@ bool LocalizationIO::LoadLocalizationData(const char* data, Language language, L
             auto it = data.text.find(langStr);
             if (it != data.text.end())
             {
-                size_t hash = StringHash{}(data.key);
+                LocalizationKey hash = StringHash{}(data.key);
                 system.AddEntry(hash, it->second);
             }
         }

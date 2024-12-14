@@ -67,13 +67,17 @@ namespace raid
 
 	// Hash
 	using StringHash = std::hash<std::string>;
+	#define HashString(key) = StringHash{}(key)
 
 	// Map
-
 	using Position = PositionVector2D;
 	static const Position InvalidPosition = Position(-1, -1);
-	using Location = Vector3D;;
+	using Location = Vector3D;
 	using Rotation = Vector3D;
+
+	// Localization
+	using LocalizationKey = size_t;
+	#define InvalidLocalizationKey LocalizationKey(0)
 
 	// Array helper
 	#define COUNTOF(arr) (sizeof(arr) / sizeof(arr[0]))

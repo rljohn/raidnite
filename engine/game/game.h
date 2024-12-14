@@ -16,6 +16,7 @@ class World;
 class Engine;
 class GameInstance;
 class IFactionManager;
+class ILocalizationSystem;
 
 struct GameFrame
 {
@@ -98,6 +99,10 @@ public:
 	static void SetFactionManager(IFactionManager* mgr);
 	static IFactionManager* GetFactionManager();
 
+	// Localization
+	static void SetLocalizationSystem(ILocalizationSystem* loc);
+	static ILocalizationSystem* GetLocalizationSystem();
+
 	// Map
 	static void SetMap(Map* map);
 	static Map* GetMap();
@@ -115,6 +120,7 @@ private:
 	static ICombatSystem* sm_CombatSystem;
 	static IEncounterLog* sm_EncounterLog;
 	static IFactionManager* sm_FactionManager;
+	static ILocalizationSystem* sm_LocalizationSystem;
 	static Map* sm_Map;
 
 	static std::vector<IGameEventListener*> sm_GameEventListeners;

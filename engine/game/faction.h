@@ -1,7 +1,9 @@
 #pragma once
 
 #include <stdint.h>
+
 #include "engine/system/multikeymap.h"
+#include "engine/localization/localization.h"
 
 namespace raid
 {
@@ -16,9 +18,18 @@ enum class FactionRelationship
 	Neutral
 };
 
+struct FactionInfo
+{
+	LocalizationKey DisplayName;
+};
+
 class IFactionManager
 {
 public:
+
+	virtual void RegisterFaction(FactionId id, const FactionInfo& info) = 0;
+	virtual void UnregisterFaction(FactionId id) = 0;
+	virtual LocalizationKey GetFactionName(FactionId id) const = 0;
 
 	virtual FactionRelationship GetRelationship(FactionId a, FactionId b) const = 0;
 	virtual void SetRelationship(FactionId a, FactionId b, FactionRelationship r) = 0;
@@ -32,6 +43,10 @@ class FactionManager : public IFactionManager
 {
 public:
 
+	void RegisterFaction(FactionId id, const FactionInfo& info) override;
+	void UnregisterFaction(FactionId id) override;
+	LocalizationKey GetFactionName(FactionId id) const override;
+
 	FactionRelationship GetRelationship(FactionId a, FactionId b) const override;
 	void SetRelationship(FactionId a, FactionId b, FactionRelationship r) override;
 
@@ -40,6 +55,7 @@ public:
 	bool IsHostile(FactionId a, FactionId b) const override;
 
 	CombinedKeyMap<FactionId, FactionRelationship> m_Relationships;
+	std::map<FactionId, FactionInfo> m_FactionInfo;
 };
 
 }

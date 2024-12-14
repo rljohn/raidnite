@@ -5,6 +5,7 @@
 #include "engine/game/damage.h"
 #include "engine/game/combat.h"
 #include "engine/engine.h"
+#include "engine/localization/localization.h"
 
 namespace raid
 {
@@ -16,6 +17,7 @@ IDamageCalculator* Game::sm_DamageCalculator = nullptr;
 ICombatSystem* Game::sm_CombatSystem = nullptr;
 IEncounterLog* Game::sm_EncounterLog = nullptr;
 IFactionManager* Game::sm_FactionManager = nullptr;
+ILocalizationSystem* Game::sm_LocalizationSystem = nullptr;
 Map* Game::sm_Map = nullptr;
 Engine* Game::sm_Engine = nullptr;
 
@@ -104,6 +106,16 @@ void Game::SetFactionManager(IFactionManager* mgr)
 IFactionManager* Game::GetFactionManager()
 {
 	return sm_FactionManager;
+}
+
+void Game::SetLocalizationSystem(ILocalizationSystem* loc)
+{
+	sm_LocalizationSystem = loc;
+}
+
+ILocalizationSystem* Game::GetLocalizationSystem()
+{
+	return sm_LocalizationSystem;
 }
 
 void Game::SetMap(Map* map)

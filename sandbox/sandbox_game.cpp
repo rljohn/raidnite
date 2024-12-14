@@ -39,6 +39,13 @@ void GameSandbox::Init()
 	// Encounter pooling
 	m_EncounterLog.Init(std::make_unique<EventPool>());
 
+	// Factions
+	m_FactionManager.RegisterFaction(SandboxFactions::Player, FactionInfo{ StringHash{}("FACTION_PLAYER") });
+	m_FactionManager.RegisterFaction(SandboxFactions::Enemy, FactionInfo{ StringHash{}("FACTION_ENEMY") });
+
+	// Localization
+	InitLocalization();
+	
 	// Game Events
 	Game::RegisterGameEventListener(this);
 
@@ -55,6 +62,8 @@ void GameSandbox::Init()
 	Game::SetEncounterLog(&m_EncounterLog);
 	Game::SetDamageCalculator(&m_DamageCalculator);
 	Game::SetCombatSystem(&m_CombatSystem);
+	Game::SetFactionManager(&m_FactionManager);
+	Game::SetLocalizationSystem(&m_Localization);
 
 	m_Widgets.push_back(&m_EngineWidgets);
 	m_Widgets.push_back(&m_MapWidgets);
@@ -125,6 +134,8 @@ void GameSandbox::Shutdown()
 		w->Shutdown();
 	}
 
+	Game::SetLocalizationSystem(nullptr);
+	Game::SetFactionManager(nullptr);
 	Game::SetEntityManager(nullptr);
 	Game::SetEncounterLog(nullptr);
 	Game::SetDamageCalculator(nullptr);
@@ -138,6 +149,13 @@ void GameSandbox::Shutdown()
 	LogSystem::SetDefaultLogger(nullptr);
 	delete m_Logger;
 	m_Logger = nullptr;
+}
+
+void GameSandbox::InitLocalization()
+{
+	m_Text.AddEntry("FACTION_PLAYER", "Player");
+	m_Text.AddEntry("FACTION_ENEMY", "Enemy");
+	m_Localization.AddLocalizationSet(&m_Text);
 }
 
 void GameSandbox::BuildMap(const int width, const int height)

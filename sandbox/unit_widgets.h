@@ -8,6 +8,7 @@ namespace raid {
 
 class Map;
 class StateMachineComponent;
+class AttributesComponent;
 
 namespace sandbox {
 
@@ -26,6 +27,7 @@ private:
 	void DrawSpawnWidgets(GameSandbox* sandbox, Map* map);
 	void DrawEntityWidgets(GameSandbox* sandbox, Map* map);
 	void DrawEntityState(StateMachineComponent* state);
+	void DrawEntityAttributes(AttributesComponent* attrs);
 
 	std::vector<std::string> m_UnitList;
 	int m_UnitListIdx = 0;
