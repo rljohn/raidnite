@@ -15,6 +15,8 @@ class Map : public IGameEventListener
 {
 public:
 
+	~Map();
+
 	void BuildMap(const PositionScalar width, const PositionScalar height);
 	void Shutdown();
 

@@ -39,11 +39,8 @@ void GameSandbox::Init()
 	// Encounter pooling
 	m_EncounterLog.Init(std::make_unique<EventPool>());
 
-	// Factions
-	m_FactionManager.RegisterFaction(SandboxFactions::Player, FactionInfo{ StringHash{}("FACTION_PLAYER") });
-	m_FactionManager.RegisterFaction(SandboxFactions::Enemy, FactionInfo{ StringHash{}("FACTION_ENEMY") });
-
-	// Localization
+	// Game Logic - Factions, Localization
+	InitFactions();
 	InitLocalization();
 	
 	// Game Events
@@ -151,10 +148,23 @@ void GameSandbox::Shutdown()
 	m_Logger = nullptr;
 }
 
+void GameSandbox::InitFactions()
+{
+	m_FactionManager.RegisterFaction(SandboxFactions::Player, FactionInfo{ HashString("FACTION_PLAYER") });
+	m_FactionManager.RegisterFaction(SandboxFactions::Enemy, FactionInfo{ HashString("FACTION_ENEMY") });
+	m_FactionManager.RegisterFaction(SandboxFactions::NeutralEnemy, FactionInfo{ HashString("FACTION_NEUTRAL_ENEMY") });
+	
+	m_FactionManager.SetRelationship(SandboxFactions::Player, SandboxFactions::Enemy, FactionRelationship::Hostile);
+	m_FactionManager.SetRelationship(SandboxFactions::Player, SandboxFactions::NeutralEnemy, FactionRelationship::Neutral);
+	m_FactionManager.SetRelationship(SandboxFactions::Enemy, SandboxFactions::NeutralEnemy, FactionRelationship::Friendly);
+}
+
 void GameSandbox::InitLocalization()
 {
 	m_Text.AddEntry("FACTION_PLAYER", "Player");
 	m_Text.AddEntry("FACTION_ENEMY", "Enemy");
+	m_Text.AddEntry("FACTION_NEUTRAL_ENEMY", "Neutral");
+
 	m_Localization.AddLocalizationSet(&m_Text);
 }
 

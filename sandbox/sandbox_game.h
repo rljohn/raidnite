@@ -28,7 +28,8 @@ namespace sandbox {
 enum SandboxFactions
 {
 	Player,
-	Enemy
+	Enemy,
+	NeutralEnemy
 };
 
 class GameSandbox : public IGameEventListener
@@ -51,6 +52,7 @@ public:
 
 private:
 
+	void InitFactions();
 	void InitLocalization();
 
 	// IGameEventListener

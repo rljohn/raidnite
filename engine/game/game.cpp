@@ -140,9 +140,9 @@ void Game::UnregisterGameEventListener(IGameEventListener* listener)
 
 void Game::DispatchGameEvent(const GameEvent& evt)
 {
-	for (IGameEventListener* listener : sm_GameEventListeners)
+	for (int i = 0 ; i < sm_GameEventListeners.size(); i++)
 	{
-		listener->OnGameEvent(evt);
+		sm_GameEventListeners[i]->OnGameEvent(evt);
 	}
 }
 

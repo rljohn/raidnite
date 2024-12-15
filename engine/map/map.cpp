@@ -8,6 +8,11 @@
 namespace raid
 {
 
+Map::~Map()
+{
+	Shutdown();
+}
+
 void Map::BuildMap(const PositionScalar width, const PositionScalar height)
 {
 	m_Tiles.resize(width, std::vector<Tile>(height));

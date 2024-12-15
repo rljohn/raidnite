@@ -67,7 +67,7 @@ namespace raid
 
 	// Hash
 	using StringHash = std::hash<std::string>;
-	#define HashString(key) = StringHash{}(key)
+	#define HashString(key) StringHash{}(key)
 
 	// Map
 	using Position = PositionVector2D;
