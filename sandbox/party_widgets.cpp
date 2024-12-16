@@ -180,6 +180,11 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 			{
 				ai->SetDesiredPosition(desire);
 			}
+
+			if (ImGui::Button("Scan For Targets"))
+			{
+				ai->ScanForTargets();
+			}
 		}
 
 		ImGui::PopID();

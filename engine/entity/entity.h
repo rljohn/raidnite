@@ -81,6 +81,15 @@ public:
     virtual Entity* GetEntity(size_t idx) = 0;
     virtual void AddEntityListener(IEntityListener* listener) = 0;
     virtual void RemoveEntityListener(IEntityListener* listener) = 0;
+
+    using EntityCallback = std::function<void(Entity*)>;
+    void ForEach(const EntityCallback& callback)
+    {
+        for (int i = 0; i < GetEntityCount(); i++)
+        {
+            callback(GetEntity(i));
+        }
+    }
 };
 
 inline EntityId GetEntityId(Entity* e)

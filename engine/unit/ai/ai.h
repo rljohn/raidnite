@@ -24,6 +24,8 @@ public:
 
 	bool HasDesiredPosition() const { return m_DesiredPosition != InvalidPosition; }
 
+	bool ScanForTargets();
+
 protected:
 
 	void BuildPath();

@@ -145,4 +145,18 @@ void AIComponent::OnMapChanged(const TilePropertiesChangedEvent& evt)
 	}
 }
 
+bool AIComponent::ScanForTargets()
+{
+	IEntityManager* entityMgr = Game::GetEntityManager();
+	if (!entityMgr)
+		return false;
+
+	entityMgr->ForEach([](Entity* e)
+	{
+		// TODO
+	});
+
+	return false;
+}
+
 } // namespace raid
