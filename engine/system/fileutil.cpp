@@ -82,7 +82,7 @@ bool FileUtil::CreateDirectoryForFile(const std::wstring& path)
 
 		return true;
 	}
-	sfinally
+	scatchall
 	{
 		return false;
 	}

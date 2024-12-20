@@ -8,8 +8,6 @@
 namespace raid
 {
 
-using FactionId = uint8_t;
-
 enum class FactionRelationship
 {
 	Invalid,
@@ -36,6 +34,7 @@ public:
 
 	virtual bool IsFriendly(FactionId a, FactionId b) const = 0;
 	virtual bool IsNeutral(FactionId a, FactionId b) const = 0;
+	virtual bool IsNeutralOrHostile(FactionId a, FactionId b) const = 0;
 	virtual bool IsHostile(FactionId a, FactionId b) const = 0;
 };
 
@@ -52,10 +51,22 @@ public:
 
 	bool IsFriendly(FactionId a, FactionId b) const override;
 	bool IsNeutral(FactionId a, FactionId b) const override;
+	bool IsNeutralOrHostile(FactionId a, FactionId b) const override;
 	bool IsHostile(FactionId a, FactionId b) const override;
 
 	CombinedKeyMap<FactionId, FactionRelationship> m_Relationships;
 	std::map<FactionId, FactionInfo> m_FactionInfo;
+};
+
+// Utility (mostly for testing) to ensure the combat system is set and destroyed.
+class FactionManagerRAII
+{
+public:
+
+	FactionManagerRAII();
+	~FactionManagerRAII();
+
+	FactionManager Instance;
 };
 
 }

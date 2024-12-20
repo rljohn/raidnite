@@ -5,6 +5,22 @@
 namespace raid
 {
 
+enum class TargetFilter
+{
+	Invalid,
+	Friendly,
+	Enemy,
+	Any
+};
+
+enum class TargetBehaviour
+{
+	Random,
+	Closest,
+	Furthest,
+	Next
+};
+
 class TargetingComponent : public Component
 {
 public:

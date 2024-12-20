@@ -123,3 +123,4 @@ TEST(MapTest, NearestAvailableTileFrom)
 		map.GetTile(result)->SetOccupant(&e);
 	}
 }
+

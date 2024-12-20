@@ -27,4 +27,24 @@ bool UnitStatics::GetUnitLevel(const Entity& entity, double& out_level)
 	return false;
 }
 
+bool UnitStatics::IsEntityInRange(const Unit& source, const Entity& target, Distance distance)
+{
+	TransformComponent* targetTransform = target.GetComponent<TransformComponent>();
+	if (!targetTransform)
+	{
+		return false;
+	}
+
+	const Position& targetPos = targetTransform->GetPosition();
+
+	const TransformComponent& transform = source.GetTransform();
+	Distance d = Pathfinding::DistanceBetweenTiles(targetPos, transform.GetPosition());
+	if (d > distance)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 } // namespace raid

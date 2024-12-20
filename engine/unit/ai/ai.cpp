@@ -1,11 +1,14 @@
 #include "engine/pch.h"
 #include "ai.h"
 
+#include "engine/game/faction.h"
 #include "engine/game/game_events.h"
 #include "engine/map/map.h"
 #include "engine/map/pathfinding.h"
+#include "engine/system/check.h"
 #include "engine/system/math/vector_math.h"
 #include "engine/unit/unit.h"
+#include "engine/unit/unit_utils.h"
 
 namespace raid
 {
@@ -145,18 +148,90 @@ void AIComponent::OnMapChanged(const TilePropertiesChangedEvent& evt)
 	}
 }
 
-bool AIComponent::ScanForTargets()
+bool AIComponent::CanTargetEntity(const Entity* e, TargetFilter targeting) const
+{
+	stry
+	{
+		IFactionManager* factions = Game::GetFactionManager();
+		scheckall(factions);
+
+		FactionId myFactionId = InvalidFactionId;
+		scheckall(UnitStatics::GetAttribute<AttributeType::Faction>(m_Parent, myFactionId));
+
+		FactionId targetFaction = InvalidFactionId;
+		scheckall(UnitStatics::GetAttribute<AttributeType::Faction>(*e, targetFaction));
+
+		if (targeting == TargetFilter::Enemy)
+		{
+			return factions->IsNeutralOrHostile(myFactionId, targetFaction);
+		}
+		else if (targeting == TargetFilter::Friendly)
+		{
+			return factions->IsFriendly(myFactionId, targetFaction);
+		}
+	}
+	scatchall
+	{
+	}
+
+	return false;
+}
+
+Entity* AIComponent::ScanForTarget(const TargetScanParams& params) const
 {
 	IEntityManager* entityMgr = Game::GetEntityManager();
 	if (!entityMgr)
-		return false;
+		return nullptr;
 
-	entityMgr->ForEach([](Entity* e)
+	Entity* target = nullptr;
+
+	entityMgr->ForEach([&](Entity* e)
 	{
-		// TODO
+		if (!CanTargetEntity(e, TargetFilter::Enemy))
+		{
+			return false;
+		}
+
+		if (!UnitStatics::IsEntityInRange(m_Unit, *e, params.Range))
+			return false;
+
+		target = e;
+		return true;
+		
 	});
 
-	return false;
+	return target;
+}
+
+std::vector<Entity*> AIComponent::ScanForTargets(const TargetScanParams& params) const
+{
+	std::vector<Entity*> results;
+
+	stry
+	{
+		IEntityManager* entityMgr = Game::GetEntityManager();
+		scheckall(entityMgr);
+
+		entityMgr->ForEach([&](Entity* e)
+		{
+			if (!CanTargetEntity(e, TargetFilter::Enemy))
+			{
+				return false;
+			}
+
+			if (!UnitStatics::IsEntityInRange(m_Unit, *e, params.Range))
+				return false;
+
+			results.push_back(e);
+			return false;
+		});
+	}
+	scatchall
+	{
+		results.clear();
+	}
+	
+	return results;
 }
 
 } // namespace raid

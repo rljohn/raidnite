@@ -58,9 +58,25 @@ bool FactionManager::IsNeutral(FactionId a, FactionId b) const
 	return (r == FactionRelationship::Neutral) || (r == FactionRelationship::Invalid);
 }
 
+bool FactionManager::IsNeutralOrHostile(FactionId a, FactionId b) const
+{
+	FactionRelationship r = GetRelationship(a, b);
+	return (r == FactionRelationship::Neutral) || (r == FactionRelationship::Hostile);
+}
+
 bool FactionManager::IsHostile(FactionId a, FactionId b) const
 {
 	return GetRelationship(a, b) == FactionRelationship::Hostile;
+}
+
+FactionManagerRAII::FactionManagerRAII()
+{
+	Game::SetFactionManager(&Instance);
+}
+
+FactionManagerRAII::~FactionManagerRAII()
+{
+	Game::SetFactionManager(nullptr);
 }
 
 } // namespace raid

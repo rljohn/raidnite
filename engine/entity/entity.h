@@ -82,12 +82,13 @@ public:
     virtual void AddEntityListener(IEntityListener* listener) = 0;
     virtual void RemoveEntityListener(IEntityListener* listener) = 0;
 
-    using EntityCallback = std::function<void(Entity*)>;
+    using EntityCallback = std::function<bool(Entity*)>;
     void ForEach(const EntityCallback& callback)
     {
         for (int i = 0; i < GetEntityCount(); i++)
         {
-            callback(GetEntity(i));
+            if (callback(GetEntity(i)))
+                break;
         }
     }
 };

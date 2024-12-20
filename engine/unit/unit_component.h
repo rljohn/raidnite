@@ -15,6 +15,8 @@ public:
 
 	UnitComponent(Unit& unit);
 
+	const Position& GetCurrentPosition() const;
+
 protected:
 
 	Unit& m_Unit;

@@ -52,6 +52,7 @@ public:
 	// Easy access to required components
 	NameComponent& GetName() { return m_Name; }
 	TransformComponent& GetTransform() { return m_Transform; }
+	const TransformComponent& GetTransform() const { return m_Transform; }
 	StateMachineComponent& GetStateMachine() { return m_StateMachine; }
 	AttributesComponent& GetAttributes() { return m_Attributes; }
 	

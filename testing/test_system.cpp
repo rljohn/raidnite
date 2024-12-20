@@ -139,18 +139,47 @@ TEST(SehTest, SehTestBasic)
 
 	stry
 	{
-		count ++; // +1
-		scheckand(count == 0, label, count++); // +1
+		count ++; // 1
+		scheckand(count == 0, label, count++); // 2
 	}
 	scatch(label)
 	{
-		count ++; // +1
-		sthrowfinally();
-	}
-	sfinally
-	{
-		count ++; // +1
+		count ++; // 2
 	}
 
-	EXPECT_EQ(count, 4);
+	EXPECT_EQ(count, 3);
+}
+
+TEST(SehTest, SehTestCatchall)
+{
+	int count = 0;
+
+	stry
+	{
+		count++; // +1
+		scheckall(count == 0);
+	}
+	scatchall
+	{
+		count++; // 2
+	}
+
+	EXPECT_EQ(count, 2);
+}
+
+TEST(SehTest, SehTestCatchall2)
+{
+	int count = 0;
+
+	stry
+	{
+		count++; // +1
+		scheckall(count == 1);
+	}
+	scatchall
+	{
+		count++; // not executed
+	}
+
+	EXPECT_EQ(count, 1);
 }

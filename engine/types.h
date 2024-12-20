@@ -74,6 +74,11 @@ namespace raid
 	static const Position InvalidPosition = Position(-1, -1);
 	using Location = Vector3D;
 	using Rotation = Vector3D;
+	using Distance = double;
+
+	// Factions
+	using FactionId = int8_t;
+	#define InvalidFactionId FactionId(-1)
 
 	// Localization
 	using LocalizationKey = size_t;

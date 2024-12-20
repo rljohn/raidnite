@@ -15,13 +15,13 @@ public:
     {
     }
 
-    const Position& GetPosition() { return m_Position; }
+    const Position& GetPosition() const { return m_Position; }
     void SetPosition(const Position& pos) { m_Position = pos; }
 
-    const Location& GetLocation() { return m_Location; }
+    const Location& GetLocation() const { return m_Location; }
     void SetLocation(const Location& pos) { m_Location = pos; }
 
-    const Position& GetOccupyingTile() { return m_OccupyingTilePos; }
+    const Position& GetOccupyingTile() const { return m_OccupyingTilePos; }
     void SetOccupyingTile(const Position& pos) { m_OccupyingTilePos = pos; }
 
 private:

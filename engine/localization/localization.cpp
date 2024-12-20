@@ -178,12 +178,10 @@ bool LocalizationIO::LoadLocalizationData(const char* data, Language language, L
 
         return true;
     }
-    sfinally
+    scatchall
     {
-
+        return false;
     }
-
-    return false;
 }
 
 } // namespace raid

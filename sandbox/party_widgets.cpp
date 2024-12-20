@@ -183,7 +183,10 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 
 			if (ImGui::Button("Scan For Targets"))
 			{
-				ai->ScanForTargets();
+				TargetScanParams params;
+				params.Type = TargetFilter::Enemy;
+				params.Range = 5; // TODO
+				ai->ScanForTarget(params);
 			}
 		}
 

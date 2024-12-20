@@ -74,3 +74,62 @@ TEST_F(GameTest, SpawnUnit)
 
 	delete e;
 }
+
+TEST_F(GameTest, TargetScan)
+{
+	WorldRAII world;
+	FactionManagerRAII factions;
+
+	constexpr const FactionId FriendlyFaction = 1;
+	constexpr const FactionId EnemyFaction = 2;
+
+	factions.Instance.SetRelationship(FriendlyFaction, EnemyFaction, FactionRelationship::Hostile);
+
+	Unit source;
+	Unit targetA, targetB, targetC;
+	Unit friendly;
+
+	std::vector<std::reference_wrapper<Unit>> units = { source, targetA, targetB, targetC, friendly };
+	for (Unit& u : units)
+	{
+		world.Instance.RegisterEntity(&u);
+		u.GetAttributes().SetupAttributes();
+	}
+
+	source.GetTransform().SetPosition(Position(0, 0));
+	source.GetAttribute<AttributeType::Faction>()->SetValue(FriendlyFaction);
+
+	// in rnageB
+	targetA.GetTransform().SetPosition(Position(2, 0));
+	targetA.GetAttribute<AttributeType::Faction>()->SetValue(EnemyFaction);
+
+	// in range
+	targetB.GetTransform().SetPosition(Position(2, 1));
+	targetB.GetAttribute<AttributeType::Faction>()->SetValue(EnemyFaction);
+
+	// out of range
+	targetC.GetTransform().SetPosition(Position(2, 3));
+	targetC.GetAttribute<AttributeType::Faction>()->SetValue(EnemyFaction);
+
+	// friendly target - in range
+	friendly.GetTransform().SetPosition(Position(1, 1));
+	friendly.GetAttribute<AttributeType::Faction>()->SetValue(FriendlyFaction);
+
+	AIComponent* ai = source.CreateAi<AIComponent>();
+	ASSERT_NE(ai, nullptr);
+
+	TargetScanParams params;
+	params.Range = 2;
+	params.Type = TargetFilter::Enemy;
+
+	Entity* target = ai->ScanForTarget(params);
+	EXPECT_EQ(target, &targetA);
+
+	std::vector<Entity*> targets = ai->ScanForTargets(params);
+	EXPECT_EQ(targets.size(), 2);
+
+	// Friendly Scan
+	params.Type = TargetFilter::Friendly;
+	target = ai->ScanForTarget(params);
+	EXPECT_EQ(target, &friendly);
+}

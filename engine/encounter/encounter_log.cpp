@@ -156,7 +156,7 @@ void EncounterLog::OnGameStart()
 
 		m_StartFrame = GetFrame();
 	}
-	sfinally
+	scatchall
 	{
 	}
 }

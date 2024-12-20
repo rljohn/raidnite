@@ -12,4 +12,9 @@ UnitComponent::UnitComponent(Unit& unit)
 {
 }
 
+const Position& UnitComponent::GetCurrentPosition() const
+{
+	return m_Unit.GetTransform().GetPosition();
+}
+
 } // namespace raid

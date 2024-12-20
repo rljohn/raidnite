@@ -95,7 +95,7 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 
 		Game::DispatchGameEvent(evt);
 	}
-	sfinally
+	scatchall
 	{
 
 	}	
