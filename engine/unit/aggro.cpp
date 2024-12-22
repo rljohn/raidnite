@@ -7,17 +7,17 @@
 namespace raid
 {
 
-void AggroTable::AddUnit(Entity* unit)
+void AggroComponent::AddUnit(Entity* unit)
 {
 	m_List.push_back(unit);
 }
 
-void AggroTable::RemoveUnit(Entity* unit)
+void AggroComponent::RemoveUnit(Entity* unit)
 {
 	m_List.remove(unit);
 }
 
-void AggroTable::OnGameEvent(const GameEvent& evt)
+void AggroComponent::OnGameEvent(const GameEvent& evt)
 {
 	switch (evt.GetType())
 	{
@@ -28,7 +28,7 @@ void AggroTable::OnGameEvent(const GameEvent& evt)
 	}
 }
 
-void AggroTable::OnUnitDied(const DeathEvent& d)
+void AggroComponent::OnUnitDied(const DeathEvent& d)
 {
 	if (Entity* e = d.GetEntity())
 	{

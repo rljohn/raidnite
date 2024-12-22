@@ -88,7 +88,7 @@ private:
 	AttributesComponent& m_Attributes;
 	BuffsComponent& m_Buffs;
 	DamageReceiver& m_DamageReceiver;
-	AggroTable& m_AggroTable;
+	AggroComponent& m_AggroTable;
 	NameComponent& m_Name;
 	TargetingComponent& m_Targeting;
 	StateMachineComponent& m_StateMachine;

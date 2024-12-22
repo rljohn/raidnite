@@ -20,7 +20,7 @@ TEST(AggroTest, AddRemove)
 	world.Instance.RegisterEntity(&b);
 	world.Instance.RegisterEntity(&c);
 
-	AggroTable* aggroA = a.GetComponent<AggroTable>();
+	AggroComponent* aggroA = a.GetComponent<AggroComponent>();
 	ASSERT_NE(aggroA, nullptr);
 
 	// add a unit to the aggro table, confirm its addition
