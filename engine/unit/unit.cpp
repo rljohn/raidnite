@@ -15,7 +15,7 @@ Unit::Unit()
 	, m_Attributes(AddComponent<AttributesComponent>())
 	, m_Buffs(AddComponent<BuffsComponent>())
 	, m_DamageReceiver(AddComponent<DamageReceiver>())
-	, m_AggroTable(AddComponent<AggroComponent>())
+	, m_Aggro(AddComponent<AggroComponent>())
 	, m_Name(AddComponent<NameComponent>())
 	, m_Targeting(AddComponent<TargetingComponent>())
 	, m_StateMachine(AddComponent<StateMachineComponent>())
@@ -61,7 +61,7 @@ void Unit::RemoveBuff(Buff* buff)
 
 bool Unit::IsInCombat() const
 {
-	return !m_AggroTable.Empty();
+	return !m_Aggro.Empty();
 }
 
 } // namespace raid

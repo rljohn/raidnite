@@ -81,10 +81,54 @@ TEST(EngineTest, TimeFrames)
 	Time::TimeDisplay display;
 	Time::GetHMS(d, display);
 	EXPECT_STREQ(display, "02:09");
-	
+
 	d = e.FramesToDuration(7801);
 	Time::GetHMS(d, display);
 	EXPECT_STREQ(display, "02:10");
+}
+
+TEST(EngineTest, Ticker)
+{
+	const std::chrono::nanoseconds frameTime(16666666);
+
+	EngineRAII e;
+	e.Instance.Init(frameTime);
+
+	unsigned tickerCount = 0;
+
+	Ticker t;
+	t.Init(Milliseconds(100), [&]()
+	{
+		tickerCount++;
+	});
+
+	TimeStamp now = std::chrono::steady_clock::now();
+	for (int i = 0; i < 100; i++)
+	{
+		e.Instance.Update(now, frameTime);
+		t.Update(frameTime);
+
+		now += frameTime;
+	}
+
+	// 16.666666ms * 100 updates = 1666.6666ms
+	// Tick every 100ms = 16.66 ticks
+
+	EXPECT_EQ(tickerCount, 16);
+
+	// Ensure the minimum number of ticks required to hit 17 ticks
+	// 100 x 16.6666 = 1666.66ms
+	// To reach 17 ticks (1700ms), 1700-1666.66 = 33.34 ms
+	// Is equivalent to 2.004 ticks, so we must tick 3 more times
+	for (int i = 0; i < 3; i++)
+	{
+		e.Instance.Update(now, frameTime);
+		t.Update(frameTime);
+
+		now += frameTime;
+	}
+
+	EXPECT_EQ(tickerCount, 17);
 }
 
 TEST(EngineTest, FrameDelta)

@@ -23,6 +23,7 @@ public:
 
 	Milliseconds FramesToMillis(const Frame frames) const;
 	Duration FramesToDuration(const Frame frames) const;
+	Frame DurationToFrames(const Duration& duration) const;
 
 private:
 
@@ -31,7 +32,19 @@ private:
 	TimeStep m_TimeStep;
 	TimeStepSeconds m_TimeStepSecs;
 	std::chrono::steady_clock::time_point m_LastUpdate;
-	Nanoseconds m_Accumulation;
+	Duration m_Accumulation;
+};
+
+struct EngineRAII
+{
+	EngineRAII();
+	~EngineRAII();
+
+	Engine Instance;
+
+private:
+
+	Engine* Previous = nullptr;
 };
 
 } // namespace raid

@@ -34,6 +34,25 @@ void AIComponent::SetDesiredPosition(const Position& p)
 	}
 }
 
+void AIComponent::Update(const GameFrame& frame)
+{
+	if (!m_Unit.IsInCombat())
+	{
+		if (m_Unit.GetAggro().IsHostile())
+		{
+			TargetScanParams params;
+			params.Type = TargetFilter::Enemy;
+			params.Range = m_Unit.GetAggro().GetAggroRange();
+
+			std::vector<Entity*> list = ScanForTargets(params);
+			if (!list.empty())
+			{
+				
+			}
+		}
+	}
+}
+
 void AIComponent::OnGameEvent(const GameEvent& evt)
 {
 	switch (evt.GetType())
@@ -215,9 +234,7 @@ std::vector<Entity*> AIComponent::ScanForTargets(const TargetScanParams& params)
 		entityMgr->ForEach([&](Entity* e)
 		{
 			if (!CanTargetEntity(e, TargetFilter::Enemy))
-			{
 				return false;
-			}
 
 			if (!UnitStatics::IsEntityInRange(m_Unit, *e, params.Range))
 				return false;

@@ -55,7 +55,9 @@ public:
 	const TransformComponent& GetTransform() const { return m_Transform; }
 	StateMachineComponent& GetStateMachine() { return m_StateMachine; }
 	AttributesComponent& GetAttributes() { return m_Attributes; }
-	
+	AggroComponent& GetAggro() { return m_Aggro; }
+	TargetingComponent& GetTargeting() { return m_Targeting; }
+
 	template<typename T, typename... Args>
 	T& AddUnitComponent(Args&&... args)
 	{
@@ -88,7 +90,7 @@ private:
 	AttributesComponent& m_Attributes;
 	BuffsComponent& m_Buffs;
 	DamageReceiver& m_DamageReceiver;
-	AggroComponent& m_AggroTable;
+	AggroComponent& m_Aggro;
 	NameComponent& m_Name;
 	TargetingComponent& m_Targeting;
 	StateMachineComponent& m_StateMachine;

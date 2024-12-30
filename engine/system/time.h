@@ -32,6 +32,25 @@ public:
 	// Math
 	static int CountNanosInSeconds(const Nanoseconds& nanos, const Seconds& seconds);
 	static int CountNanosInMillis(const Nanoseconds& nanos, const Milliseconds& seconds);
+
+	// Delta
+	static Duration TimeBetween(const TimeStamp& start, const TimeStamp& end);
+	static Duration TimeSince(const TimeStamp& start);
+};
+
+// Helper Class - Ticks at a set interval
+struct Ticker
+{
+	using Func = std::function<void()>;
+	
+	void Init(Duration duration, Func cb);
+	void Update(const TimeStep& timeStep);
+
+private:
+
+	Func m_TickFunction = nullptr;
+	Duration m_Accumulation = Duration(0);
+	Duration m_Frequency = Duration(0);
 };
 
 } // namespace raid

@@ -27,6 +27,7 @@ public:
 	const Position& GetDesiredPosition() const { return m_DesiredPosition; }
 	void SetDesiredPosition(const Position& p);
 
+	void Update(const GameFrame& frame) override;
 	void OnGameEvent(const GameEvent& evt) override;
 
 	bool HasDesiredPosition() const { return m_DesiredPosition != InvalidPosition; }

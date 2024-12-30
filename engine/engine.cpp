@@ -1,5 +1,7 @@
 #include "engine/pch.h"
+
 #include "engine.h"
+#include "engine/game/game.h"
 #include "engine/system/args.h"
 
 using namespace std::chrono;
@@ -73,5 +75,20 @@ Duration Engine::FramesToDuration(const Frame frames) const
 	return m_BaseTimeStep * frames;
 }
 
+Frame Engine::DurationToFrames(const Duration& duration) const
+{
+	return duration / m_BaseTimeStep;
+}
+
+EngineRAII::EngineRAII()
+{
+	Previous = Game::GetEngine();
+	Game::SetEngine(&Instance);
+}
+
+EngineRAII::~EngineRAII()
+{
+	Game::SetEngine(Previous);
+}
 
 } // namespace raid

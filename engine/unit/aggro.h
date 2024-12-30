@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/entity/component.h"
+#include "engine/unit/targeting.h"
 
 #include <list>
 
@@ -40,6 +41,8 @@ public:
 
 	AggroBehaviour GetBehaviour() const { return m_Behaviour; }
 	void SetBehaviour(AggroBehaviour b) { m_Behaviour = b; }
+
+	bool IsHostile() const { return GetBehaviour() == AggroBehaviour::Aggro; }
 
 private:
 

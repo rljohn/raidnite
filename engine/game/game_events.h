@@ -169,5 +169,18 @@ struct DamageEvent : public GameEvent, EntityEvent
 	DamageType DamageType = DamageType::Invalid;
 };
 
+struct TargetChangedEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::TargetChanged; }
+
+	TargetChangedEvent(Entity* source, Entity* target)
+		: m_Source(source)
+		, m_Target(target)
+	{
+	}
+
+	Entity* m_Source = nullptr;
+	Entity* m_Target = nullptr;
+};
 
 } // namespace raid

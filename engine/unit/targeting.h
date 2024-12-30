@@ -33,6 +33,7 @@ public:
 
 	bool HasTarget() const;
 	Entity* GetTarget() const;
+	void SetTarget(Entity* entity);
 
 private:
 

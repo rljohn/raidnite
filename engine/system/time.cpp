@@ -1,8 +1,14 @@
 #include "engine/pch.h"
 #include "time.h"
+
 #include "engine/types.h"
+#include "engine/engine.h"
 
 namespace raid {
+
+ /////////////////////
+ // Time
+ /////////////////////
 
 bool Time::IsInitialized(const TimeStamp& time)
 {
@@ -85,6 +91,43 @@ int Time::CountNanosInMillis(const Nanoseconds& nanos, const Milliseconds& secon
     // Convert M seconds to nanoseconds
     Nanoseconds tmp = std::chrono::duration_cast<Nanoseconds>(seconds);
     return (int)(tmp.count() / nanos.count());
+}
+
+Duration Time::TimeBetween(const TimeStamp& start, const TimeStamp& end)
+{
+    return end - start;
+}
+
+Duration Time::TimeSince(const TimeStamp& t)
+{
+    return TimeBetween(t, GetCurrent());
+}
+
+/////////////////////
+// Ticker
+/////////////////////
+
+void Ticker::Init(Duration duration, Func cb)
+{
+    m_Frequency = duration;
+    m_TickFunction = cb;
+}
+
+void Ticker::Update(const TimeStep& timeStep)
+{
+    if (m_TickFunction == nullptr)
+        return;
+
+    if (Engine* engine = Game::GetEngine())
+    {
+        m_Accumulation += timeStep;
+
+        while (m_Accumulation >= m_Frequency)
+        {
+            m_Accumulation -= m_Frequency;
+            m_TickFunction();
+        }
+    }
 }
 
 } // namespace raid

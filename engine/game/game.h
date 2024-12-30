@@ -40,7 +40,8 @@ enum class GameEventType
 	EntitySpawned,
 	EntityDestroyed,
 	EntityOccupancyChanged,
-	EntityPositionChanged
+	EntityPositionChanged,
+	TargetChanged
 };
 
 class IGameSystem
