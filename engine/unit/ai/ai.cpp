@@ -18,7 +18,7 @@ AIComponent::AIComponent(Unit& parent)
 	, m_Movement(*parent.GetComponent<MovementComponent>())
 	, m_DesiredPosition(InvalidPosition)
 {
-
+	m_AggroTicker.Init(Milliseconds(100), [this]() { UpdateAggro(); });
 }
 
 void AIComponent::SetDesiredPosition(const Position& p)
@@ -36,20 +36,27 @@ void AIComponent::SetDesiredPosition(const Position& p)
 
 void AIComponent::Update(const GameFrame& frame)
 {
-	if (!m_Unit.IsInCombat())
-	{
-		if (m_Unit.GetAggro().IsHostile())
-		{
-			TargetScanParams params;
-			params.Type = TargetFilter::Enemy;
-			params.Range = m_Unit.GetAggro().GetAggroRange();
+	m_AggroTicker.Update(frame.TimeStep);
+}
 
-			std::vector<Entity*> list = ScanForTargets(params);
-			if (!list.empty())
-			{
-				
-			}
-		}
+void AIComponent::UpdateAggro()
+{
+	if (m_Unit.IsInCombat())
+		return;
+
+	if (!m_Unit.GetAggro().IsHostile())
+		return;
+
+	TargetScanParams params;
+	params.Type = TargetFilter::Enemy;
+	params.Range = m_Unit.GetAggro().GetAggroRange();
+
+	std::vector<Entity*> list = ScanForTargets(params);
+	if (!list.empty())
+	{
+		Entity* target = list[0];
+		m_Unit.GetAggro().AddUnit(target);
+		m_Unit.GetTargeting().SetTarget(target);
 	}
 }
 

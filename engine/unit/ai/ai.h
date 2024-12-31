@@ -37,6 +37,8 @@ public:
 
 protected:
 
+	void UpdateAggro();
+
 	void BuildPath();
 	void OnMapChanged(const TilePropertiesChangedEvent& evt);
 	
@@ -44,6 +46,7 @@ protected:
 
 	Position m_DesiredPosition;
 	MovementComponent& m_Movement;
+	Ticker m_AggroTicker;
 };
 
 } // namespace raid
