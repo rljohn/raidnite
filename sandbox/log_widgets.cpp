@@ -81,6 +81,9 @@ const char* EncounterEventTypeToString(EncounterEventType eventType)
     case EncounterEventType::AuraRemoved: return "AuraRemoved";
     case EncounterEventType::OccupancyChanged: return "OccupancyChanged";
     case EncounterEventType::PositionChanged: return "PositionChanged";
+    case EncounterEventType::TargetChanged: return "TargetChanged";
+    case EncounterEventType::AggroBegin: return "AggroBegin";
+    case EncounterEventType::AggroEnd: return "AggroEnd";
     default: 
         mainAssertf(false, "Unknown event type: %d", eventType);
         return "Unknown";

@@ -230,6 +230,57 @@ void EncounterLog::OnUnitPositionChanged(const EntityPositionChangedEvent& posit
 	}
 }
 
+void EncounterLog::OnTargetChanged(const TargetChangedEvent& targetEvent)
+{
+	if (EncounterEvent* e = AddEvent<EncounterEventType::AggroBegin>())
+	{
+		e->m_Source = targetEvent.m_Source->GetId();
+
+		if (targetEvent.m_Target)
+		{
+			e->m_Target = targetEvent.m_Target->GetId();
+		}
+		else
+		{
+			e->m_Target = InvalidEntityId;
+		}
+	}
+}
+
+void EncounterLog::OnAggroBegin(const AggroBeginEvent& aggroEvent)
+{
+	if (EncounterEvent* e = AddEvent<EncounterEventType::AggroBegin>())
+	{
+		e->m_Source = aggroEvent.m_Source->GetId();
+
+		if (aggroEvent.m_Target)
+		{
+			e->m_Target = aggroEvent.m_Target->GetId();
+		}
+		else
+		{
+			e->m_Target = InvalidEntityId;
+		}
+	}
+}
+
+void EncounterLog::OnAggroEnd(const AggroBeginEvent& aggroEvent)
+{
+	if (EncounterEvent* e = AddEvent<EncounterEventType::AggroEnd>())
+	{
+		e->m_Source = aggroEvent.m_Source->GetId();
+
+		if (aggroEvent.m_Target)
+		{
+			e->m_Target = aggroEvent.m_Target->GetId();
+		}
+		else
+		{
+			e->m_Target = InvalidEntityId;
+		}
+	}
+}
+
 void EncounterLog::OnEntityDied(const DeathEvent& deathDevent)
 {
 

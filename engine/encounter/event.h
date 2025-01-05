@@ -34,6 +34,9 @@ enum EncounterEventType
 	AuraRemoved,
 	OccupancyChanged,
 	PositionChanged,
+	TargetChanged,
+	AggroBegin,
+	AggroEnd,
 
 	MAX
 };

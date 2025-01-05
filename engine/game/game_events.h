@@ -183,4 +183,32 @@ struct TargetChangedEvent : public GameEvent
 	Entity* m_Target = nullptr;
 };
 
+struct AggroBeginEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::AggroBegin; }
+
+	AggroBeginEvent(Entity* source, Entity* target)
+		: m_Source(source)
+		, m_Target(target)
+	{
+	}
+
+	Entity* m_Source = nullptr;
+	Entity* m_Target = nullptr;
+};
+
+struct AggroEndEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::AggroEnd; }
+
+	AggroEndEvent(Entity* source, Entity* target)
+		: m_Source(source)
+		, m_Target(target)
+	{
+	}
+
+	Entity* m_Source = nullptr;
+	Entity* m_Target = nullptr;
+};
+
 } // namespace raid

@@ -80,6 +80,9 @@ private:
 	void OnDamageEvent(const DamageEvent& damageEvent);
 	void OnUnitOccupancyChanged(const EntityOccupancyChangedEvent& occupancyEvent);
 	void OnUnitPositionChanged(const EntityPositionChangedEvent& positionEvent);
+	void OnTargetChanged(const TargetChangedEvent& targetEvent);
+	void OnAggroBegin(const AggroBeginEvent& aggroEvent);
+	void OnAggroEnd(const AggroBeginEvent& aggroEnd);
 
 	template <EncounterEventType T>
 	EncounterEvent* CreateEncounterEvent()
