@@ -118,15 +118,12 @@ void Ticker::Update(const TimeStep& timeStep)
     if (m_TickFunction == nullptr)
         return;
 
-    if (Engine* engine = Game::GetEngine())
-    {
-        m_Accumulation += timeStep;
+    m_Accumulation += timeStep;
 
-        while (m_Accumulation >= m_Frequency)
-        {
-            m_Accumulation -= m_Frequency;
-            m_TickFunction();
-        }
+    while (m_Accumulation >= m_Frequency)
+    {
+        m_Accumulation -= m_Frequency;
+        m_TickFunction();
     }
 }
 

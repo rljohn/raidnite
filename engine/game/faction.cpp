@@ -35,7 +35,8 @@ FactionRelationship FactionManager::GetRelationship(FactionId a, FactionId b) co
 	if (a == b)
 		return FactionRelationship::Friendly;
 
-	const FactionRelationship* result = m_Relationships.Get(a, b);
+	// Consistent access with a<b
+	const FactionRelationship* result = a > b ? m_Relationships.Get(b, a) : m_Relationships.Get(a, b);
 	return result ? *result : FactionRelationship::Invalid;
 }
 
@@ -44,7 +45,11 @@ void FactionManager::SetRelationship(FactionId a, FactionId b, FactionRelationsh
 	if (a == b)
 		return;
 
-	m_Relationships.Set(a, b, r);
+	// Consistent access with a<b
+	if (a > b)
+		m_Relationships.Set(b, a, r);
+	else
+		m_Relationships.Set(a, b, r);
 }
 
 bool FactionManager::IsFriendly(FactionId a, FactionId b) const

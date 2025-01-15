@@ -2,6 +2,7 @@
 #include "test_game.h"
 
 #include "engine/game/damage.h"
+#include "engine/game/game.h"
 #include "engine/game/world.h"
 #include "engine/unit/spawner.h"
 #include "engine/unit/unit.h"
@@ -132,4 +133,47 @@ TEST_F(GameTest, TargetScan)
 	params.Type = TargetFilter::Friendly;
 	target = ai->ScanForTarget(params);
 	EXPECT_EQ(target, &friendly);
+}
+
+TEST_F(GameTest, Aggro)
+{
+	WorldRAII world;
+	FactionManagerRAII factions;
+
+	constexpr const FactionId FriendlyFaction = 1;
+	constexpr const FactionId EnemyFaction = 2;
+
+	factions.Instance.SetRelationship(FriendlyFaction, EnemyFaction, FactionRelationship::Hostile);
+
+	Unit player, enemy;
+
+	std::vector<std::reference_wrapper<Unit>> units = { player, enemy };
+	for (Unit& u : units)
+	{
+		world.Instance.RegisterEntity(&u);
+		u.GetAttributes().SetupAttributes();
+	}
+
+	player.CreateAi<AIComponent>();
+	player.GetTransform().SetPosition(Position(0, 0));
+	player.GetAttribute<AttributeType::Faction>()->SetValue(FriendlyFaction);
+
+	enemy.CreateAi<AIComponent>();
+	enemy.GetTransform().SetPosition(Position(4, 0));
+	enemy.GetAttribute<AttributeType::Faction>()->SetValue(EnemyFaction);
+	enemy.GetAggro().SetBehaviour(AggroBehaviour::Aggro);
+
+	GameFrame frame
+	{
+		0, Milliseconds(16), std::chrono::duration_cast<TimeStepSeconds>(Milliseconds(16))
+	};
+
+	// Tick for "160ms" as Aggro Component ticks every 100ms
+	for (int i = 0; i < 10; i++)
+	{
+		world.Instance.Update(frame);
+	}
+
+	EXPECT_TRUE(enemy.GetAggro().Count() == 1);
+	EXPECT_EQ(enemy.GetTargeting().GetTarget(), &player);
 }

@@ -213,7 +213,11 @@ Entity* AIComponent::ScanForTarget(const TargetScanParams& params) const
 
 	entityMgr->ForEach([&](Entity* e)
 	{
-		if (!CanTargetEntity(e, TargetFilter::Enemy))
+		// Scan should not include self
+		if (e == &m_Parent)
+			return false;
+
+		if (!CanTargetEntity(e, params.Type))
 		{
 			return false;
 		}
