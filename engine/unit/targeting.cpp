@@ -21,6 +21,7 @@ void TargetingComponent::SetTarget(Entity* entity)
 	if (m_Target != entity)
 	{
 		m_Target = entity;
+		unitVerbose("[{}] Set Target: {}", m_Parent.GetLogName(), entity ? entity->GetLogName() : "None");
 
 		TargetChangedEvent evt(&m_Parent, entity);
 		Game::DispatchGameEvent(evt);

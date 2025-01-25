@@ -45,6 +45,15 @@ public:
     virtual void OnInit() {}
     virtual void Update(const GameFrame& /* frame */);
     virtual void OnGameEvent(const GameEvent& evt);
+    
+#if RAID_LOGGING
+    virtual const char* GetLogName()
+    {
+        static char buf[32] = { 0 };
+        sprintf_s(buf, "%lld", GetId());
+        return buf;
+    }
+#endif // RAID_LOGGING
 
 protected:
 

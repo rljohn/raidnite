@@ -105,7 +105,7 @@ Logger* LogSystem::GetDefaultLogger()
 
 void LogSystem::AssertBreakMsg(const char* DEBUG_ONLY(message))
 {
-#if RAID_DEBUG
+#if RAID_LOGGING
 	if (!::IsDebuggerPresent())
 		return;
 

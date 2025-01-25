@@ -14,6 +14,8 @@
 #define DEBUG_ONLY(...) __VA_ARGS__
 #endif
 
+#define RAID_LOGGING (RAID_DEBUG)
+
 #define WIDESTR(x) L ## #x
 
 #include <algorithm>

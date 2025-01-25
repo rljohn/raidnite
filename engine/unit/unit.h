@@ -79,6 +79,13 @@ public:
 		return m_AiController;
 	}
 
+#if RAID_LOGGING
+	virtual const char* GetLogName()
+	{
+		return m_Name.GetName().c_str();
+	}
+#endif // RAID_LOGGING
+
 private:
 
 	///////////////////////

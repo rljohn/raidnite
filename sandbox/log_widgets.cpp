@@ -69,6 +69,7 @@ const char* EncounterEventTypeToString(EncounterEventType eventType)
     case EncounterEventType::ZoneExit: return "ZoneExit";
     case EncounterEventType::EncounterStart: return "EncounterStart";
     case EncounterEventType::EncounterEnd: return "EncounterEnd";
+    case EncounterEventType::TilePropertiesChanged: return "TilePropertiesChanged";
     case EncounterEventType::EntityCreated: return "EntityCreated";
     case EncounterEventType::EntityDied: return "EntityDied";
     case EncounterEventType::EntityDestroyed: return "EntityDestroyed";
@@ -167,6 +168,12 @@ void LogWidget::DrawFilters()
              e.m_Position.GetX(), e.m_Position.GetY());
          break;
      }
+     case EncounterEventType::TargetChanged:
+         break;
+     case EncounterEventType::AggroBegin:
+         break;
+     case EncounterEventType::AggroEnd:
+         break;
      default:
          break;
      }

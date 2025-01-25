@@ -69,6 +69,10 @@ void UnitWidget::DrawSpawnWidgets(GameSandbox* sandbox, Map* map)
 		raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
 		if (Unit* unit = dynamic_cast<Unit*>(spawner.SpawnEntity(map, spawnPos)))
 		{
+			// Give the NPC aggro/hostile AI
+			unit->CreateAi<AIComponent>();
+			unit->GetAggro().SetBehaviour(AggroBehaviour::Aggro);
+
 			NameComponent& names = unit->GetName();
 			names.SetName(m_UnitList[m_UnitListIdx]);
 
@@ -126,6 +130,7 @@ void UnitWidget::DrawEntityWidgets(GameSandbox* sandbox, Map* map)
 					raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
 					spawner.DestroyEntity(map, e);
 					i--;
+					continue;
 				}
 
 				if (StateMachineComponent* state = e->GetComponent<StateMachineComponent>())

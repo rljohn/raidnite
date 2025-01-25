@@ -1,6 +1,7 @@
 #include "engine/pch.h"
 #include "engine/unit/aggro.h"
 
+#include "engine/system/log/log_channels.h"
 #include "engine/game/combat.h"
 #include "engine/system/check.h"
 
@@ -9,11 +10,13 @@ namespace raid
 
 void AggroComponent::AddUnit(Entity* unit)
 {
+	unitVerbose("[{}] Add Aggro: {}", m_Parent.GetLogName(), unit->GetLogName());
 	m_List.push_back(unit);
 }
 
 void AggroComponent::RemoveUnit(Entity* unit)
 {
+	unitVerbose("[{}] Remove Aggro: {}", m_Parent.GetLogName(), unit->GetLogName());
 	m_List.remove(unit);
 }
 
