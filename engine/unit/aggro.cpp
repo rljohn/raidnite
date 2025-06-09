@@ -12,12 +12,18 @@ void AggroComponent::AddUnit(Entity* unit)
 {
 	unitVerbose("[{}] Add Aggro: {}", m_Parent.GetLogName(), unit->GetLogName());
 	m_List.push_back(unit);
+
+	AggroBeginEvent evt(GetParent(), unit);
+	Game::DispatchGameEvent(evt);
 }
 
 void AggroComponent::RemoveUnit(Entity* unit)
 {
 	unitVerbose("[{}] Remove Aggro: {}", m_Parent.GetLogName(), unit->GetLogName());
 	m_List.remove(unit);
+
+	AggroEndEvent evt(GetParent(), unit);
+	Game::DispatchGameEvent(evt);
 }
 
 void AggroComponent::OnGameEvent(const GameEvent& evt)

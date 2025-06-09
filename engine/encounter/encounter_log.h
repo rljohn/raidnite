@@ -82,7 +82,7 @@ private:
 	void OnUnitPositionChanged(const EntityPositionChangedEvent& positionEvent);
 	void OnTargetChanged(const TargetChangedEvent& targetEvent);
 	void OnAggroBegin(const AggroBeginEvent& aggroEvent);
-	void OnAggroEnd(const AggroBeginEvent& aggroEnd);
+	void OnAggroEnd(const AggroEndEvent& aggroEnd);
 
 	template <EncounterEventType T>
 	EncounterEvent* CreateEncounterEvent()

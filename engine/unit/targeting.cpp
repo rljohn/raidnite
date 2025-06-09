@@ -23,7 +23,7 @@ void TargetingComponent::SetTarget(Entity* entity)
 		m_Target = entity;
 		unitVerbose("[{}] Set Target: {}", m_Parent.GetLogName(), entity ? entity->GetLogName() : "None");
 
-		TargetChangedEvent evt(&m_Parent, entity);
+		TargetChangedEvent evt(GetParent(), entity);
 		Game::DispatchGameEvent(evt);
 	}
 }

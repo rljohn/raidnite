@@ -163,16 +163,22 @@ void LogWidget::DrawFilters()
          ImGui::SameLine();
          EntityPositionChangedEvent e(nullptr);
          EncounterData::UnpackageData(evt, e);
-         ImGui::Text("lld: %d,%d -> %d,%d", evt.m_Source, 
+         ImGui::Text("%lld: %d,%d -> %d,%d", evt.m_Source, 
              e.m_Previous.GetX(), e.m_Previous.GetY(), 
              e.m_Position.GetX(), e.m_Position.GetY());
          break;
      }
      case EncounterEventType::TargetChanged:
+         ImGui::SameLine();
+         ImGui::Text("%lld: %lld", evt.m_Source, evt.m_Target);
          break;
      case EncounterEventType::AggroBegin:
+         ImGui::SameLine();
+         ImGui::Text("%lld: %lld", evt.m_Source, evt.m_Target);
          break;
      case EncounterEventType::AggroEnd:
+         ImGui::SameLine();
+         ImGui::Text("%lld: %lld", evt.m_Source, evt.m_Target);
          break;
      default:
          break;

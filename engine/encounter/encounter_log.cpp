@@ -139,6 +139,24 @@ void EncounterLog::OnGameEvent(const GameEvent& evt)
 			OnUnitPositionChanged(positionEvent);
 		}
 		break;
+	case GameEventType::TargetChanged:
+		{
+			const TargetChangedEvent& targetEvent = static_cast<const TargetChangedEvent&>(evt);
+			OnTargetChanged(targetEvent);
+		}
+		break;
+	case GameEventType::AggroBegin:
+		{
+			const AggroBeginEvent& targetEvent = static_cast<const AggroBeginEvent&>(evt);
+			OnAggroBegin(targetEvent);
+		}
+		break;
+	case GameEventType::AggroEnd:
+		{
+			const AggroEndEvent& aggroEvent = static_cast<const AggroEndEvent&>(evt);
+			OnAggroEnd(aggroEvent);
+		}
+		break;
 	}
 }
 
@@ -232,7 +250,7 @@ void EncounterLog::OnUnitPositionChanged(const EntityPositionChangedEvent& posit
 
 void EncounterLog::OnTargetChanged(const TargetChangedEvent& targetEvent)
 {
-	if (EncounterEvent* e = AddEvent<EncounterEventType::AggroBegin>())
+	if (EncounterEvent* e = AddEvent<EncounterEventType::TargetChanged>())
 	{
 		e->m_Source = targetEvent.m_Source->GetId();
 
@@ -264,7 +282,7 @@ void EncounterLog::OnAggroBegin(const AggroBeginEvent& aggroEvent)
 	}
 }
 
-void EncounterLog::OnAggroEnd(const AggroBeginEvent& aggroEvent)
+void EncounterLog::OnAggroEnd(const AggroEndEvent& aggroEvent)
 {
 	if (EncounterEvent* e = AddEvent<EncounterEventType::AggroEnd>())
 	{
