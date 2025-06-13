@@ -9,6 +9,7 @@ namespace raid {
 class Map;
 class StateMachineComponent;
 class AttributesComponent;
+class AggroComponent;
 
 namespace sandbox {
 
@@ -28,6 +29,7 @@ private:
 	void DrawEntityWidgets(GameSandbox* sandbox, Map* map);
 	void DrawEntityState(StateMachineComponent* state);
 	void DrawEntityAttributes(AttributesComponent* attrs);
+	void DrawAggroTable(AggroComponent* aggro);
 
 	std::vector<std::string> m_UnitList;
 	int m_UnitListIdx = 0;

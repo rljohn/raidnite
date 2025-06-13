@@ -104,7 +104,7 @@ void LogWidget::DrawFilters()
     ImGui::TreePop();
 }
 
- void LogWidget::DrawEvent(IEncounterLog* log, const EncounterEvent & evt)
+ void LogWidget::DrawEvent(IEncounterLog* log, const EncounterEvent & evt) const
 {
      if (!m_Filter[evt.m_Type])
          return;

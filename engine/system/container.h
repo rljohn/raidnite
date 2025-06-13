@@ -61,6 +61,28 @@ namespace raid
 	}
 
 	template<typename T>
+	T* VectorGet(std::vector<T>& vec, int index)
+	{
+		if (index >= 0 && index < vec.size())
+		{
+			return vec[index];
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	// Declare functions required for Range-Based for loop
+#define DECLARE_ITERABLE(Container) public: \
+    using iterator = decltype(Container)::iterator;                      \
+    using const_iterator = decltype(Container)::const_iterator;          \
+    iterator begin() { return Container.begin(); }                       \
+    iterator end() { return Container.end(); }                           \
+    const_iterator begin() const { return Container.begin(); }        \
+    const_iterator end() const { return Container.end(); }
+
+	template<typename T>
 	bool SetContains(const std::set<T>& s, const T& value)
 	{
 		return s.find(value) != s.end();
@@ -70,6 +92,21 @@ namespace raid
 	bool ArrayContains(const std::array<T, _SIZE>& s, const T& value)
 	{
 		return s.find(value) != s.end();
+	}
+
+	template<typename T>
+	T* ListGet(std::list<T*>& list, int index)
+	{
+		if (index >= 0 && index < list.size())
+		{
+			auto it = list.begin();
+			std::advance(it, index);
+			return *it;
+		}
+		else
+		{
+			return nullptr;
+		}
 	}
 
 } // namespace raid

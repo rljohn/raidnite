@@ -15,7 +15,7 @@ public:
 
 	void Init() override;
 	void Draw(GameSandbox* sandbox) override;
-	void DrawEvent(IEncounterLog* log, const EncounterEvent& evt);
+	void DrawEvent(IEncounterLog* log, const EncounterEvent& evt) const;
 	void Shutdown() override;
 
 	const char* GetName() override { return "Event Log"; }

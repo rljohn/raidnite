@@ -142,6 +142,11 @@ void UnitWidget::DrawEntityWidgets(GameSandbox* sandbox, Map* map)
 				{
 					DrawEntityAttributes(attrs);
 				}
+
+				if (AggroComponent* aggro = e->GetComponent<AggroComponent>())
+				{
+					DrawAggroTable(aggro);
+				}
 			}
 			ImGui::PopID();
 
@@ -177,6 +182,25 @@ void UnitWidget::DrawEntityAttributes(AttributesComponent* attrs)
 				ImGui::Text("Faction: %s (%d)", text, faction);
 			}
 		}
+	}
+}
+
+void UnitWidget::DrawAggroTable(AggroComponent* comp)
+{
+	if (comp->Count() == 0)
+		return;
+
+	if (ImGui::TreeNode("Aggro Table"))
+	{
+		for (int i = 0; i < comp->Count(); i++)
+		{
+			for (Entity* e : *comp)
+			{
+				ImGui::Text("%d", e->GetId());
+			}
+		}
+
+		ImGui::TreePop();
 	}
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/entity/component.h"
+#include "engine/system/container.h"
 #include "engine/unit/targeting.h"
 
 #include <list>
@@ -35,6 +36,7 @@ public:
 
 	int Count() const { return (int)m_List.size(); }
 	bool Empty() const { return m_List.empty(); }
+	Entity* GetEntry(int index) { return ListGet(m_List, index); }
 
 	Distance GetAggroRange() const { return m_Range; }
 	void SetAggroRange(Distance d) { m_Range = d; }
@@ -51,6 +53,9 @@ private:
 	std::list<Entity*> m_List;
 	Distance m_Range = DefaultAggroRange;
 	AggroBehaviour m_Behaviour = AggroBehaviour::Passive;
+
+	// Iterable on the aggro list
+	DECLARE_ITERABLE(m_List);
 };
 
 } // namespace raid
