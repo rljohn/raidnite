@@ -6,6 +6,8 @@
 #include "engine/localization/localization.h"
 #include "engine/system/log/logging.h"
 #include "engine/unit/states/state.h"
+#include "engine/unit/targeting.h"
+#include "engine/unit/unit_utils.h"
 
 #include <optional>
 
@@ -130,6 +132,7 @@ void UnitWidget::DrawEntityWidgets(GameSandbox* sandbox, Map* map)
 					raid::UnitSpawner& spawner = sandbox->GetUnitSpawner();
 					spawner.DestroyEntity(map, e);
 					i--;
+					ImGui::PopID();
 					continue;
 				}
 
@@ -141,6 +144,11 @@ void UnitWidget::DrawEntityWidgets(GameSandbox* sandbox, Map* map)
 				if (AttributesComponent* attrs = e->GetComponent<AttributesComponent>())
 				{
 					DrawEntityAttributes(attrs);
+				}
+
+				if (TargetingComponent* targeting = e->GetComponent<TargetingComponent>())
+				{
+					DrawTargeting(targeting);
 				}
 
 				if (AggroComponent* aggro = e->GetComponent<AggroComponent>())
@@ -196,11 +204,20 @@ void UnitWidget::DrawAggroTable(AggroComponent* comp)
 		{
 			for (Entity* e : *comp)
 			{
-				ImGui::Text("%d", e->GetId());
+				ImGui::Text("%d: %s", e->GetId(), UnitStatics::GetName(*e));
 			}
 		}
 
 		ImGui::TreePop();
+	}
+}
+
+void UnitWidget::DrawTargeting(TargetingComponent* targeting)
+{
+	if (targeting->HasTarget())
+	{
+		Entity* target = targeting->GetTarget();
+		ImGui::Text("Target: %d (%s)", target->GetId(), UnitStatics::GetName(*target));
 	}
 }
 

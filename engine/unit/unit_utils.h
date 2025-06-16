@@ -14,6 +14,7 @@ public:
 
 	static void InitUnitHealth(Unit& unit, double min, double max);
 	static bool GetUnitLevel(const Entity& entity, double& out_level);
+	static const char* GetName(const Entity& entity);
 
 	template<AttributeType ATTR, typename VALUE_TYPE>
 	static bool GetAttribute(const Entity& entity, VALUE_TYPE& out_value)

@@ -76,6 +76,7 @@ public:
 private:
 
 	void OnEntityPositionChanged(Entity* entity, const Position& from, const Position& to);
+	void OnEntityDestroyed(Entity* entity);
 
 	std::vector<std::vector<Tile>> m_Tiles;
 	PositionScalar m_Width = 0;

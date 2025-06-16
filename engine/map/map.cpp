@@ -50,6 +50,11 @@ void Map::OnGameEvent(const GameEvent& evt)
 		const EntityPositionChangedEvent& upcEvent = static_cast<const EntityPositionChangedEvent&>(evt);
 		OnEntityPositionChanged(upcEvent.GetEntity(), upcEvent.m_Previous, upcEvent.m_Position);
 	}
+	else if (evt.GetType() == GameEventType::EntityDestroyed)
+	{
+		const EntityDestroyedEvent& destoyEvent = static_cast<const EntityDestroyedEvent&>(evt);
+		OnEntityDestroyed(destoyEvent.GetEntity());
+	}
 }
 
 PositionScalar Map::GetWidth() const
@@ -378,6 +383,17 @@ void Map::OnEntityPositionChanged(Entity* entity, const Position& from, const Po
 	if (Tile* next = GetTile(to))
 	{
 		next->OnEntityEnter(entity);
+	}
+}
+
+void Map::OnEntityDestroyed(Entity* entity)
+{
+	for (std::vector<Tile>& row : m_Tiles) 
+	{
+		for (Tile& entry : row)
+		{
+			entry.OnEntityDestroyed(entity);
+		}
 	}
 }
 

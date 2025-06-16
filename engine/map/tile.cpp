@@ -34,4 +34,14 @@ void Tile::OnEntityExit(Entity* e)
 	VectorRemove(m_ActiveEntities, e);
 }
 
+void Tile::OnEntityDestroyed(Entity* e)
+{
+	VectorRemove(m_ActiveEntities, e);
+
+	if (m_Occupant == e)
+	{
+		SetOccupant(nullptr);
+	}
+}
+
 } // namespace raid

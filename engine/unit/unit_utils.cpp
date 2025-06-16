@@ -27,6 +27,16 @@ bool UnitStatics::GetUnitLevel(const Entity& entity, double& out_level)
 	return false;
 }
 
+const char* UnitStatics::GetName(const Entity & entity)
+{
+	if (NameComponent* name = entity.GetComponent<NameComponent>())
+	{
+		return name->GetName().c_str();
+	}
+
+	return "";
+}
+
 bool UnitStatics::IsEntityInRange(const Unit& source, const Entity& target, Distance distance)
 {
 	TransformComponent* targetTransform = target.GetComponent<TransformComponent>();

@@ -38,6 +38,7 @@ public:
 	// Entities may pass through tiles on the way to their occupied tile.
 	void OnEntityEnter(Entity* e);
 	void OnEntityExit(Entity* e);
+	void OnEntityDestroyed(Entity* e);
 
 	// Return a list for all entities that are currently active on this tile.
 	const std::vector<Entity*>& GetActiveEntities()
