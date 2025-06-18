@@ -26,14 +26,24 @@ void AggroComponent::RemoveUnit(Entity* unit)
 	Game::DispatchGameEvent(evt);
 }
 
+void AggroComponent::ResetAggro()
+{
+	while (!Empty())
+	{
+		RemoveUnit(m_List.front());
+	}
+}
+
 void AggroComponent::OnGameEvent(const GameEvent& evt)
 {
 	switch (evt.GetType())
 	{
 	case GameEventType::Death:
+	{
 		const DeathEvent& d = static_cast<const DeathEvent&>(evt);
 		OnUnitDied(d);
-		break;
+	}
+	break;
 	}
 }
 

@@ -85,6 +85,7 @@ void CombatSystem::BuildDamageEvent(const DamageParams& e)
 		double actualDamage = (1.0f - resistPercent) * baseDamage;
 
 		DamageEvent evt(target);
+		evt.Source = source;
 		evt.BaseDamage = baseDamage;
 		evt.ActualDamage = actualDamage;
 

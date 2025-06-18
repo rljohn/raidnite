@@ -64,6 +64,12 @@ void AIComponent::OnGameEvent(const GameEvent& evt)
 {
 	switch (evt.GetType())
 	{
+	case GameEventType::Damage:
+	{
+		const DamageEvent& dmg = static_cast<const DamageEvent&>(evt);
+		OnDamageEvent(dmg);
+	}
+	break;
 	case GameEventType::TilePropertiesChanged:
 	{
 		const TilePropertiesChangedEvent& e = static_cast<const TilePropertiesChangedEvent&>(evt);
@@ -94,6 +100,43 @@ void AIComponent::BuildPath()
 	}
 
 	map->SetTileOccupation(path.GetDestination()->GetPosition(), GetParent(), m_Unit.GetTransform());
+}
+
+void AIComponent::OnDamageEvent(const DamageEvent& dmg)
+{
+	// Already in combat, early out
+	if (m_Unit.IsInCombat())
+		return;
+
+	Entity* addTarget = nullptr;
+
+	// Outgoing damage
+	if (dmg.Source == GetParent())
+	{
+		addTarget = dmg.GetEntity();
+	}
+	// Incoming Damage
+	else if (dmg.GetEntity() == GetParent())
+	{
+		addTarget = dmg.GetSource();
+	}
+
+	// Try to add target?
+	if (addTarget)
+	{
+		// Can we target this entity?
+		if (CanTargetEntity(addTarget, TargetFilter::Enemy))
+		{
+			// Add unit to aggro table
+			m_Unit.GetAggro().AddUnit(addTarget);
+
+			// Target if not targetting anything
+			if (!m_Unit.GetTargeting().HasTarget())
+			{
+				m_Unit.GetTargeting().SetTarget(addTarget);
+			}
+		}
+	}
 }
 
 void AIComponent::OnMapChanged(const TilePropertiesChangedEvent& evt)

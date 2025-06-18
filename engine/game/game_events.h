@@ -164,6 +164,9 @@ struct DamageEvent : public GameEvent, EntityEvent
 	{
 	}
 
+	Entity* GetSource() const { return Source; }
+
+	Entity* Source = nullptr;
 	double BaseDamage = 0;
 	double ActualDamage = 0;
 	DamageType DamageType = DamageType::Invalid;

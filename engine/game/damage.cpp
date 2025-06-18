@@ -51,4 +51,18 @@ double DamageCalculator::CalculateResistPercent(double enemy_level, double resis
 	return DR;
 }
 
+//////////////////////////////////////////////////
+// DamageCalculatorRAII
+//////////////////////////////////////////////////
+
+DamageCalculatorRAII::DamageCalculatorRAII()
+{
+	Game::SetDamageCalculator(&Instance);
+}
+
+DamageCalculatorRAII::~DamageCalculatorRAII()
+{
+	Game::SetDamageCalculator(nullptr);
+}
+
 } // namespace raid

@@ -31,6 +31,7 @@ public:
 
 	void AddUnit(Entity* unit);
 	void RemoveUnit(Entity* unit);
+	void ResetAggro();
 
 	void OnGameEvent(const GameEvent& evt) override;
 

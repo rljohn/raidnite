@@ -130,6 +130,23 @@ private:
 	static std::vector<IGameSystem*> sm_GameSystems;
 };
 
+class GameEventListenerRAII
+{
+public:
+
+	GameEventListenerRAII(IGameEventListener* listener)
+		: m_Listener(listener)
+	{
+		Game::RegisterGameEventListener(listener);
+	}
+
+	~GameEventListenerRAII()
+	{
+		Game::UnregisterGameEventListener(m_Listener);
+	}
+
+	IGameEventListener* m_Listener;
+};
 
 
 } // namespace raid

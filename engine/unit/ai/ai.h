@@ -11,6 +11,7 @@ namespace raid
 class Unit;
 class Entity;
 struct TilePropertiesChangedEvent;
+struct DamageEvent;
 
 struct TargetScanParams
 {
@@ -40,7 +41,10 @@ protected:
 	void UpdateAggro();
 
 	void BuildPath();
+
+	// Game Events
 	void OnMapChanged(const TilePropertiesChangedEvent& evt);
+	void OnDamageEvent(const DamageEvent& evt);
 	
 	bool CanTargetEntity(const Entity* e, TargetFilter targeting) const;
 

@@ -44,4 +44,15 @@ namespace raid
 		double CalculateResistPercent(double enemy_level, double resist) override;
 	};
 
+	// Utility (mostly for testing) to ensure the combat system is set and destroyed.
+	class DamageCalculatorRAII
+	{
+	public:
+
+		DamageCalculatorRAII();
+		~DamageCalculatorRAII();
+
+		DamageCalculator Instance;
+	};
+
 } // namespace
