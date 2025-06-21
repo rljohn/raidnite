@@ -186,7 +186,12 @@ void PartyWidget::DrawPartyWidgets(GameSandbox* sandbox)
 				TargetScanParams params;
 				params.Type = TargetFilter::Enemy;
 				params.Range = 5; // TODO
-				ai->ScanForTarget(params);
+				
+				if (Entity* target = ai->ScanForTarget(params))
+				{
+					unit->GetAggro().AddUnit(target);
+					unit->GetTargeting().SetTarget(target);
+				}
 			}
 		}
 
