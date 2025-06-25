@@ -126,6 +126,7 @@
     <ClInclude Include="encounter\encounter_data.h" />
     <ClInclude Include="game\faction.h" />
     <ClInclude Include="system\multikeymap.h" />
+    <ClInclude Include="game\ability.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -205,5 +206,6 @@
     <ClCompile Include="encounter\encounter_data.cpp" />
     <ClCompile Include="game\game_events.cpp" />
     <ClCompile Include="game\faction.cpp" />
+    <ClCompile Include="game\ability.cpp" />
   </ItemGroup>
 </Project>

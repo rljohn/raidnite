@@ -12,7 +12,7 @@ using namespace raid;
 
 TEST(ListsTest, IntrusiveTestGeneric)
 {
-	SpellId spellId = 5;
+	AbilityId spellId = 5;
 	PlayerId source = 10;
 	PlayerId target = 15;
 	TimeStamp now = Time::GetCurrent();

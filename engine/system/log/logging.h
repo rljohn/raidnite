@@ -25,7 +25,7 @@ public:
 	void Shutdown();
 
 	template<typename... Args>
-	bool LogMessage(const LogChannel& channel, LogSeverity severity, const char* format, Args&&... args)
+	bool LogMessage(const LogChannel& channel, LogSeverity severity, fmt::format_string<Args...> format, Args&&... args)
 	{
 		if (channel.Severity < severity)
 			return false;

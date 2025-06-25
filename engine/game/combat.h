@@ -21,7 +21,7 @@ public:
 		double SourceLevel = 0;
 		EntityId Target = InvalidEntityId;
 		DamageType Type = DamageType::Invalid;
-		SpellId Spell = InvalidSpellId;
+		AbilityId Spell = InvalidAbilityId;
 		double Value = 0;
 	};
 

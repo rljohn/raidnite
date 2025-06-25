@@ -89,7 +89,7 @@ TEST(AggroTest, AggroOnDamage)
 	AggroComponent* aggroA = a.GetComponent<AggroComponent>();
 	ASSERT_NE(aggroA, nullptr);
 
-	const SpellId spellID = 1337;
+	const AbilityId spellID = 1337;
 
 	// Build a damage event from A to B
 	CombatSystem::DamageParams params;

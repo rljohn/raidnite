@@ -49,8 +49,8 @@ namespace raid
 	using Frame = uint64_t;
 
 	// Abilities
-	using SpellId = int64_t;
-	#define InvalidSpellId SpellId(0)
+	using AbilityId = int64_t;
+	#define InvalidAbilityId AbilityId(0)
 
 	// Players
 	using PlayerId = int64_t;

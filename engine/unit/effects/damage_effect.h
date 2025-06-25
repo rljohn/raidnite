@@ -7,7 +7,7 @@ namespace raid
 {
 	struct BE_Damage : IBuffEffect
 	{
-		void Init(EntityId source, SpellId spell, DamageType type, double value);
+		void Init(EntityId source, AbilityId spell, DamageType type, double value);
 
 		void OnAdd(Entity& owner);
 		void OnRemove() override;
@@ -18,7 +18,7 @@ namespace raid
 
 		EntityId m_Source;
 		EntityId m_TargetId;
-		SpellId m_SpellId;
+		AbilityId m_SpellId;
 		DamageType m_DamageType;
 		double m_Value;
 	};

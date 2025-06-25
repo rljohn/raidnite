@@ -18,6 +18,7 @@
     <ClCompile Include="test_args.cpp" />
     <ClCompile Include="test_movement.cpp" />
     <ClCompile Include="test_factions.cpp" />
+    <ClCompile Include="test_ability.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

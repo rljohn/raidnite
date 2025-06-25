@@ -94,7 +94,7 @@ public:
 		return evt;
 	}
 
-	static void OnAbilityStart(EncounterEvent& event, SpellId spellId)
+	static void OnAbilityStart(EncounterEvent& event, AbilityId spellId)
 	{
 		event.m_Type = EncounterEventType::AbilityStart;
 		event.m_ExtraData1.Int64 = spellId;

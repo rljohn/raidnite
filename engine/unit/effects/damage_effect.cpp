@@ -9,7 +9,7 @@
 
 namespace raid
 {
-	void BE_Damage::Init(EntityId source, SpellId spell, DamageType type, double value)
+	void BE_Damage::Init(EntityId source, AbilityId spell, DamageType type, double value)
 	{
 		m_Source = source;
 		m_SpellId = spell;

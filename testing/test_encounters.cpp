@@ -12,7 +12,7 @@ using namespace raid;
 
 TEST(EncounterAbilityCast, EncounterTests)
 {
-	SpellId spellId = 5;
+	AbilityId spellId = 5;
 	PlayerId source = 10;
 	PlayerId target = 15;
 

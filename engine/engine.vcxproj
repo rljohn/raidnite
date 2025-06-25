@@ -54,7 +54,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)thirdparty</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -94,6 +94,7 @@
     <ClInclude Include="entity\entity.h" />
     <ClInclude Include="entity\name.h" />
     <ClInclude Include="entity\transform.h" />
+    <ClInclude Include="game\ability.h" />
     <ClInclude Include="game\combat.h" />
     <ClInclude Include="game\combat_common.h" />
     <ClInclude Include="game\faction.h" />
@@ -116,6 +117,7 @@
     <ClInclude Include="system\delegate.h" />
     <ClInclude Include="system\fileutil.h" />
     <ClCompile Include="encounter\encounter_data.cpp" />
+    <ClCompile Include="game\ability.cpp" />
     <ClCompile Include="game\faction.cpp" />
     <ClCompile Include="game\game_events.cpp" />
     <ClCompile Include="game\game_logic.cpp" />

@@ -61,7 +61,7 @@ public:
         double mag = Magnitude();
         if (mag != 0) 
         {
-            return Vector2D(m_X / mag, m_X / mag);
+            return Vector2(m_X / mag, m_X / mag);
         }
 
         return *this;
