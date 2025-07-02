@@ -18,7 +18,7 @@ Unit::Unit()
 	, m_Aggro(AddComponent<AggroComponent>())
 	, m_Name(AddComponent<NameComponent>())
 	, m_Targeting(AddComponent<TargetingComponent>())
-	, m_StateMachine(AddComponent<StateMachineComponent>())
+	, m_StateMachine(AddUnitComponent<StateMachineComponent>())
 	, m_Movement(AddComponent<MovementComponent>(m_Transform))
 	, m_AiController(nullptr)
 {

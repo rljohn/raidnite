@@ -23,4 +23,9 @@ Ability* AbilityComponent::GetAbility(AbilityId ability)
 	return nullptr;
 }
 
+void AbilityComponent::SetCurrentAbility(Ability* ability)
+{
+	m_CurrentAbility = ability;
+}
+
 } // namespace raid

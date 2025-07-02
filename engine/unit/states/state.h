@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/entity/component.h"
+#include "engine/unit/unit_component.h"
 
 namespace raid
 {
@@ -10,11 +11,14 @@ enum class StateType
 	Invalid = -1,
 	Idle = 0,
 	Moving = 2,
+	Ability = 3,
 
 	COUNT
 };
 
 const char* StateTypeToString(StateType e);
+
+class StateMachineComponent;
 
 class UnitState
 {
@@ -22,18 +26,19 @@ public:
 
 	virtual StateType GetType() const = 0;
 
-	virtual void OnBegin() {}
-	virtual void OnEnd() {}
-	virtual void Update() {}
+	virtual void Init(StateMachineComponent& machine) {}
+	virtual void OnBegin(StateMachineComponent& machine) {}
+	virtual void OnEnd(StateMachineComponent& machine) {}
+	virtual void Update(StateMachineComponent& machine) {}
 
 	virtual bool GetDesiredState(StateType& /* state */) { return false; }
 };
 
-class StateMachineComponent : public Component
+class StateMachineComponent : public UnitComponent
 {
 public:
 
-	StateMachineComponent(Entity& parent);
+	StateMachineComponent(Unit& parent);
 
 	bool AddState(UnitState* state);
 	bool HasState(StateType t);
@@ -42,7 +47,7 @@ public:
 	UnitState* GetCurrentState();
 	StateType GetCurrentStateType() const;
 
-	void Update();
+	void Update(const GameFrame& /* frame */) override;
 
 private:
 

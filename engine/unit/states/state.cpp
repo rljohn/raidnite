@@ -1,6 +1,8 @@
 #include "engine/pch.h"
+#include "engine/unit/unit.h"
 #include "engine/unit/states/state.h"
 #include "engine/unit/states/state_idle.h"
+#include "engine/unit/states/state_ability.h"
 #include "engine/system/log/logging.h"
 
 #include "thirdparty/spdlog/fmt/bundled/format.h"
@@ -22,10 +24,11 @@ const char* StateTypeToString(StateType e)
 	return "Invalid";
 }
 
-StateMachineComponent::StateMachineComponent(Entity& parent)
-	: Component(parent)
+StateMachineComponent::StateMachineComponent(Unit& parent)
+	: UnitComponent(parent)
 {
 	AddState(new UnitState_Idle());
+	AddState(new UnitState_Ability());
 }
 
 bool StateMachineComponent::AddState(UnitState* state)
@@ -44,6 +47,7 @@ bool StateMachineComponent::AddState(UnitState* state)
 	}
 
 	m_States[(int)t] = state;
+	state->Init(*this);
 	return true;
 }
 
@@ -89,13 +93,13 @@ UnitState* StateMachineComponent::GetState(StateType t)
 	return m_States[(int)t];
 }
 
-void StateMachineComponent::Update()
+void StateMachineComponent::Update(const GameFrame& frame)
 {
 	UnitState* state = GetCurrentState();
 	if (!state)
 		return;
 
-	state->Update();
+	state->Update(*this);
 
 	StateType desiredState;
 	if (state->GetDesiredState(desiredState))
@@ -103,9 +107,9 @@ void StateMachineComponent::Update()
 		UnitState* nextState = GetState(desiredState);
 		if (nextState)
 		{
-			state->OnEnd();
+			state->OnEnd(*this);
 			m_CurrentState = desiredState;
-			nextState->OnBegin();
+			nextState->OnBegin(*this);
 		}
 		else
 		{

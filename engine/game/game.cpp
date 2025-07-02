@@ -1,6 +1,7 @@
 #include "engine/pch.h"
 #include "game.h"
 
+#include "engine/engine.h"
 #include "engine/entity/entity.h"
 #include "engine/game/damage.h"
 #include "engine/game/combat.h"
@@ -10,6 +11,7 @@
 namespace raid
 {
 
+// Statics
 std::vector<IGameSystem*> Game::sm_GameSystems;
 std::vector<IGameEventListener*> Game::sm_GameEventListeners;
 IEntityManager* Game::sm_EntityLocator = nullptr;
@@ -20,6 +22,20 @@ IFactionManager* Game::sm_FactionManager = nullptr;
 ILocalizationSystem* Game::sm_LocalizationSystem = nullptr;
 Map* Game::sm_Map = nullptr;
 Engine* Game::sm_Engine = nullptr;
+
+// Helper
+Frame GetCurrentGameFrame()
+{
+	if (Engine* engine = Game::GetEngine())
+	{
+		return engine->GetFrameCount();
+	}
+	else
+	{
+
+		return InvalidFrame;
+	}
+}
 
 void Game::Init()
 {

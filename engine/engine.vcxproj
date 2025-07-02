@@ -151,6 +151,7 @@
     <ClInclude Include="unit\power.h" />
     <ClInclude Include="unit\spawner.h" />
     <ClInclude Include="unit\states\state.h" />
+    <ClInclude Include="unit\states\state_ability.h" />
     <ClInclude Include="unit\states\state_idle.h" />
     <ClInclude Include="unit\targeting.h" />
     <ClInclude Include="unit\unit.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="unit\power.cpp" />
     <ClCompile Include="unit\spawner.cpp" />
     <ClCompile Include="unit\states\state.cpp" />
+    <ClCompile Include="unit\states\state_ability.cpp" />
     <ClCompile Include="unit\targeting.cpp" />
     <ClCompile Include="unit\unit.cpp" />
     <ClCompile Include="unit\unit_component.cpp" />

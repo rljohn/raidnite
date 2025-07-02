@@ -84,7 +84,7 @@ namespace LogChannels
 #define unitDisplay(fmt, ...) logDisplay(fmt, LogChannels::Unit, raid::LogSeverity::Display, __VA_ARGS__)
 #define unitError(fmt, ...) logError(fmt, LogChannels::Unit, raid::LogSeverity::Error, __VA_ARGS__)
 #define unitWarning(fmt, ...) logWarning(fmt, LogChannels::Unit, raid::LogSeverity::Warning, __VA_ARGS__)
-#define unitAssert(cond) logAssert(cond, LogChannels::Unit, raid::LogSeverity::Error, #cond)
+#define unitAssert(cond) logAssert(cond, "{}", LogChannels::Unit, raid::LogSeverity::Error, #cond)
 #define unitAssertf(cond, fmt, ...) logAssert(cond, fmt, LogChannels::Unit, raid::LogSeverity::Error, #cond)
 #define unitVerbose(fmt, ...) logVerbose(fmt, LogChannels::Unit, raid::LogSeverity::Verbose, __VA_ARGS__)
 

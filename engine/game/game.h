@@ -130,6 +130,8 @@ private:
 	static std::vector<IGameSystem*> sm_GameSystems;
 };
 
+Frame GetCurrentGameFrame();
+
 class GameEventListenerRAII
 {
 public:

@@ -15,11 +15,7 @@ public:
 
 	void format(const spdlog::details::log_msg&, const std::tm&, spdlog::memory_buf_t& dest) override
 	{
-		Frame frame = 0;
-		if (Engine* engine = Game::GetEngine())
-		{
-			frame = engine->GetFrameCount();
-		}
+		Frame frame = GetCurrentGameFrame();
 
 		std::string str = std::to_string(frame);
 		dest.append(std::string(10 - str.length(), '0') + str);

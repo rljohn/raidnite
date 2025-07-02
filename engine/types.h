@@ -46,7 +46,10 @@ namespace raid
 	using Duration = Nanoseconds;
 	using TimeStep = Nanoseconds;
 	using TimeStepSeconds = std::chrono::duration<double>;
+
+	// Game Frames
 	using Frame = uint64_t;
+	#define InvalidFrame Frame(0)
 
 	// Abilities
 	using AbilityId = int64_t;

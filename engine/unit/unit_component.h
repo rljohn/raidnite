@@ -16,6 +16,7 @@ public:
 	UnitComponent(Unit& unit);
 
 	const Position& GetCurrentPosition() const;
+	Unit& GetUnit() { return m_Unit; }
 
 protected:
 
