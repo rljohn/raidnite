@@ -128,6 +128,7 @@
     <ClInclude Include="system\multikeymap.h" />
     <ClInclude Include="game\ability.h" />
     <ClInclude Include="unit\states\state_ability.h" />
+    <ClInclude Include="system\frame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="encounter\encounter.cpp">
@@ -209,5 +210,6 @@
     <ClCompile Include="game\faction.cpp" />
     <ClCompile Include="game\ability.cpp" />
     <ClCompile Include="unit\states\state_ability.cpp" />
+    <ClCompile Include="system\frame.cpp" />
   </ItemGroup>
 </Project>

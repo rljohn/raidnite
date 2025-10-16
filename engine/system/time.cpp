@@ -39,6 +39,11 @@ TimeStamp& Time::Add(TimeStamp& time, const Milliseconds& millis)
 	return time;
 }
 
+Duration Time::ToNanoSeconds(double seconds) 
+{
+    return duration_cast<Duration>(std::chrono::duration<double>(seconds));
+}
+
 Seconds Time::ToSeconds(const Duration& d)
 {
 	return std::chrono::duration_cast<std::chrono::seconds>(d);

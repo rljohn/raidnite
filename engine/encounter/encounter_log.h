@@ -2,7 +2,7 @@
 
 #include "engine/game/combat.h"
 #include "engine/game/game.h"
-
+#include "engine/system/frame.h"
 #include "engine/system/inlist.h"
 #include "engine/system/pool.h"
 #include "engine/encounter/event.h"
@@ -56,8 +56,7 @@ public:
 	}
 
 	// Helpers for measuring gametime since a specific point of reference.
-	Milliseconds GetTimeSince(const Frame frame, const Frame since) const;
-	Milliseconds GetTimeSince(const Frame frame) const 
+	Milliseconds GetTimeFromStart(const Frame frame) const 
 	{ 
 		return GetTimeSince(frame, m_StartFrame); 
 	}

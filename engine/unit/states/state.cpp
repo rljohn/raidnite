@@ -99,7 +99,7 @@ void StateMachineComponent::Update(const GameFrame& frame)
 	if (!state)
 		return;
 
-	state->Update(*this);
+	state->Update(*this, frame);
 
 	StateType desiredState;
 	if (state->GetDesiredState(desiredState))

@@ -29,9 +29,9 @@ public:
 	virtual void Init(StateMachineComponent& machine) {}
 	virtual void OnBegin(StateMachineComponent& machine) {}
 	virtual void OnEnd(StateMachineComponent& machine) {}
-	virtual void Update(StateMachineComponent& machine) {}
+	virtual void Update(StateMachineComponent& machine, const GameFrame& frame) {}
 
-	virtual bool GetDesiredState(StateType& /* state */) { return false; }
+	virtual bool GetDesiredState(StateType& /* state */) const { return false; }
 };
 
 class StateMachineComponent : public UnitComponent

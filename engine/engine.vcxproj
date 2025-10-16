@@ -124,6 +124,7 @@
     <ClCompile Include="system\args.cpp">
       <FileType>CppHeader</FileType>
     </ClCompile>
+    <ClInclude Include="system\frame.h" />
     <ClInclude Include="system\inlist.h" />
     <ClInclude Include="system\json.h" />
     <ClInclude Include="system\log\logging.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="map\pathfinding.cpp" />
     <ClCompile Include="map\tile.cpp" />
     <ClCompile Include="system\fileutil.cpp" />
+    <ClCompile Include="system\frame.cpp" />
     <ClCompile Include="system\log\logging.cpp" />
     <ClCompile Include="system\log\log_channels.cpp" />
     <ClCompile Include="system\math\vector2.cpp" />

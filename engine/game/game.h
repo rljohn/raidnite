@@ -44,6 +44,8 @@ enum class GameEventType
 	TargetChanged,
 	AggroBegin,
 	AggroEnd,
+	AbilityBegin,
+	AbilityEnd
 };
 
 class IGameSystem

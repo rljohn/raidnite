@@ -3,7 +3,9 @@
 
 #include "engine/engine.h"
 #include "engine/game/ability.h"
+#include "engine/game/game_events.h"
 #include "engine/unit/unit.h"
+#include "engine/unit/targeting.h"
 
 namespace raid
 {
@@ -11,33 +13,59 @@ namespace raid
 void UnitState_Ability::Init(StateMachineComponent& machine)
 {
 	m_AbilityComponent = machine.GetUnit().GetComponent<AbilityComponent>();
+	unitAssert(m_AbilityComponent);
+
+	m_TargetingComponent = machine.GetUnit().GetComponent<TargetingComponent>();
+	unitAssert(m_TargetingComponent);
 }
 
 void UnitState_Ability::OnBegin(StateMachineComponent& machine)
 {
 	Ability* ability = m_AbilityComponent->GetCurrentAbility();
-	unitAssert(ability != nullptr);
+	if (!ability)
+	{
+		unitAssert(ability != nullptr);
+		return;
+	}
 
 	m_StartFrame = GetCurrentGameFrame();
+	m_BaseCooldown = ability->GetBaseCooldown();
+	m_Target = m_TargetingComponent->GetTarget();
 
-	// TODO: Calculate cooldown of spell in frames
+	Duration duration = Time::ToNanoSeconds(m_BaseCooldown);
+	m_BaseCooldownInFrames = Game::GetEngine()->DurationToFrames(duration);
+
+	AbilityBeginEvent evt(&machine.GetUnit(), m_Target);
+	Game::DispatchGameEvent(evt);
 }
 
 void UnitState_Ability::OnEnd(StateMachineComponent& machine)
 {
-	if (m_Completed)
-	{
+	AbilityEndEvent evt(&machine.GetUnit(), m_Target, m_Success);
+	Game::DispatchGameEvent(evt);
+	m_Target = nullptr;
+	m_StartFrame = 0;
+	m_BaseCooldown = 0;
+	m_BaseCooldownInFrames = 0;
+}
 
+void UnitState_Ability::Update(StateMachineComponent& machine, const GameFrame& frame)
+{
+	// TODO: Calculate progress
+	m_Finished = false;
+}
+
+bool UnitState_Ability::GetDesiredState(StateType& state) const
+{
+	if (m_Finished)
+	{
+		state = StateType::Idle;
+		return true;
 	}
 	else
 	{
-		// TODO: Trigger interupt event
+		return false;
 	}
-}
-
-void UnitState_Ability::Update(StateMachineComponent& machine)
-{
-	// TODO: 
 }
 
 } // namespace raid

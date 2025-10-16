@@ -6,6 +6,8 @@
 #include "engine/game/combat.h"
 #include "engine/system/log/logging.h"
 #include "engine/system/check.h"
+#include "engine/system/frame.h"
+
 #include "engine/engine.h"
 
 namespace raid
@@ -309,17 +311,6 @@ void EncounterLog::OnDamageEvent(const DamageEvent& damageEvent)
 
 }
 
-Milliseconds EncounterLog::GetTimeSince(const Frame frame, const Frame since) const
-{
-	if (Engine* engine = Game::GetEngine())
-	{
-		Frame duration = frame - since;
-		return engine->FramesToMillis(duration);
-	}
-
-	return Milliseconds(0);
-}
-
 void EncounterLog::GetDisplayString(const Encounter& e, DisplayString& buffer) const
 {
 	Time::TimeDisplay startDisplay, endDisplay, durationDisplay;
@@ -328,8 +319,8 @@ void EncounterLog::GetDisplayString(const Encounter& e, DisplayString& buffer) c
 	{
 		Frame dt = e.GetEndFrame() - e.GetStartFrame();
 
-		Milliseconds start = GetTimeSince(e.GetStartFrame());
-		Milliseconds end = GetTimeSince(e.GetEndFrame());
+		Milliseconds start = GetTimeFromStart(e.GetStartFrame());
+		Milliseconds end = GetTimeFromStart(e.GetEndFrame());
 		Milliseconds duration = GetTimeSince(e.GetEndFrame(), e.GetStartFrame());
 		
 		Time::GetHMS(start, startDisplay);
@@ -342,7 +333,7 @@ void EncounterLog::GetDisplayString(const Encounter& e, DisplayString& buffer) c
 	{
 		mainAssert(e.GetStartFrame() != 0);
 
-		Milliseconds start = GetTimeSince(e.GetStartFrame());
+		Milliseconds start = GetTimeFromStart(e.GetStartFrame());
 		Milliseconds duration = GetTimeSince(GetFrame(), e.GetStartFrame());
 
 		Time::GetHMS(start, startDisplay);
@@ -354,7 +345,7 @@ void EncounterLog::GetDisplayString(const Encounter& e, DisplayString& buffer) c
 
 void EncounterLog::GetDisplayString(const EncounterEvent& e, DisplayString& buffer) const
 {
-	Milliseconds ts = GetTimeSince(e.m_Frame);
+	Milliseconds ts = GetTimeFromStart(e.m_Frame);
 
 	Time::TimeDisplay display = { 0 };
 	Time::GetHMS(ts, display);

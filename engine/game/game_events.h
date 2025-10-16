@@ -214,4 +214,34 @@ struct AggroEndEvent : public GameEvent
 	Entity* m_Target = nullptr;
 };
 
+struct AbilityBeginEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::AbilityBegin; }
+
+	AbilityBeginEvent(Entity* source, Entity* target)
+		: m_Source(source)
+		, m_Target(target)
+	{
+	}
+
+	Entity* m_Source = nullptr;
+	Entity* m_Target = nullptr;
+};
+
+struct AbilityEndEvent : public GameEvent
+{
+	virtual GameEventType GetType() const { return GameEventType::AbilityEnd; }
+
+	AbilityEndEvent(Entity* source, Entity* target, bool success)
+		: m_Source(source)
+		, m_Target(target)
+		, m_Success(success)
+	{
+	}
+
+	Entity* m_Source = nullptr;
+	Entity* m_Target = nullptr;
+	bool m_Success;
+};
+
 } // namespace raid

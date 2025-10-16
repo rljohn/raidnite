@@ -22,6 +22,7 @@ public:
 	static TimeStamp& Add(TimeStamp& time, const Milliseconds& millis);
 	
 	// Conversation
+	static Duration ToNanoSeconds(double seconds);
 	static Seconds ToSeconds(const Duration& d);
 	static Milliseconds ToMillis(const Duration& d);
 
