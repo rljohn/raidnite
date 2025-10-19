@@ -71,7 +71,10 @@ TEST(AbilityTest, Cooldown)
 	engine.Instance.Update(now, frameTime);
 	EXPECT_EQ(engine.Instance.GetFrameCount(), 1);
 
+	//////////////////////////
 	// Cast spell with 0% CDR
+	//////////////////////////
+
 	a->OnCast(engine.Instance.GetFrameCount(), 0.0);
 	EXPECT_FALSE(a->IsAvailable());
 	EXPECT_TRUE(a->IsOnCooldown());
@@ -79,6 +82,30 @@ TEST(AbilityTest, Cooldown)
 	// Update engine until almost on cooldown (i.e. 1 tick away)
 	Duration cd = Time::ToNanoSeconds(a->GetBaseCooldown());
 	int ticks = static_cast<int>(std::floor(cd / frameTime)) - 1;
+	for (int i = 0; i < ticks; i++)
+	{
+		engine.Instance.Update(now, frameTime);
+	}
+	EXPECT_FALSE(a->IsAvailable());
+	EXPECT_TRUE(a->IsOnCooldown());
+
+	// Update engine one more time - ability should be ready now
+	engine.Instance.Update(now, frameTime);
+	EXPECT_TRUE(a->IsAvailable());
+	EXPECT_FALSE(a->IsOnCooldown());
+
+	//////////////////////////
+	// Cast spell with 20% CDR
+	//////////////////////////
+
+	double cdr = 0.2;
+	a->OnCast(engine.Instance.GetFrameCount(), cdr);
+	EXPECT_FALSE(a->IsAvailable());
+	EXPECT_TRUE(a->IsOnCooldown());
+
+	// Update engine until almost on cooldown (i.e. 1 tick away)
+	cd = Time::ToNanoSeconds(a->GetBaseCooldown());
+	ticks = static_cast<int>(((std::floor(cd / frameTime)) - 1) * (1 - cdr));
 	for (int i = 0; i < ticks; i++)
 	{
 		engine.Instance.Update(now, frameTime);
