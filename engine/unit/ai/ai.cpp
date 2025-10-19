@@ -1,6 +1,7 @@
 #include "engine/pch.h"
 #include "ai.h"
 
+#include "engine/game/ability.h"
 #include "engine/game/faction.h"
 #include "engine/game/game_events.h"
 #include "engine/map/map.h"
@@ -303,6 +304,22 @@ std::vector<Entity*> AIComponent::ScanForTargets(const TargetScanParams& params)
 	}
 	
 	return results;
+}
+
+bool AIComponent::IsReadyToCast()
+{
+	AbilityComponent& abilities = m_Unit.GetAbilityComponent();
+
+	for (Ability* ability : abilities)
+	{
+		
+	}
+
+	// TODO
+	//  Enumerate abilities
+	//  Find any ability that is ready to cast
+
+	return false;
 }
 
 } // namespace raid

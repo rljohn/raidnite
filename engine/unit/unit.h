@@ -5,6 +5,7 @@
 #include "engine/unit/states/state.h"
 #include "engine/entity/component.h"
 #include "engine/entity/transform.h"
+#include "engine/game/ability.h"
 #include "engine/game/damage.h"
 #include "engine/unit/ai/ai.h"
 #include "engine/unit/aggro.h"
@@ -57,6 +58,7 @@ public:
 	AttributesComponent& GetAttributes() { return m_Attributes; }
 	AggroComponent& GetAggro() { return m_Aggro; }
 	TargetingComponent& GetTargeting() { return m_Targeting; }
+	AbilityComponent& GetAbilityComponent() { return m_Ability; }
 
 	template<typename T, typename... Args>
 	T& AddUnitComponent(Args&&... args)
@@ -100,6 +102,9 @@ private:
 	AggroComponent& m_Aggro;
 	NameComponent& m_Name;
 	TargetingComponent& m_Targeting;
+	AbilityComponent& m_Ability;
+
+	// Dependency: Abilities
 	StateMachineComponent& m_StateMachine;
 
 	// Dependency: Transform
