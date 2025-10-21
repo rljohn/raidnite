@@ -86,4 +86,43 @@ void AbilityComponent::SetCurrentAbility(Ability* ability)
 	m_CurrentAbility = ability;
 }
 
+void AbilityComponent::OnCast(Frame frame)
+{
+	// TODO: Needs to come as incoming parameter most likely
+	double cdr = 0.0;
+
+	if (m_CurrentAbility)
+	{
+		if (m_CurrentAbility->UseGlobalCooldown())
+		{
+			StartGlobalCooldown(frame, cdr);
+		}
+
+		m_CurrentAbility->OnCast(frame, cdr);
+	}
+}
+
+bool AbilityComponent::IsOnGlobalCooldown() const
+{
+	if (m_NextGcdFrame == 0)
+		return false;
+
+	return GetCurrentGameFrame() < m_NextGcdFrame;
+}
+
+bool AbilityComponent::StartGlobalCooldown(Frame frame, double cooldownReduction)
+{
+	m_LastGcdFrame = frame;
+
+	cooldownReduction = std::clamp(cooldownReduction, 0.0, 1.0);
+
+	double cooldown = GetBaseGlobalCooldown() * (1.0 - cooldownReduction);
+
+	Duration duration = Time::ToNanoSeconds(cooldown);
+	Frame cooldownInFrames = Game::GetEngine()->DurationToFrames(duration);
+	m_NextGcdFrame = m_LastGcdFrame + cooldownInFrames;
+
+	return true;
+}
+
 } // namespace raid

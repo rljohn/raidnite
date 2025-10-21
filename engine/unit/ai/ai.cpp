@@ -312,14 +312,53 @@ bool AIComponent::IsReadyToCast()
 
 	for (Ability* ability : abilities)
 	{
+		// This is a GCD ability and we're on the GCD
+		if (ability->UseGlobalCooldown() && abilities.IsOnGlobalCooldown())
+			continue;
+
+		// The ability is not yet available
+		if (!ability->IsAvailable())
+			continue;
 		
+		// No desire to cast this ability at this time
+		if (!WantsToCastAbility(ability))
+			continue;
+
+		// Early out (success) for abilities with no target requirements.
+		if (ability->IsSelfCast() || ability->IsGroundCast())
+		{
+			return true;
+		}
+
+		// Friendly casts only on "friendly" targets
+		if (ability->IsFriendlyCast())
+		{
+			if (Entity* target = m_Unit.GetTargeting().GetTarget())
+			{
+				return CanTargetEntity(target, TargetFilter::Friendly);
+			}
+		}
+
+		// Enemy casts only on "hostile" or "neutral" targets
+		if (ability->IsEnemyCast())
+		{
+			if (Entity* target = m_Unit.GetTargeting().GetTarget())
+			{
+				return CanTargetEntity(target, TargetFilter::Enemy);
+			}
+		}
 	}
 
-	// TODO
-	//  Enumerate abilities
-	//  Find any ability that is ready to cast
 
 	return false;
+}
+
+bool AIComponent::WantsToCastAbility(Ability* a)
+{
+	// TODO:
+	//	Add logic here, i.e. heal abilities when low health.
+	//  Abilities that are not automatic must be clicked by user etc.
+	return true;
 }
 
 } // namespace raid

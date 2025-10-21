@@ -29,6 +29,7 @@ struct AbilityDefinition
 	AbilityTargetingFlags Targeting;
 	double Damage;
 	double CooldownSeconds;
+	bool UseCcd;
 };
 
 class Ability
@@ -51,6 +52,7 @@ public:
 	bool CanCastWhileMoving() const { return m_Definition.CastWhileMoving; }
 	double GetDamage() const { return m_Definition.Damage; }
 	double GetBaseCooldown() const { return m_Definition.CooldownSeconds; }
+	bool UseGlobalCooldown() const { return m_Definition.UseCcd; }
 
 	// Events
 	void OnCast(Frame frame, double cooldownReduction);
@@ -78,6 +80,8 @@ public:
 	AbilityComponent(Entity& parent)
 		: Component(parent)
 		, m_CurrentAbility(nullptr)
+		, m_LastGcdFrame(0)
+		, m_NextGcdFrame(0)
 	{
 	}
 
@@ -87,12 +91,22 @@ public:
 	void SetCurrentAbility(Ability* ability);
 	Ability* GetCurrentAbility() const { return m_CurrentAbility; }
 
+	void OnCast(Frame frame);
+
+	bool IsOnGlobalCooldown() const;
+	bool StartGlobalCooldown(Frame frame, double cooldownReduction);
+	double GetBaseGlobalCooldown() { return 1.0; }
+
 private:
 
 	std::vector<Ability*> m_Abilities;
 	DECLARE_ITERABLE(m_Abilities);
 
 	Ability* m_CurrentAbility = nullptr;
+
+	// Global Cooldown
+	Frame m_LastGcdFrame;
+	Frame m_NextGcdFrame;
 };
 
 }

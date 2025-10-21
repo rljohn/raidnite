@@ -10,6 +10,7 @@ namespace raid
 
 class Unit;
 class Entity;
+class Ability;
 struct TilePropertiesChangedEvent;
 struct DamageEvent;
 
@@ -40,6 +41,7 @@ public:
 
 	// Casting
 	bool IsReadyToCast();
+	bool WantsToCastAbility(Ability* a);
 
 protected:
 
