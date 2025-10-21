@@ -53,13 +53,16 @@ TEST(AbilityTest, Cooldown)
 		.CastWhileMoving = true,
 		.Targeting = AbilityTargetingFlags::EnemyTarget,
 		.Damage = 100,
-		.CooldownSeconds = 3.0
+		.CooldownSeconds = 3.0,
+		.UseGcd = true
 	};
 
 	abilityComp.AddAbility(abilityDef);
 
 	Ability* a = abilityComp.GetAbility(TestAbilityId);
 	ASSERT_NE(a, nullptr);
+
+	abilityComp.SetCurrentAbility(a);
 
 	const std::chrono::nanoseconds frameTime(16666666);
 	EngineRAII engine;
@@ -75,9 +78,10 @@ TEST(AbilityTest, Cooldown)
 	// Cast spell with 0% CDR
 	//////////////////////////
 
-	a->OnCast(engine.Instance.GetFrameCount(), 0.0);
+	abilityComp.OnCast(engine.Instance.GetFrameCount(), 0.0);
 	EXPECT_FALSE(a->IsAvailable());
 	EXPECT_TRUE(a->IsOnCooldown());
+	EXPECT_TRUE(abilityComp.IsOnGlobalCooldown());
 
 	// Update engine until almost on cooldown (i.e. 1 tick away)
 	Duration cd = Time::ToNanoSeconds(a->GetBaseCooldown());
@@ -88,6 +92,7 @@ TEST(AbilityTest, Cooldown)
 	}
 	EXPECT_FALSE(a->IsAvailable());
 	EXPECT_TRUE(a->IsOnCooldown());
+	EXPECT_FALSE(abilityComp.IsOnGlobalCooldown());
 
 	// Update engine one more time - ability should be ready now
 	engine.Instance.Update(now, frameTime);
@@ -99,7 +104,7 @@ TEST(AbilityTest, Cooldown)
 	//////////////////////////
 
 	double cdr = 0.2;
-	a->OnCast(engine.Instance.GetFrameCount(), cdr);
+	abilityComp.OnCast(engine.Instance.GetFrameCount(), cdr);
 	EXPECT_FALSE(a->IsAvailable());
 	EXPECT_TRUE(a->IsOnCooldown());
 

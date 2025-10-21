@@ -86,11 +86,8 @@ void AbilityComponent::SetCurrentAbility(Ability* ability)
 	m_CurrentAbility = ability;
 }
 
-void AbilityComponent::OnCast(Frame frame)
+void AbilityComponent::OnCast(Frame frame, double cdr)
 {
-	// TODO: Needs to come as incoming parameter most likely
-	double cdr = 0.0;
-
 	if (m_CurrentAbility)
 	{
 		if (m_CurrentAbility->UseGlobalCooldown())

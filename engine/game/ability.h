@@ -29,7 +29,7 @@ struct AbilityDefinition
 	AbilityTargetingFlags Targeting;
 	double Damage;
 	double CooldownSeconds;
-	bool UseCcd;
+	bool UseGcd;
 };
 
 class Ability
@@ -52,7 +52,7 @@ public:
 	bool CanCastWhileMoving() const { return m_Definition.CastWhileMoving; }
 	double GetDamage() const { return m_Definition.Damage; }
 	double GetBaseCooldown() const { return m_Definition.CooldownSeconds; }
-	bool UseGlobalCooldown() const { return m_Definition.UseCcd; }
+	bool UseGlobalCooldown() const { return m_Definition.UseGcd; }
 
 	// Events
 	void OnCast(Frame frame, double cooldownReduction);
@@ -91,7 +91,7 @@ public:
 	void SetCurrentAbility(Ability* ability);
 	Ability* GetCurrentAbility() const { return m_CurrentAbility; }
 
-	void OnCast(Frame frame);
+	void OnCast(Frame frame, double cdr);
 
 	bool IsOnGlobalCooldown() const;
 	bool StartGlobalCooldown(Frame frame, double cooldownReduction);
