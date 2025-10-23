@@ -16,11 +16,16 @@ TEST(AbilityTest, AbilityComponent)
 	AbilityDefinition abilityDef
 	{
 		.Id = TestAbilityId,
+		.Name = InvalidLocalizationKey,
 		.CostType = PowerType::Mana,
 		.CostValue = 15,
 		.Range = 3,
 		.CastWhileMoving = true,
-		.Damage = 100
+		.Targeting = AbilityTargetingFlags::EnemyTarget,
+		.Damage = 100,
+		.CastTimeSeconds = 1,
+		.CooldownSeconds = 5,
+		.UseGcd = true,
 	};
 
 	abilityComp.AddAbility(abilityDef);
@@ -47,12 +52,14 @@ TEST(AbilityTest, Cooldown)
 	AbilityDefinition abilityDef
 	{
 		.Id = TestAbilityId,
+		.Name = InvalidLocalizationKey,
 		.CostType = PowerType::Mana,
 		.CostValue = 15,
 		.Range = 3,
 		.CastWhileMoving = true,
 		.Targeting = AbilityTargetingFlags::EnemyTarget,
 		.Damage = 100,
+		.CastTimeSeconds = 0.0,
 		.CooldownSeconds = 3.0,
 		.UseGcd = true
 	};

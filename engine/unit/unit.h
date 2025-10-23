@@ -50,15 +50,20 @@ public:
 	// Combat Helpers
 	bool IsInCombat() const;
 
-	// Easy access to required components
+	// Easy access to  components
 	NameComponent& GetName() { return m_Name; }
 	TransformComponent& GetTransform() { return m_Transform; }
-	const TransformComponent& GetTransform() const { return m_Transform; }
 	StateMachineComponent& GetStateMachine() { return m_StateMachine; }
 	AttributesComponent& GetAttributes() { return m_Attributes; }
 	AggroComponent& GetAggro() { return m_Aggro; }
 	TargetingComponent& GetTargeting() { return m_Targeting; }
 	AbilityComponent& GetAbilityComponent() { return m_Ability; }
+	AIComponent* GetAi() { return m_AiController; }
+
+	// Constant Access to components
+	const AbilityComponent& GetAbilityComponent() const { return m_Ability; }
+	const TransformComponent& GetTransform() const { return m_Transform; }
+	const AIComponent* GetAi() const { return m_AiController; }
 
 	template<typename T, typename... Args>
 	T& AddUnitComponent(Args&&... args)

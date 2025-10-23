@@ -216,4 +216,37 @@ TEST_F(GameTest, BasicAttack)
 	{
 		world.Instance.Update(frame);
 	}
+
+	// Now targeting the enemy
+	EXPECT_TRUE(player.GetAggro().Count() == 1);
+	EXPECT_EQ(player.GetTargeting().GetTarget(), &enemy);
+
+	// Add an ability
+	AbilityDefinition abilityDef
+	{
+		.Id = 1337,
+		.Name = InvalidLocalizationKey,
+		.CostType = PowerType::Mana,
+		.CostValue = 15,
+		.Range = 3,
+		.CastWhileMoving = true,
+		.Targeting = AbilityTargetingFlags::EnemyTarget,
+		.Damage = 100,
+		.CastTimeSeconds = 0.5,
+		.CooldownSeconds = 3.0,
+		.UseGcd = true
+	};
+	player.GetAbilityComponent().AddAbility(abilityDef);
+
+	AIComponent* ai = player.GetAi();
+	ASSERT_NE(ai, nullptr);
+
+	// We have a target. We have an ABility.
+	EXPECT_TRUE(ai->IsReadyToCast());
+
+	// Update: Idle -> AbilityCast
+	StateMachineComponent& stateMachine = player.GetStateMachine();
+	EXPECT_EQ(stateMachine.GetCurrentStateType(), StateType::Idle);
+	world.Instance.Update(frame);
+	EXPECT_EQ(stateMachine.GetCurrentStateType(), StateType::Ability);
 }

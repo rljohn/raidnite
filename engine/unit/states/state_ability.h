@@ -11,12 +11,17 @@ class UnitState_Ability : public UnitState
 {
 public:
 
+	UnitState_Ability(StateMachineComponent& machine)
+		: UnitState(machine)
+	{
+	}
+
 	StateType GetType() const override  { return StateType::Ability; }
 
-	void Init(StateMachineComponent& machine) override;
-	void OnBegin(StateMachineComponent& machine) override;
-	void OnEnd(StateMachineComponent& machine) override;
-	void Update(StateMachineComponent& machine, const GameFrame& frame) override;
+	void Init() override;
+	void OnBegin() override;
+	void OnEnd() override;
+	void Update(const GameFrame& frame) override;
 	bool GetDesiredState(StateType& /* state */) const override;
 
 private:

@@ -40,8 +40,8 @@ public:
 	std::vector<Entity*> ScanForTargets(const TargetScanParams& params) const;
 
 	// Casting
-	bool IsReadyToCast();
-	bool WantsToCastAbility(Ability* a);
+	bool IsReadyToCast() const;
+	bool WantsToCastAbility(Ability* a) const;
 
 protected:
 

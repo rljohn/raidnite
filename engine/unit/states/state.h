@@ -24,14 +24,23 @@ class UnitState
 {
 public:
 
+	UnitState(StateMachineComponent& parent);
+
 	virtual StateType GetType() const = 0;
 
-	virtual void Init(StateMachineComponent& machine) {}
-	virtual void OnBegin(StateMachineComponent& machine) {}
-	virtual void OnEnd(StateMachineComponent& machine) {}
-	virtual void Update(StateMachineComponent& machine, const GameFrame& frame) {}
+	virtual void Init() {}
+	virtual void OnBegin() {}
+	virtual void OnEnd() {}
+	virtual void Update(const GameFrame& frame) {}
 
 	virtual bool GetDesiredState(StateType& /* state */) const { return false; }
+
+	Unit& GetUnit();
+	const Unit& GetUnit() const;
+
+protected:
+
+	StateMachineComponent& m_Machine;
 };
 
 class StateMachineComponent : public UnitComponent

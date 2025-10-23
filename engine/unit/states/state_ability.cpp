@@ -10,16 +10,16 @@
 namespace raid
 {
 
-void UnitState_Ability::Init(StateMachineComponent& machine)
+void UnitState_Ability::Init()
 {
-	m_AbilityComponent = machine.GetUnit().GetComponent<AbilityComponent>();
+	m_AbilityComponent = GetUnit().GetComponent<AbilityComponent>();
 	unitAssert(m_AbilityComponent);
 
-	m_TargetingComponent = machine.GetUnit().GetComponent<TargetingComponent>();
+	m_TargetingComponent = GetUnit().GetComponent<TargetingComponent>();
 	unitAssert(m_TargetingComponent);
 }
 
-void UnitState_Ability::OnBegin(StateMachineComponent& machine)
+void UnitState_Ability::OnBegin()
 {
 	Ability* ability = m_AbilityComponent->GetCurrentAbility();
 	if (!ability)
@@ -35,13 +35,13 @@ void UnitState_Ability::OnBegin(StateMachineComponent& machine)
 	Duration duration = Time::ToNanoSeconds(m_BaseCooldown);
 	m_BaseCooldownInFrames = Game::GetEngine()->DurationToFrames(duration);
 
-	AbilityBeginEvent evt(&machine.GetUnit(), m_Target);
+	AbilityBeginEvent evt(&GetUnit(), m_Target);
 	Game::DispatchGameEvent(evt);
 }
 
-void UnitState_Ability::OnEnd(StateMachineComponent& machine)
+void UnitState_Ability::OnEnd()
 {
-	AbilityEndEvent evt(&machine.GetUnit(), m_Target, m_Success);
+	AbilityEndEvent evt(&GetUnit(), m_Target, m_Success);
 	Game::DispatchGameEvent(evt);
 	m_Target = nullptr;
 	m_StartFrame = 0;
@@ -49,7 +49,7 @@ void UnitState_Ability::OnEnd(StateMachineComponent& machine)
 	m_BaseCooldownInFrames = 0;
 }
 
-void UnitState_Ability::Update(StateMachineComponent& machine, const GameFrame& frame)
+void UnitState_Ability::Update(const GameFrame& frame)
 {
 	// TODO: Calculate progress
 	m_Finished = false;

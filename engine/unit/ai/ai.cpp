@@ -306,9 +306,9 @@ std::vector<Entity*> AIComponent::ScanForTargets(const TargetScanParams& params)
 	return results;
 }
 
-bool AIComponent::IsReadyToCast()
+bool AIComponent::IsReadyToCast() const
 {
-	AbilityComponent& abilities = m_Unit.GetAbilityComponent();
+	const AbilityComponent& abilities = m_Unit.GetAbilityComponent();
 
 	for (Ability* ability : abilities)
 	{
@@ -353,7 +353,7 @@ bool AIComponent::IsReadyToCast()
 	return false;
 }
 
-bool AIComponent::WantsToCastAbility(Ability* a)
+bool AIComponent::WantsToCastAbility(Ability* a) const
 {
 	// TODO:
 	//	Add logic here, i.e. heal abilities when low health.

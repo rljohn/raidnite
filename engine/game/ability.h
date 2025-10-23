@@ -22,12 +22,14 @@ DECLARE_FLAG_OPERATORS(AbilityTargetingFlags);
 struct AbilityDefinition
 {
 	AbilityId Id;
+	LocalizationKey Name;
 	PowerType CostType;
 	double CostValue;
 	double Range;
 	bool CastWhileMoving;
 	AbilityTargetingFlags Targeting;
 	double Damage;
+	double CastTimeSeconds;
 	double CooldownSeconds;
 	bool UseGcd;
 };

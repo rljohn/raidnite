@@ -24,11 +24,34 @@ const char* StateTypeToString(StateType e)
 	return "Invalid";
 }
 
+/////////////////////////////////
+// Unit State
+/////////////////////////////////
+
+UnitState::UnitState(StateMachineComponent& parent)
+	: m_Machine(parent)
+{
+}
+
+Unit& UnitState::GetUnit()
+{
+	return m_Machine.GetUnit();
+}
+
+const Unit& UnitState::GetUnit() const
+{
+	return m_Machine.GetUnit();
+}
+
+/////////////////////////////////
+// State Machine Component
+/////////////////////////////////
+
 StateMachineComponent::StateMachineComponent(Unit& parent)
 	: UnitComponent(parent)
 {
-	AddState(new UnitState_Idle());
-	AddState(new UnitState_Ability());
+	AddState(new UnitState_Idle(*this));
+	AddState(new UnitState_Ability(*this));
 }
 
 bool StateMachineComponent::AddState(UnitState* state)
@@ -47,7 +70,7 @@ bool StateMachineComponent::AddState(UnitState* state)
 	}
 
 	m_States[(int)t] = state;
-	state->Init(*this);
+	state->Init();
 	return true;
 }
 
@@ -99,7 +122,7 @@ void StateMachineComponent::Update(const GameFrame& frame)
 	if (!state)
 		return;
 
-	state->Update(*this, frame);
+	state->Update(frame);
 
 	StateType desiredState;
 	if (state->GetDesiredState(desiredState))
@@ -107,9 +130,9 @@ void StateMachineComponent::Update(const GameFrame& frame)
 		UnitState* nextState = GetState(desiredState);
 		if (nextState)
 		{
-			state->OnEnd(*this);
+			state->OnEnd();
 			m_CurrentState = desiredState;
-			nextState->OnBegin(*this);
+			nextState->OnBegin();
 		}
 		else
 		{
